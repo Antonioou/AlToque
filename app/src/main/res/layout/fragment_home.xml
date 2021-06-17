@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".view.initial.ui.home.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/dp_50">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_notification_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:src="@drawable/ic_notifications_black_24dp"
+            app:backgroundTint="@color/colorWhite"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@id/civ_picprofile_home"
+            app:layout_constraintEnd_toStartOf="@id/civ_picprofile_home"
+            app:layout_constraintTop_toTopOf="@id/civ_picprofile_home" />
+
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_15"
+            android:fontFamily="@font/productsansregular"
+            android:text="Hola, Carlos"
+            android:textSize="23sp"
+            app:layout_constraintBottom_toBottomOf="@id/civ_picprofile_home"
+            app:layout_constraintEnd_toStartOf="@id/fab_notification_home"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/civ_picprofile_home" />
+
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/civ_picprofile_home"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:src="@drawable/logo_altoque_max"
+            app:civ_border_color="@color/colorWhite"
+            app:civ_border_width="4dp"
+            app:civ_shadow_color="#3f51b5"
+            app:civ_shadow_radius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_directionuser_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_25"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground"
+            android:visibility="visible"
+            app:cardBackgroundColor="@color/colorGreyMatiz5"
+            app:cardCornerRadius="@dimen/dp_15"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/latoregular"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:text="Dirección de envio"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="12sp"
+                    app:drawableTint="#F9A825" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/latoregular"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:paddingBottom="5dp"
+                    android:text="Casa de Luna"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    app:drawableEndCompat="@drawable/ic_outline_location_on_24"
+                    app:drawableTint="#F9A825" />
+            </LinearLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_suggestionstore_home"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground"
+            android:visibility="visible"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_directionuser_home">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawingCacheQuality="auto"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/food_reference_img"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_ìnfostore_sugg_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:selectableItemBackground"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardCornerRadius="@dimen/dp_10"
+                    app:cardElevation="5dp"
+                    app:contentPadding="3dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_namestore_sugg_rv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/dp_5"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginBottom="2dp"
+                            android:fontFamily="@font/latobold"
+                            android:gravity="center_vertical"
+                            android:text="Restaurant Lucero"
+                            android:textColor="@color/colorBlackMatiz1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_directionstore_sugg_rv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/dp_5"
+                            android:fontFamily="@font/latoregular"
+                            android:gravity="center_vertical"
+                            android:text="Avenida Los Cespedes"
+                            android:textColor="@color/colorGrey"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginHorizontal="@dimen/dp_5"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginBottom="@dimen/dp_5"
+                            android:background="@color/colorGreyMatiz1" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_starsstore_sugg_rv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="@dimen/dp_5"
+                                android:layout_weight="0.3"
+                                android:drawableTint="@color/colorBlueMatiz1"
+                                android:fontFamily="@font/latoregular"
+                                android:gravity="center"
+                                android:text="10-15 mins"
+                                android:textColor="@color/colorGrey"
+                                android:textSize="13sp"
+                                app:drawableStartCompat="@drawable/ic_baseline_access_time_24" />
+
+                            <TextView
+                                android:id="@+id/tv_timestore_sugg_rv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="@dimen/dp_5"
+                                android:layout_weight="0.3"
+                                android:drawableTint="@color/colorYellowMatiz1"
+                                android:fontFamily="@font/latoregular"
+                                android:gravity="center"
+                                android:text="4.1 (10)"
+                                android:textColor="@color/colorGrey"
+                                android:textSize="13sp"
+                                app:drawableStartCompat="@drawable/ic_baseline_star_outline_24" />
+
+                            <TextView
+                                android:id="@+id/tv_coststore_sugg_rv"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="@dimen/dp_5"
+                                android:layout_weight="0.3"
+                                android:drawableTint="#81C784"
+                                android:fontFamily="@font/latoregular"
+                                android:gravity="center"
+                                android:text="3.00"
+                                android:textColor="@color/colorGrey"
+                                android:textSize="13sp"
+                                app:drawableStartCompat="@drawable/ic_baseline_attach_money_24" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+        <TextView
+            android:id="@+id/title_store"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_30"
+            android:fontFamily="@font/ibm_semibold"
+            android:text="Tiendas"
+            android:textColor="@color/colorBlackMatiz1"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toStartOf="@id/fab_filterstore_home"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_suggestionstore_home" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_filterstore_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:backgroundTint="@color/colorGreyMatiz3"
+            android:src="@drawable/ic_baseline_sort_24"
+            app:backgroundTint="@color/colorGreyMatiz3"
+            app:elevation="5dp"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@id/title_store"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title_store" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mc_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="@dimen/dp_10"
+            app:cardElevation="5dp"
+            app:contentPadding="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fab_filterstore_home">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/food_reference_img"
+                    app:layout_constraintBottom_toBottomOf="@id/view_divider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:fontFamily="@font/latobold"
+                    android:gravity="center_vertical"
+                    android:text="Restaurant Lucero"
+                    android:textColor="@color/colorBlackMatiz1"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/tv1"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:fontFamily="@font/latoregular"
+                    android:gravity="center_vertical"
+                    android:text="Avenida Los Cespedes"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                    app:layout_constraintEnd_toStartOf="@id/imageView"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <View
+                    android:id="@+id/view_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:background="@color/colorGreyMatiz1"
+                    app:layout_constraintTop_toBottomOf="@id/tv1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_5"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_divider">
+
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/dp_5"
+                        android:layout_weight="0.3"
+                        android:drawableTint="@color/colorBlueMatiz1"
+                        android:fontFamily="@font/latoregular"
+                        android:gravity="center"
+                        android:text="10-15 mins"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_access_time_24" />
+
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/dp_5"
+                        android:layout_weight="0.3"
+                        android:drawableTint="@color/colorYellowMatiz1"
+                        android:fontFamily="@font/latoregular"
+                        android:gravity="center"
+                        android:text="4.1 (10)"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_star_outline_24" />
+
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/dp_5"
+                        android:layout_weight="0.3"
+                        android:drawableTint="#81C784"
+                        android:fontFamily="@font/latoregular"
+                        android:gravity="center"
+                        android:text="3.00"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_attach_money_24" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mc_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="@dimen/dp_10"
+            app:cardElevation="5dp"
+            app:contentPadding="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mc_1">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/second_image"
+                    app:layout_constraintBottom_toBottomOf="@id/view_divider1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+
+                    android:id="@+id/textView1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:fontFamily="@font/latobold"
+                    android:gravity="center_vertical"
+                    android:text="Cevicheria Carlo"
+                    android:textColor="@color/colorBlackMatiz1"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/tv11"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv11"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:fontFamily="@font/latoregular"
+                    android:gravity="center_vertical"
+                    android:text="Avenida Los Punos"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView1"
+                    app:layout_constraintEnd_toStartOf="@id/imageView1"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <View
+                    android:id="@+id/view_divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:background="@color/colorGreyMatiz1"
+                    app:layout_constraintTop_toBottomOf="@id/tv11" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_5"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_divider1">
+
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/dp_5"
+                        android:layout_weight="0.3"
+                        android:drawableTint="@color/colorBlueMatiz1"
+                        android:fontFamily="@font/latoregular"
+                        android:gravity="center"
+                        android:text="5-10 mins"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_access_time_24" />
+
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/dp_5"
+                        android:layout_weight="0.3"
+                        android:drawableTint="@color/colorYellowMatiz1"
+                        android:fontFamily="@font/latoregular"
+                        android:gravity="center"
+                        android:text="3.9 (31)"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_star_outline_24" />
+
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/dp_5"
+                        android:layout_weight="0.3"
+                        android:drawableTint="#81C784"
+                        android:fontFamily="@font/latoregular"
+                        android:gravity="center"
+                        android:text="Gratis"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="13sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_attach_money_24" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginTop="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@id/mc_2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

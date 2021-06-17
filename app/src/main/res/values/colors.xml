@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+
+    <color name="colorWhite">#fff</color>
+
+    <color name="colorBlack">#000000</color>
+    <color name="colorBlackMatiz1">#404041</color>
+
+
+    <color name="colorGreen">#00E676</color>
+    <color name="colorGreenMatiz3">#e8f5e9</color>
+
+    <color name="colorYellow">#CCA920</color>
+    <color name="colorYellowMatiz1">#ffca28</color>
+    <color name="colorYellowMatiz2">#fff350</color>
+
+    <color name="colorGrey">#6A6B6F</color>
+    <color name="colorGreyMatiz1">#8B8A86</color>
+    <color name="colorGreyMatiz2">#BCC2CF</color>
+    <color name="colorGreyMatiz3">#E6E9ED</color>
+    <color name="colorGreyMatiz4">#f9f9f9</color>
+    <color name="colorGreyMatiz5">#fafafa</color>
+
+    <color name="colorViolet">#825DFF</color>
+    <color name="colorVioletMatiz1">#8373CA</color>
+    <color name="colorVioletMatiz2">#ADA3D4</color>
+    <color name="colorVioletMatiz3">#E4E0EF</color>
+
+    <color name="colorRed">#FF1744</color>
+    <color name="colorRedMatiz3">#EF9A9A</color>
+
+    <color name="colorBlue">#448AFF</color>
+    <color name="colorBlueMatiz1">#6291AC</color>
+    <color name="colorBlueMatiz2">#B8C5DC</color>
+    <color name="colorBlueMatiz3">#E1F5FE</color>
+    <color name="colorBlueMatiz4">#EFF6FB</color>
+
+</resources>
