@@ -2,6 +2,7 @@ package com.altoque.delivery;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
@@ -16,12 +17,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +39,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.altoque.delivery.data.SessionSP;
+import com.altoque.delivery.utils.ConnectivityReceiver;
+import com.altoque.delivery.utils.initClass;
 import com.altoque.delivery.view.OAuth.OAuthActivity;
 import com.altoque.delivery.view.initial.InitialActivity;
 import com.google.android.gms.common.api.ApiException;
@@ -72,9 +78,6 @@ public class MainActivity extends AppCompatActivity {
     List<Address> list;
     FusedLocationProviderClient mFusedLocationClient;
     int PERMISSION_ID = 44;
-
-    
-
     private static final String TAG = MainActivity.class.getSimpleName();
 
 
@@ -82,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow()
@@ -97,42 +99,52 @@ public class MainActivity extends AppCompatActivity {
 
         final MaterialCardView mc_sectionlogo_login = findViewById(R.id.mc_sectionlogo_login);
 
-
         feb_next_fstep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, OAuthActivity.class);
-                // create the transition animation - the images in the layouts
-                // of both activities are defined with android:transitionName="robot"
                 ActivityOptions options = ActivityOptions
-                        .makeSceneTransitionAnimation(MainActivity.this, mc_sectionlogo_login, "go_login_transition");
-                // start the new activity
+                        .makeSceneTransitionAnimation(MainActivity.this,
+                                mc_sectionlogo_login,
+                                "go_login_transition");
                 startActivity(intent, options.toBundle());
 
             }
         });
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        // method to get the location
         getLastLocation();
 
     }
 
-    @SuppressLint("MissingPermission")
     private void getLastLocation() {
         // check if permissions are given
         if (checkPermissions()) {
 
             if (isLocationEnabled()) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         Location location = task.getResult();
-                        if (location == null) {
-                            requestNewLocationData();
-                        } else {
-                            getNameDirection(location);
+                        Integer retry = 0;
+                        if (retry == 0) {
+                            if (location == null) {
+                                retry += 1;
+                                requestNewLocationData();
+                            } else {
+                                getNameDirection(location);
+                            }
                         }
                     }
                 });
@@ -148,8 +160,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void dialogRequestLocation(){
-
+    private void dialogRequestLocation() {
 
         final View customLayout = getLayoutInflater()
                 .inflate(R.layout.layout_requestlocation_dialog, null);
@@ -173,20 +184,28 @@ public class MainActivity extends AppCompatActivity {
 
         mat.setCancelable(false);
         mat.show();
-
     }
 
-    @SuppressLint("MissingPermission")
     private void requestNewLocationData() {
 
-
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(5);
-        mLocationRequest.setFastestInterval(0);
-        mLocationRequest.setNumUpdates(1);
+        LocationRequest mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(60)
+                .setFastestInterval(0)
+                .setNumUpdates(1);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
     }
 
@@ -219,14 +238,12 @@ public class MainActivity extends AppCompatActivity {
         mat.dismiss();
     }
 
-    // method to check
-    // if location is enabled
     private boolean isLocationEnabled() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    // If everything is alright then
     @Override
     public void
     onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -236,14 +253,6 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLastLocation();
             }
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (checkPermissions()) {
-            getLastLocation();
         }
     }
 
@@ -267,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                             location.getLongitude(),
                             1);
                     String dir = String.valueOf(list.get(0));
-                    Log.e(TAG, "direcc "+ dir);
+                    Log.e(TAG, "direcc " + dir);
                     //Toast.makeText(this, ""+dir, Toast.LENGTH_LONG).show();
 
 
@@ -278,4 +287,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (checkPermissions()) {
+            getLastLocation();
+        }
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+    }
 }

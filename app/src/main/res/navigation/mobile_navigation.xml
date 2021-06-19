@@ -5,24 +5,24 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_home"
         android:name="com.altoque.delivery.view.initial.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_services"
         android:name="com.altoque.delivery.view.initial.ui.services.ServicesFragment"
         android:label="@string/title_services"
         tools:layout="@layout/fragment_services" />
 
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_order"
         android:name="com.altoque.delivery.view.initial.ui.order.OrderFragment"
         android:label="@string/title_order"
         tools:layout="@layout/fragment_order" />
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_cart"
         android:name="com.altoque.delivery.view.initial.ui.cart.CartFragment"
         android:label="@string/title_cart"
