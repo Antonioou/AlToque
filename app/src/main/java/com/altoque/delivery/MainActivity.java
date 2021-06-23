@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.ComponentActivity;
@@ -42,6 +43,7 @@ import com.altoque.delivery.data.SessionSP;
 import com.altoque.delivery.utils.ConnectivityReceiver;
 import com.altoque.delivery.utils.initClass;
 import com.altoque.delivery.view.OAuth.OAuthActivity;
+import com.altoque.delivery.view.OAuth.RegisterActivity;
 import com.altoque.delivery.view.initial.InitialActivity;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -88,16 +90,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow()
-                    .setStatusBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorWhite));
-            getWindow()
-                    .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                    .setStatusBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
         }
 
         mat = new AlertDialog.Builder(MainActivity.this).create();
 
         feb_next_fstep = findViewById(R.id.feb_next_fstep);
 
-        final MaterialCardView mc_sectionlogo_login = findViewById(R.id.mc_sectionlogo_login);
+        final ConstraintLayout cl_sectionlogo = findViewById(R.id.cl_sectionlogo_main);
 
         feb_next_fstep.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,9 +105,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, OAuthActivity.class);
                 ActivityOptions options = ActivityOptions
                         .makeSceneTransitionAnimation(MainActivity.this,
-                                mc_sectionlogo_login,
+                                cl_sectionlogo,
                                 "go_login_transition");
                 startActivity(intent, options.toBundle());
+                //startActivity(new Intent(MainActivity.this, RegisterActivity.class));
 
             }
         });

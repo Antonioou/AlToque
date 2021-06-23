@@ -12,7 +12,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "http:/192.168.0.200:80/ControlPanel-GOYAN-old/";
+    public static final String BASE_URL = "https://apialtoquedelivery.000webhostapp.com/";
     //public static final String BASE_URL="http://61c38c1db234.ngrok.io/";
     public static Retrofit retrofit = null;
 

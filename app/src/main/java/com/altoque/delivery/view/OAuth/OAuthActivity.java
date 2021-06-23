@@ -8,6 +8,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -27,7 +29,11 @@ import android.widget.Toast;
 
 import com.altoque.delivery.MainActivity;
 import com.altoque.delivery.R;
+import com.altoque.delivery.api.ApiClient;
+import com.altoque.delivery.api.ApiHelper;
+import com.altoque.delivery.apiInterface.ApiInterface;
 import com.altoque.delivery.data.SessionSP;
+import com.altoque.delivery.model.JoinResponseModel;
 import com.altoque.delivery.view.SplashActivity;
 import com.altoque.delivery.view.initial.InitialActivity;
 import com.chaos.view.PinView;
@@ -54,6 +60,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class OAuthActivity extends AppCompatActivity {
 
 
@@ -79,6 +89,8 @@ public class OAuthActivity extends AppCompatActivity {
     ConstraintLayout layout_bottomsheet;
     BottomSheetBehavior bottomsheetbehavior;
 
+    public ApiInterface apiInterface;
+
 
     private void initView() {
 
@@ -92,6 +104,8 @@ public class OAuthActivity extends AppCompatActivity {
         btn_next_tstep = findViewById(R.id.btn_activate_tstep);
         pb_tstep = findViewById(R.id.pb_load_tstep);
         pinView = findViewById(R.id.pinView);
+
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
     }
 
@@ -249,9 +263,8 @@ public class OAuthActivity extends AppCompatActivity {
                 bottomsheetbehavior.setHideable(false);
 
 
-
             } catch (Exception e) {
-                Toast.makeText(OAuthActivity.this, "Errror: " + e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(OAuthActivity.this, "Error: " + e.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -304,14 +317,10 @@ public class OAuthActivity extends AppCompatActivity {
                     pb_tstep.setVisibility(View.INVISIBLE);
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        Log.e("LogUser", "" + user.getUid().toString());
 
-                        //showToast(user.getUid().toString());
-
-                        SessionSP.get(OAuthActivity.this).saveStateLogin("yes");
                         pinView.setLineColor(Color.GREEN);
-                        startActivity(new Intent(OAuthActivity.this, InitialActivity.class));
-                        finishAffinity();
+
+                        valideteUser(user.getUid().toString());
 
                     } else {
 
@@ -327,6 +336,83 @@ public class OAuthActivity extends AppCompatActivity {
             btn_next_tstep.setEnabled(true);
             pinView.setEnabled(true);
         });
+    }
+
+    //SOLICITAR INFORMACIÓN DE LA EXISTENCIA DEL USUARIO
+    private void valideteUser(String codeUID) {
+
+        Call<JoinResponseModel> call = apiInterface.
+                ClientLogin("valid_login_users", codeUID);
+        ApiHelper.enqueueWithRetry(call, new Callback<JoinResponseModel>() {
+            @Override
+            public void onResponse(Call<JoinResponseModel> call, Response<JoinResponseModel> response) {
+
+                if (response.isSuccessful()) {
+
+                    String result = response.body().getResultado().toString();
+                    String msg = response.body().getMensaje().toString();
+
+                    //ENVIA LA VARIABLE Y VALIDA CON BOOLEAN SI ES VACIO
+                    if (validateEmpty(result) || validateEmpty(msg)) {
+                        Toast.makeText(OAuthActivity.this, "Error de ingreso. Espere unos minutos.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    //INVOCA METODO DE CAPTURA DE DATOS PRE GUARDADOS
+                    if (result.equals("1")) {
+                        //   getDataUser();
+                    } //REDIRECCIONA AL REGISTRO
+                    else if (result.equals("0")) {
+                        // launchRegisterActivity(codeUID);
+                    }
+                    Toast.makeText(OAuthActivity.this, "" + result + "\n" + msg, Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<JoinResponseModel> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    //OBTENDRA LOS DATOS Y LO GUARDARA EN SP
+    private void getDataUser() {
+
+
+        //SessionSP.get(OAuthActivity.this).saveStateLogin("yes");
+
+    }
+
+    //ENVIARA AL SIGT ACTIVITY PARA SU REGiSTRO
+    private void launchRegisterActivity(String codeUID) {
+        Intent intent = new Intent(OAuthActivity.this, RegisterActivity.class);
+        intent.putExtra("codeUID", codeUID);
+        startActivity(intent);
+        finishAffinity();
+    }
+
+    private boolean validateEmpty(String string) {
+        string = string.trim();
+        if (!string.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAfterTransition();
+    }
+
+    @Override
+    public void finishAfterTransition() {
+        super.finishAfterTransition();
+        //finishAffinity();
     }
 
 

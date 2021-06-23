@@ -1,14 +1,19 @@
 package com.altoque.delivery.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +36,10 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         //requestWindowFeature(1);
-        //getWindow().setStatusBarColor(Color.TRANSPARENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow()
+                    .setStatusBarColor(ContextCompat.getColor(SplashActivity.this, R.color.colorPrimary));
+        }
 
         tv_state = findViewById(R.id.tv_load_splash);
     }
@@ -55,7 +63,7 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
                 if (!isConnected) {
                     Toast.makeText(SplashActivity.this, "Sin conexión a internet.", Toast.LENGTH_SHORT).show();
                     tv_state.setText("Esperando conexión a internet...");
-                }else{
+                } else {
                     nextActivity();
                 }
             }
@@ -64,11 +72,20 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
 
     }
 
-    private void nextActivity(){
+    private void nextActivity() {
         if (SessionSP.get(SplashActivity.this).getStateLogin().equals("yes")) {
+
             startActivity(new Intent(SplashActivity.this, InitialActivity.class));
-        }else {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+
+        } else {
+            //final ImageView iv_logo = findViewById(R.id.iv_logo_splash);
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            /*ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(SplashActivity.this,
+                            iv_logo,
+                            "go_main_transition");
+                            , options.toBundle()*/
+            startActivity(intent);
         }
         finish();
     }
