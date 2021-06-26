@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.altoque.delivery.MainActivity;
 import com.altoque.delivery.data.SessionSP;
 import com.altoque.delivery.databinding.FragmentHomeBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class HomeFragment extends Fragment {
@@ -23,25 +26,43 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
+    TextView tv_username;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.logout;
+        tv_username = binding.logout;
 
-        textView.setOnClickListener(new View.OnClickListener() {
+        tv_username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SessionSP.get(requireContext()).saveStateLogin("no");
+
+                FirebaseAuth mAuthent = FirebaseAuth.getInstance();
+                mAuthent.signOut();
+
+                SessionSP.get(requireContext()).logout();
                 startActivity(new Intent(requireContext(), MainActivity.class));
                 getActivity().finish();
+
+
 
             }
         });
 
+        setUserName();
+
+        Toast.makeText(requireContext(), ""+SessionSP.get(requireContext()).getStateLogin(), Toast.LENGTH_SHORT).show();
+
+
         return root;
+    }
+
+    private void setUserName(){
+        tv_username.setText("Hola, "+SessionSP.get(requireContext()).getNameSessSp().toString().trim());
     }
 
     @Override

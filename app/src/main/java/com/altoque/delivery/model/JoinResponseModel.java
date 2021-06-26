@@ -4,15 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class JoinResponseModel {
+
     @SerializedName("resultado")
-    @Expose
     String resultado;
     @SerializedName("mensaje")
-    @Expose
     String mensaje;
 
-    public JoinResponseModel() {
-    }
+    public JoinResponseModel() { }
 
     @Override
     public String toString() {

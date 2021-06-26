@@ -3,6 +3,8 @@ package com.altoque.delivery.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.altoque.delivery.model.CustomerModel;
+
 public class SessionSP {
 
     private static SessionSP INSTANCE;
@@ -11,11 +13,11 @@ public class SessionSP {
     public static final String PREFS_DATA = "DATA_SESSION_SP";
     public static final String PREFS_SESSION = "STATE_SESSION_SP";
 
-    public static final String ID_SESS_SP = "ID_SP";
+    //public static final String ID_SESS_SP = "ID_SP";
     public static final String NAME_SESS_SP = "NAME_SP";
     public static final String LNAME_SESS_SP = "LNAME_SP";
     public static final String PHONE_SESS_SP = "PHONE_SP";
-    public static final String EMAIL_SESS_SP = "PHONE_SP";
+    public static final String UID_SESS_SP = "UID_SP";
     public static final String PHOTO_SESS_SP = "PHOTO_SP";
     public static final String TARGET_RESULT = "TARGET_RESULT_RESERVATION";
 
@@ -52,18 +54,18 @@ public class SessionSP {
         return loggedSP.getString(VALOR_STATE_SESS_SP, "");
     }
 
-    /*public void saveDataCustomer(CustomerModel customer) {
+    public void saveDataCustomer(CustomerModel customer) {
         if (customer != null) {
             SharedPreferences.Editor editor = dataSP.edit();
-            editor.putString(ID_SESS_SP, customer.getId_customer());
-            editor.putString(NAME_SESS_SP, customer.getFirstname_customer());
-            editor.putString(LNAME_SESS_SP, customer.getLastname_customer());
-            editor.putString(EMAIL_SESS_SP, customer.getEmail_customer());
-            editor.putInt(PHONE_SESS_SP, customer.getPhone_customer());
-            editor.putString(PHOTO_SESS_SP, customer.getPhoto_customer());
+            //editor.putString(ID_SESS_SP, customer.getIdcliente());
+            editor.putString(NAME_SESS_SP, customer.getNombrecli());
+            editor.putString(LNAME_SESS_SP, customer.getApellidos_cli());
+            editor.putString(UID_SESS_SP, customer.getCodigoUID_cli());
+            editor.putString(PHONE_SESS_SP, customer.getCel_cli());
+            editor.putString(PHOTO_SESS_SP, customer.getFoto_cli());
             editor.apply();
         }
-    }*/
+    }
 
     public void setTargetResultReservation(String target) {
         if (target != null) {
@@ -73,9 +75,9 @@ public class SessionSP {
         }
     }
 
-    public String getIdSessSp() {
-        return dataSP.getString(ID_SESS_SP, "");
-    }
+    //public String getIdSessSp() {
+      //  return dataSP.getString(ID_SESS_SP, "");
+    //}
 
     public String getNameSessSp() {
         return dataSP.getString(NAME_SESS_SP, "");
@@ -85,12 +87,12 @@ public class SessionSP {
         return dataSP.getString(LNAME_SESS_SP, "");
     }
 
-    public Integer getPhoneSessSp() {
-        return dataSP.getInt(PHONE_SESS_SP, 0);
+    public String getPhoneSessSp() {
+        return dataSP.getString(PHONE_SESS_SP, "");
     }
 
-    public String getEmailSessSp() {
-        return dataSP.getString(EMAIL_SESS_SP, "");
+    public String getUidSessSp() {
+        return dataSP.getString(UID_SESS_SP, "");
     }
 
     public String getPhotoSessSp() {
@@ -104,10 +106,10 @@ public class SessionSP {
 
     public void logout() {
         SharedPreferences.Editor editor1 = dataSP.edit();
-        editor1.putString(ID_SESS_SP, null);
+        //editor1.putString(ID_SESS_SP, null);
         editor1.putString(NAME_SESS_SP, null);
         editor1.putString(LNAME_SESS_SP, null);
-        editor1.putString(EMAIL_SESS_SP, null);
+        editor1.putString(UID_SESS_SP, null);
         editor1.putInt(PHONE_SESS_SP, 0);
         editor1.putString(PHOTO_SESS_SP, null);
         editor1.apply();

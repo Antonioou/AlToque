@@ -340,17 +340,18 @@ public class OAuthActivity extends AppCompatActivity {
 
     //SOLICITAR INFORMACIÓN DE LA EXISTENCIA DEL USUARIO
     private void valideteUser(String codeUID) {
+        Log.e("OAuth_res1", "validate user");
 
-        Call<JoinResponseModel> call = apiInterface.
-                ClientLogin("valid_login_users", codeUID);
-        ApiHelper.enqueueWithRetry(call, new Callback<JoinResponseModel>() {
+        Call<List<JoinResponseModel>> call = apiInterface.
+                ClientLogin("valid_login_users", "1", "1", codeUID);
+        ApiHelper.enqueueWithRetry(call, new Callback<List<JoinResponseModel>>() {
             @Override
-            public void onResponse(Call<JoinResponseModel> call, Response<JoinResponseModel> response) {
+            public void onResponse(Call<List<JoinResponseModel>> call, Response<List<JoinResponseModel>> response) {
 
                 if (response.isSuccessful()) {
 
-                    String result = response.body().getResultado().toString();
-                    String msg = response.body().getMensaje().toString();
+                    String result = response.body().get(0).getResultado().toString();
+                    String msg = response.body().get(0).getMensaje();
 
                     //ENVIA LA VARIABLE Y VALIDA CON BOOLEAN SI ES VACIO
                     if (validateEmpty(result) || validateEmpty(msg)) {
@@ -359,19 +360,19 @@ public class OAuthActivity extends AppCompatActivity {
                     }
                     //INVOCA METODO DE CAPTURA DE DATOS PRE GUARDADOS
                     if (result.equals("1")) {
-                        //   getDataUser();
+                        Toast.makeText(OAuthActivity.this, "Acción a recopilar datos.", Toast.LENGTH_LONG).show();
                     } //REDIRECCIONA AL REGISTRO
                     else if (result.equals("0")) {
-                        // launchRegisterActivity(codeUID);
+                       // SessionSP.get(OAuthActivity.this).saveStateLogin("register");
+                        launchRegisterActivity();
                     }
-                    Toast.makeText(OAuthActivity.this, "" + result + "\n" + msg, Toast.LENGTH_LONG).show();
                 }
 
             }
 
             @Override
-            public void onFailure(Call<JoinResponseModel> call, Throwable t) {
-
+            public void onFailure(Call<List<JoinResponseModel>> call, Throwable t) {
+                Log.e("OAuth_res1", "OnFailure "+t.getMessage());
             }
         });
 
@@ -387,9 +388,8 @@ public class OAuthActivity extends AppCompatActivity {
     }
 
     //ENVIARA AL SIGT ACTIVITY PARA SU REGiSTRO
-    private void launchRegisterActivity(String codeUID) {
+    private void launchRegisterActivity() {
         Intent intent = new Intent(OAuthActivity.this, RegisterActivity.class);
-        intent.putExtra("codeUID", codeUID);
         startActivity(intent);
         finishAffinity();
     }

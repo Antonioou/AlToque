@@ -247,7 +247,7 @@ public class OAuthBottomSheet extends BottomSheetDialogFragment {
                             Log.e("LogUser", "" + user.getUid().toString());
 
                             showToast(user.getUid().toString());
-                            SessionSP.get(requireContext()).saveStateLogin("yes");
+                            //SessionSP.get(requireContext()).saveStateLogin("yes");
                             pinView.setLineColor(Color.GREEN);
                             startActivity(new Intent(requireContext(), InitialActivity.class));
                             getActivity().finishAffinity();

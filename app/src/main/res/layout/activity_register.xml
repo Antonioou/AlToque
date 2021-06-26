@@ -132,7 +132,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_genero_register"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Género"
@@ -146,10 +146,12 @@
                     app:startIconDrawable="@drawable/ic_outline_menu_open_24"
                     app:startIconTint="@color/colorSecundary">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <AutoCompleteTextView
+                        android:id="@+id/actv_genero_register"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/latoregular" />
+                        android:inputType="none"
+                        android:fontFamily="@font/latoregular"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -166,10 +168,26 @@
                     app:backgroundTint="@color/colorPrimary"
                     app:cornerRadius="10dp"
                     app:elevation="10dp"
+                    android:elevation="@dimen/dp_0"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/til_genero_register" />
 
+                <ProgressBar
+                    android:id="@+id/pb_load_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.CircularProgressIndicator"
+                    android:indeterminate="true"
+                    android:progress="30"
+                    android:max="100"
+                    android:visibility="gone"
+                    android:elevation="@dimen/dp_50"
+                    android:indeterminateTint="@color/colorSecundary"
+                    app:layout_constraintTop_toTopOf="@id/btn_next_register"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_next_register"
+                    app:layout_constraintStart_toStartOf="@id/btn_next_register"
+                    app:layout_constraintEnd_toEndOf="@id/btn_next_register"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

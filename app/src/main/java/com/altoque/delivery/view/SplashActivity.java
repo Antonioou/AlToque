@@ -23,6 +23,7 @@ import com.altoque.delivery.data.SessionSP;
 import com.altoque.delivery.utils.ConnectivityReceiver;
 import com.altoque.delivery.utils.initClass;
 import com.altoque.delivery.view.OAuth.OAuthActivity;
+import com.altoque.delivery.view.OAuth.RegisterActivity;
 import com.altoque.delivery.view.initial.InitialActivity;
 
 import static android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
@@ -74,10 +75,11 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
 
     private void nextActivity() {
         if (SessionSP.get(SplashActivity.this).getStateLogin().equals("yes")) {
-
             startActivity(new Intent(SplashActivity.this, InitialActivity.class));
-
-        } else {
+        }else if (SessionSP.get(SplashActivity.this).getStateLogin().equals("register")) {
+            startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
+        }
+        else {
             //final ImageView iv_logo = findViewById(R.id.iv_logo_splash);
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             /*ActivityOptions options = ActivityOptions
