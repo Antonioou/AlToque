@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.altoque.delivery.MainActivity;
@@ -58,7 +60,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -265,13 +269,32 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            Log.e("Dir_error", "Latitude: " + mLastLocation.getLatitude() + "");
-            Log.e("Dir_error", "Longitude: " + mLastLocation.getLongitude() + "");
+            //Log.e("Dir_error", "Latitude: " + mLastLocation.getLatitude() + "");
+            //Log.e("Dir_error", "Longitude: " + mLastLocation.getLongitude() + "");
 
             globalLat = mLastLocation.getLatitude();
             globalLng = mLastLocation.getLongitude();
 
+            if (mLastLocation.getLatitude() != 0.0 && mLastLocation.getLongitude() != 0.0) {
+                try {
+
+                    Geocoder geocoder = new Geocoder(DirectionClientActivity.this, Locale.getDefault());
+                    list = geocoder.getFromLocation(
+                            mLastLocation.getLatitude(),
+                            mLastLocation.getLongitude(),
+                            1);
+                    String dir = String.valueOf(list.get(0).getAddressLine(0));
+
+                    TextView tv_dir = findViewById(R.id.tv_namedirection_dirclient);
+                    tv_dir.setText(dir);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
             agregarMarcador(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+
         }
     };
 
@@ -371,7 +394,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
         }
     }
 
-    private void disableInput(){
+    private void disableInput() {
         feb_next.setEnabled(false);
         et_name.setEnabled(false);
         et_distrito.setEnabled(false);
@@ -379,7 +402,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
         et_reference.setEnabled(false);
     }
 
-    private void enableInput(){
+    private void enableInput() {
         feb_next.setEnabled(true);
         et_name.setEnabled(true);
         et_distrito.setEnabled(true);

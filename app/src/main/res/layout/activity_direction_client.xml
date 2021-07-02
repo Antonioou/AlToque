@@ -23,6 +23,25 @@
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/tv_namedirection_dirclient"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:padding="7dp"
+        android:fontFamily="@font/latoregular"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/colorBlack"
+        android:drawableStart="@drawable/ic_outline_location_on_24"
+        android:drawablePadding="@dimen/dp_5"
+        android:gravity="center_vertical"
+        android:text="Cargando datos..."
+        android:background="@drawable/layout_round"/>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/feb_next_dirclient"
         android:layout_width="wrap_content"

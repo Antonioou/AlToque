@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
                             location.getLongitude(),
                             1);
                     String dir = String.valueOf(list.get(0));
-                    Log.e(TAG, "direcc " + dir);
+                    //Log.e(TAG, "direcc " + dir);
                     //Toast.makeText(this, ""+dir, Toast.LENGTH_LONG).show();
 
 
