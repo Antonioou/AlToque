@@ -5,34 +5,51 @@ import com.google.gson.annotations.SerializedName;
 
 public class JoinResponseModel {
 
-    @SerializedName("resultado")
-    String resultado;
-    @SerializedName("mensaje")
-    String mensaje;
+    @SerializedName("code_server")
+    String code_server;
+    @SerializedName("res_server")
+    String res_server;
+    @SerializedName("msg_server")
+    String msg_server;
 
     public JoinResponseModel() { }
+
+    public JoinResponseModel(String code_server, String res_server, String msg_server) {
+        this.code_server = code_server;
+        this.res_server = res_server;
+        this.msg_server = msg_server;
+    }
 
     @Override
     public String toString() {
         return "JoinResponseModel{" +
-                "resultado='" + resultado + '\'' +
-                ", mensaje='" + mensaje + '\'' +
+                "code_server='" + code_server + '\'' +
+                ", res_server='" + res_server + '\'' +
+                ", msg_server='" + msg_server + '\'' +
                 '}';
     }
 
-    public String getResultado() {
-        return resultado;
+    public String getCode_server() {
+        return code_server;
     }
 
-    public void setResultado(String resultado) {
-        this.resultado = resultado;
+    public void setCode_server(String code_server) {
+        this.code_server = code_server;
     }
 
-    public String getMensaje() {
-        return mensaje;
+    public String getRes_server() {
+        return res_server;
     }
 
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
+    public void setRes_server(String res_server) {
+        this.res_server = res_server;
+    }
+
+    public String getMsg_server() {
+        return msg_server;
+    }
+
+    public void setMsg_server(String msg_server) {
+        this.msg_server = msg_server;
     }
 }

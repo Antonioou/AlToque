@@ -1,53 +1,34 @@
-package com.altoque.delivery.view.OAuth;
+package com.altoque.delivery.view.oauth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.viewpager.widget.ViewPager;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.altoque.delivery.MainActivity;
 import com.altoque.delivery.R;
 import com.altoque.delivery.api.ApiClient;
 import com.altoque.delivery.api.ApiHelper;
 import com.altoque.delivery.apiInterface.ApiInterface;
 import com.altoque.delivery.data.SessionSP;
+import com.altoque.delivery.model.CustomerModel;
 import com.altoque.delivery.model.JoinResponseModel;
-import com.altoque.delivery.view.SplashActivity;
 import com.altoque.delivery.view.initial.InitialActivity;
 import com.chaos.view.PinView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -56,7 +37,6 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -340,7 +320,7 @@ public class OAuthActivity extends AppCompatActivity {
 
     //SOLICITAR INFORMACIÓN DE LA EXISTENCIA DEL USUARIO
     private void valideteUser(String codeUID) {
-        Log.e("OAuth_res1", "validate user");
+        //Log.e("OAuth_res1", "validate user");
 
         Call<List<JoinResponseModel>> call = apiInterface.
                 ClientLogin("valid_login_users", "1", "1", codeUID);
@@ -349,9 +329,11 @@ public class OAuthActivity extends AppCompatActivity {
             public void onResponse(Call<List<JoinResponseModel>> call, Response<List<JoinResponseModel>> response) {
 
                 if (response.isSuccessful()) {
+                    String code = response.body().get(0).getCode_server().toString();
+                    String result = response.body().get(0).getRes_server().toString();
+                    String msg = response.body().get(0).getMsg_server();
 
-                    String result = response.body().get(0).getResultado().toString();
-                    String msg = response.body().get(0).getMensaje();
+                    Log.e("OAuth_res", "OnFailure " + response.body().toString() + "\nUID: " + codeUID);
 
                     //ENVIA LA VARIABLE Y VALIDA CON BOOLEAN SI ES VACIO
                     if (validateEmpty(result) || validateEmpty(msg)) {
@@ -359,12 +341,16 @@ public class OAuthActivity extends AppCompatActivity {
                         return;
                     }
                     //INVOCA METODO DE CAPTURA DE DATOS PRE GUARDADOS
-                    if (result.equals("1")) {
-                        Toast.makeText(OAuthActivity.this, "Acción a recopilar datos.", Toast.LENGTH_LONG).show();
+                    if (code.equals("221")) {
+                        getDataUser(codeUID);
+                    }//BANEADO
+                    else if (code.equals("322")) {
+                        Toast.makeText(OAuthActivity.this, "Usuario baneado.", Toast.LENGTH_LONG).show();
                     } //REDIRECCIONA AL REGISTRO
-                    else if (result.equals("0")) {
-                       // SessionSP.get(OAuthActivity.this).saveStateLogin("register");
+                    else if (code.equals("010")) {
                         launchRegisterActivity();
+                    } else if (code.equals("110")) {
+                        Toast.makeText(OAuthActivity.this, "Error de parametros. Intente mas tarde.", Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -372,7 +358,8 @@ public class OAuthActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<JoinResponseModel>> call, Throwable t) {
-                Log.e("OAuth_res1", "OnFailure "+t.getMessage());
+                Toast.makeText(OAuthActivity.this, "Error de conexión en el servidor. Intente mas tarde.", Toast.LENGTH_LONG).show();
+                Log.e("OAuth_res", "OnFailure " + t.getMessage());
             }
         });
 
@@ -380,15 +367,57 @@ public class OAuthActivity extends AppCompatActivity {
     }
 
     //OBTENDRA LOS DATOS Y LO GUARDARA EN SP
-    private void getDataUser() {
+    private void getDataUser(String codeUID) {
 
+        Call<List<CustomerModel>> call = apiInterface.
+                getClientData("insert_select_user", "1", "1", codeUID);
+        ApiHelper.enqueueWithRetry(call, new Callback<List<CustomerModel>>() {
+            @Override
+            public void onResponse(Call<List<CustomerModel>> call, Response<List<CustomerModel>> response) {
 
-        //SessionSP.get(OAuthActivity.this).saveStateLogin("yes");
+                if (response.isSuccessful()) {
+                    String code = response.body().get(0).getCode_server().toString();
+                    String result = response.body().get(0).getRes_server().toString();
+                    String msg = response.body().get(0).getMsg_server();
+
+                    //Log.e("OAuth_res", "OnFailure " + response.body().toString());
+
+                    //ENVIA LA VARIABLE Y VALIDA CON BOOLEAN SI ES VACIO
+                    if (validateEmpty(result) || validateEmpty(msg)) {
+                        Toast.makeText(OAuthActivity.this, "Error de ingreso. Espere unos minutos.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    //INVOCA METODO DE CAPTURA DE DATOS PRE GUARDADOS
+                    if (code.equals("221")) {
+                        CustomerModel customerModel = response.body().get(0);
+                        SessionSP.get(OAuthActivity.this).setPhoneSessSp(response.body().get(0).getCel_cli());
+                        SessionSP.get(OAuthActivity.this).saveDataCustomer(customerModel);
+                        SessionSP.get(OAuthActivity.this).saveStateLogin("yes");
+                        startActivity(new Intent(OAuthActivity.this, InitialActivity.class));
+                        finishAffinity();
+
+                    }//REDIRECCIONA AL REGISTRO
+                    else if (code.equals("010")) {
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<CustomerModel>> call, Throwable t) {
+                Toast.makeText(OAuthActivity.this, "Error de conexión en el servidor. Intente mas tarde.", Toast.LENGTH_LONG).show();
+                Log.e("OAuth_res", "OnFailure " + t.getMessage());
+            }
+        });
+
 
     }
 
     //ENVIARA AL SIGT ACTIVITY PARA SU REGiSTRO
     private void launchRegisterActivity() {
+        SessionSP.get(OAuthActivity.this).saveStateLogin("register");
+        SessionSP.get(OAuthActivity.this).setPhoneSessSp(et_ncel.getText().toString().trim());
         Intent intent = new Intent(OAuthActivity.this, RegisterActivity.class);
         startActivity(intent);
         finishAffinity();

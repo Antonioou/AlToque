@@ -6,191 +6,208 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".view.OAuth.RegisterActivity">
+    tools:context=".view.oauth.RegisterActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_sectionreg_register"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
         android:elevation="0dp"
-        android:transitionName="go_register_transition"
-        android:background="@color/colorPrimary">
-
+        android:transitionName="go_dirclient_transition">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="20dp"
-            android:background="@drawable/layout_round"
-            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginHorizontal="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginHorizontal="@dimen/dp_10">
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@drawable/layout_round"
+            android:elevation="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/title"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_20"
-                android:fontFamily="@font/productsansbold"
-                android:text="Registro"
-                android:textColor="@color/colorBlackMatiz1"
-                android:textSize="@dimen/sp_40"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/civ_picprofile_register"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/civ_picprofile_register"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginStart="@dimen/dp_20"
-                android:src="@drawable/logo_altoque_max"
-                app:civ_border_color="@color/colorWhite"
-                app:civ_border_width="4dp"
-                app:civ_shadow_color="#AF9BB5"
-                app:civ_shadow_radius="10dp"
-                app:layout_constraintBottom_toTopOf="@id/cl_sectionreg_register"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_setphoto_reg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cornerRadius="@dimen/dp_10"
-                app:layout_constraintTop_toTopOf="@id/civ_picprofile_register"
-                app:layout_constraintBottom_toBottomOf="@id/civ_picprofile_register"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/civ_picprofile_register"
-                android:textAllCaps="false"
-                android:padding="@dimen/dp_15"
-                app:iconTint="@color/colorSecundary"
-                app:icon="@drawable/ic_outline_add_photo_alternate_24"
-                android:textColor="@color/colorBlackMatiz1"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:text="Agregar foto"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_sectionreg_register"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="@dimen/dp_20"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/civ_picprofile_register">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_firstname_register"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Nombre"
-                    app:boxCornerRadiusBottomEnd="@dimen/dp_10"
-                    app:boxCornerRadiusBottomStart="@dimen/dp_10"
-                    app:boxCornerRadiusTopEnd="@dimen/dp_10"
-                    app:boxCornerRadiusTopStart="@dimen/dp_10"
-                    app:errorEnabled="true"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:startIconDrawable="@drawable/ic_baseline_person_outline_24"
-                    app:startIconTint="@color/colorSecundary">
+                    android:layout_height="match_parent">
 
-                    <com.google.android.material.textfield.TextInputEditText
+
+                    <TextView
+                        android:id="@+id/title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:fontFamily="@font/latoregular" />
+                        android:layout_margin="@dimen/dp_20"
+                        android:fontFamily="@font/productsansbold"
+                        android:text="Registro"
+                        android:textColor="@color/colorBlackMatiz1"
+                        android:textSize="@dimen/sp_40"
+                        app:layout_constraintBottom_toTopOf="@id/civ_picprofile_register"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/civ_picprofile_register"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:src="@drawable/logo_altoque_max"
+                        app:civ_border_color="@color/colorWhite"
+                        app:civ_border_width="4dp"
+                        app:civ_shadow_color="#AF9BB5"
+                        app:civ_shadow_radius="10dp"
+                        app:layout_constraintBottom_toTopOf="@id/cl_formreg_register"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/title" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_lastname_register"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Apellido"
-                    app:boxCornerRadiusBottomEnd="@dimen/dp_10"
-                    app:boxCornerRadiusBottomStart="@dimen/dp_10"
-                    app:boxCornerRadiusTopEnd="@dimen/dp_10"
-                    app:boxCornerRadiusTopStart="@dimen/dp_10"
-                    app:errorEnabled="true"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/til_firstname_register"
-                    app:startIconDrawable="@drawable/ic_baseline_person_outline_24"
-                    app:startIconTint="@color/colorSecundary">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_setphoto_reg"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:fontFamily="@font/latoregular" />
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:padding="@dimen/dp_15"
+                        android:text="Agregar foto"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorBlackMatiz1"
+                        app:cornerRadius="@dimen/dp_10"
+                        app:icon="@drawable/ic_outline_add_photo_alternate_24"
+                        app:iconTint="@color/colorSecundary"
+                        app:layout_constraintBottom_toBottomOf="@id/civ_picprofile_register"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/civ_picprofile_register"
+                        app:layout_constraintTop_toTopOf="@id/civ_picprofile_register" />
 
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_genero_register"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Género"
-                    app:boxCornerRadiusBottomEnd="@dimen/dp_10"
-                    app:boxCornerRadiusBottomStart="@dimen/dp_10"
-                    app:boxCornerRadiusTopEnd="@dimen/dp_10"
-                    app:boxCornerRadiusTopStart="@dimen/dp_10"
-                    app:errorEnabled="true"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/til_lastname_register"
-                    app:startIconDrawable="@drawable/ic_outline_menu_open_24"
-                    app:startIconTint="@color/colorSecundary">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/actv_genero_register"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_formreg_register"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:fontFamily="@font/latoregular"/>
+                        android:layout_height="0dp"
+                        android:layout_margin="@dimen/dp_20"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/civ_picprofile_register">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_firstname_register"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Nombre"
+                            app:boxCornerRadiusBottomEnd="@dimen/dp_10"
+                            app:boxCornerRadiusBottomStart="@dimen/dp_10"
+                            app:boxCornerRadiusTopEnd="@dimen/dp_10"
+                            app:boxCornerRadiusTopStart="@dimen/dp_10"
+                            app:errorEnabled="true"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:startIconDrawable="@drawable/ic_baseline_person_outline_24"
+                            app:startIconTint="@color/colorSecundary">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_next_register"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:layout_marginBottom="@dimen/dp_20"
-                    android:fontFamily="@font/productsansregular"
-                    android:paddingVertical="12dp"
-                    android:text="Registrarse"
-                    android:textAllCaps="false"
-                    app:backgroundTint="@color/colorPrimary"
-                    app:cornerRadius="10dp"
-                    app:elevation="10dp"
-                    android:elevation="@dimen/dp_0"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/til_genero_register" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/latoregular"
+                                android:inputType="textPersonName" />
 
-                <ProgressBar
-                    android:id="@+id/pb_load_register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.CircularProgressIndicator"
-                    android:indeterminate="true"
-                    android:progress="30"
-                    android:max="100"
-                    android:visibility="gone"
-                    android:elevation="@dimen/dp_50"
-                    android:indeterminateTint="@color/colorSecundary"
-                    app:layout_constraintTop_toTopOf="@id/btn_next_register"
-                    app:layout_constraintBottom_toBottomOf="@id/btn_next_register"
-                    app:layout_constraintStart_toStartOf="@id/btn_next_register"
-                    app:layout_constraintEnd_toEndOf="@id/btn_next_register"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_lastname_register"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Apellido"
+                            app:boxCornerRadiusBottomEnd="@dimen/dp_10"
+                            app:boxCornerRadiusBottomStart="@dimen/dp_10"
+                            app:boxCornerRadiusTopEnd="@dimen/dp_10"
+                            app:boxCornerRadiusTopStart="@dimen/dp_10"
+                            app:errorEnabled="true"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/til_firstname_register"
+                            app:startIconDrawable="@drawable/ic_baseline_person_outline_24"
+                            app:startIconTint="@color/colorSecundary">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/latoregular"
+                                android:inputType="textPersonName" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_genero_register"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Género"
+                            app:boxCornerRadiusBottomEnd="@dimen/dp_10"
+                            app:boxCornerRadiusBottomStart="@dimen/dp_10"
+                            app:boxCornerRadiusTopEnd="@dimen/dp_10"
+                            app:boxCornerRadiusTopStart="@dimen/dp_10"
+                            app:errorEnabled="true"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/til_lastname_register"
+                            app:startIconDrawable="@drawable/ic_outline_menu_open_24"
+                            app:startIconTint="@color/colorSecundary">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/actv_genero_register"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/latoregular"
+                                android:inputType="none" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_next_register"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_20"
+                            android:layout_marginBottom="@dimen/dp_20"
+                            android:elevation="@dimen/dp_0"
+                            android:fontFamily="@font/productsansregular"
+                            android:paddingVertical="12dp"
+                            android:text="Registrarse"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorWhite"
+                            app:backgroundTint="@color/colorPrimary"
+                            app:cornerRadius="10dp"
+                            app:elevation="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/til_genero_register" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_load_register"
+                            style="@style/Widget.MaterialComponents.CircularProgressIndicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:elevation="@dimen/dp_50"
+                            android:indeterminate="true"
+                            android:indeterminateTint="@color/colorSecundary"
+                            android:max="100"
+                            android:progress="30"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@id/btn_next_register"
+                            app:layout_constraintEnd_toEndOf="@id/btn_next_register"
+                            app:layout_constraintStart_toStartOf="@id/btn_next_register"
+                            app:layout_constraintTop_toTopOf="@id/btn_next_register" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.OAuth.OAuthActivity">
+    tools:context=".view.oauth.OAuthActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,6 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
+                    android:visibility="gone"
                     android:src="@drawable/ic_baseline_arrow_back_ios_24"
                     app:backgroundTint="@color/colorWhite"
                     app:fabSize="mini"
@@ -115,6 +116,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:errorEnabled="true"
+                    android:hint="Número"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:startIconTint="@color/colorPrimary"
                     app:startIconDrawable="@drawable/ic_baseline_phone_android_24"
                     app:layout_constraintTop_toTopOf="parent">
@@ -122,13 +125,12 @@
                         android:id="@+id/et_ncel_sstep"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/colorWhite"
                         android:fontFamily="@font/sourcesansprosemibold"
                         android:inputType="number"
                         android:maxLength="9"
                         android:maxLines="1"
-                        android:textAlignment="textStart"
-                        android:hint="Número"/>
+                        android:textSize="16sp"
+                        android:textAlignment="textStart" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,6 +147,7 @@
                     app:backgroundTint="@color/colorPrimary"
                     android:textAllCaps="false"
                     app:cornerRadius="10dp"
+                    android:textColor="@color/colorWhite"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/til_ncel_sstep" />

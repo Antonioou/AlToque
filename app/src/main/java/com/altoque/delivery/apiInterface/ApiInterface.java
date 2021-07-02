@@ -1,6 +1,7 @@
 package com.altoque.delivery.apiInterface;
 
 import com.altoque.delivery.model.CustomerModel;
+import com.altoque.delivery.model.DomicilioModel;
 import com.altoque.delivery.model.GeneroModel;
 import com.altoque.delivery.model.JoinResponseModel;
 
@@ -38,6 +39,31 @@ public interface ApiInterface {
             @Field("idgenero") String idgenero,
             @Field("token") String token
     );
+
+    @FormUrlEncoded
+    @POST("controller/rusuario.php")
+    Call<List<CustomerModel>> getClientData(
+            @Field("op") String operation,
+            @Field("param_type") String param_type,
+            @Field("param_process") String param_process,
+            @Field("codigouid") String CodeUID
+    );
+
+
+    @FormUrlEncoded
+    @POST("controller/rdomicilio.php")
+    Call<List<DomicilioModel>> DirectionRegister(
+            @Field("op") String operation,
+            @Field("param_process") String param_process,
+            @Field("direccion") String direccion,
+            @Field("piso") String piso,
+            @Field("referencia") String referencia,
+            @Field("lat") String lat,
+            @Field("lng") String lng,
+            @Field("iddistrito") String iddistrito,
+            @Field("idcliente") String idcliente
+    );
+
 
     /**************************** RELACINATED TO GENEROS ********************************/
 

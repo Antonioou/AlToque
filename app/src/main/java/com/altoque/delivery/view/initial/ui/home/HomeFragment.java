@@ -55,9 +55,6 @@ public class HomeFragment extends Fragment {
 
         setUserName();
 
-        Toast.makeText(requireContext(), ""+SessionSP.get(requireContext()).getStateLogin(), Toast.LENGTH_SHORT).show();
-
-
         return root;
     }
 

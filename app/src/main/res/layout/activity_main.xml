@@ -10,8 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:transitionName="go_main_transition">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_sectionlogo_main"
@@ -20,10 +19,8 @@
             android:background="@color/colorWhite"
             android:backgroundTint="#841194"
             android:elevation="0dp"
-
             android:orientation="vertical"
             android:transitionName="go_login_transition"
-
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

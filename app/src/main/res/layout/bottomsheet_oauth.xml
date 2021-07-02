@@ -43,6 +43,7 @@
                     android:src="@drawable/ic_baseline_arrow_back_ios_24"
                     app:backgroundTint="@color/colorWhite"
                     app:fabSize="mini"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -159,6 +160,7 @@
                     android:transitionName="go_init_transition"
                     android:textAllCaps="false"
                     app:cornerRadius="10dp"
+                    android:textColor="@color/colorWhite"
                     app:backgroundTint="@color/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

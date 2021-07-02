@@ -1,8 +1,10 @@
-package com.altoque.delivery.view.OAuth;
+package com.altoque.delivery.view.oauth;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,9 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.altoque.delivery.MainActivity;
@@ -27,8 +27,8 @@ import com.altoque.delivery.data.SessionSP;
 import com.altoque.delivery.databinding.ActivityRegisterBinding;
 import com.altoque.delivery.model.CustomerModel;
 import com.altoque.delivery.model.GeneroModel;
+import com.altoque.delivery.view.direction.DirectionClientActivity;
 import com.altoque.delivery.view.initial.InitialActivity;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -128,11 +128,11 @@ public class RegisterActivity extends AppCompatActivity {
                         idgeneroList.removeAll(idgeneroList);
                     }
                     //Log.e("Reg_error", "Success " + response.body().toString());
-                    if (response.body().get(0).getResultado().equals("0")) {
+                    if (response.body().get(0).getCode_server().equals("010")) {
 
-                        Toast.makeText(RegisterActivity.this, "Sin datos", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Hubo un problema al cargar los datos.", Toast.LENGTH_SHORT).show();
 
-                    } else if (response.body().get(0).getResultado().equals("1")) {
+                    } else if (response.body().get(0).getCode_server().equals("221")) {
 
                         til_genero.setEnabled(true);
 
@@ -153,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             }
                         });
-                    }else{
+                    } else {
                         Toast.makeText(RegisterActivity.this, "Error al cargar los datos.", Toast.LENGTH_SHORT).show();
                     }
 
@@ -169,25 +169,25 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    private void validateInput(){
-        if (!guid.isEmpty()){
+    private void validateInput() {
+        if (!guid.isEmpty()) {
             String name = til_name.getEditText().getText().toString();
             String lname = til_lastname.getEditText().getText().toString();
 
-            if (name.isEmpty()){
+            if (name.isEmpty()) {
                 til_name.setError("Ingrese su Nombre");
                 return;
-            }else if (lname.isEmpty()){
+            } else if (lname.isEmpty()) {
                 til_lastname.setError("Ingrese su Apellido");
                 til_name.setError(null);
                 til_genero.setError(null);
                 return;
-            }else if (posGenero.isEmpty()){
+            } else if (posGenero.isEmpty()) {
                 til_genero.setError("Seleccione su genero");
                 til_name.setError(null);
                 til_lastname.setError(null);
                 return;
-            }else{
+            } else {
                 til_name.setError(null);
                 til_lastname.setError(null);
                 til_genero.setError(null);
@@ -198,46 +198,67 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void registerCustomer(String name, String lname){
+    private void registerCustomer(String name, String lname) {
 
-
+        til_genero.setEnabled(false);
 
         String token = "111";
-        String phone = "114123";
+        String phone = "";
         String photo = "foto.img";
 
+        if (!SessionSP.get(RegisterActivity.this).getPhoneSessSp().isEmpty()) {
+            phone = SessionSP.get(RegisterActivity.this).getPhoneSessSp();
+        } else {
+            Toast.makeText(this, "No se cargo el Número de celular", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         CustomerModel c = new CustomerModel();
+
         c.setNombrecli(name);
         c.setApellidos_cli(lname);
         c.setCel_cli(phone);
         c.setCodigoUID_cli(guid);
         c.setFoto_cli(photo);
 
-        Call <List<CustomerModel>> call = apiInterface.
-                ClientRegister("insert_select_user","1", "2",
-                guid, phone, name, lname, photo, posGenero, token);
+        Call<List<CustomerModel>> call = apiInterface.
+                ClientRegister("insert_select_user", "1", "2",
+                        guid, phone, name, lname, photo, posGenero, token);
         ApiHelper.enqueueWithRetry(call, new Callback<List<CustomerModel>>() {
             @Override
             public void onResponse(Call<List<CustomerModel>> call, Response<List<CustomerModel>> response) {
 
-                if (response.isSuccessful()){
-                    Log.e("Register_error", "error body: "+response.body());
-                    if (response.body().get(0).getResultado().equals("1")){
+                if (response.isSuccessful()) {
+                    Log.e("Register_error", "uid: "+guid+"\nbody: "+response.body());
+                    if (response.body().get(0).getCode_server().equals("221")) {
                         pb_load.setVisibility(View.GONE);
                         btn_next.setEnabled(true);
+                        til_genero.setEnabled(true);
 
-
+                        c.setIdcliente(response.body().get(0).getIdcliente());
                         SessionSP.get(RegisterActivity.this).saveDataCustomer(c);
-                        SessionSP.get(RegisterActivity.this).saveStateLogin("yes");
+                        SessionSP.get(RegisterActivity.this).saveStateLogin("dirclient");
 
+                        final ConstraintLayout cl_sectionreg_register = findViewById(R.id.cl_sectionreg_register);
 
-                        startActivity(new Intent(RegisterActivity.this, InitialActivity.class));
+                        Intent intent = new Intent(RegisterActivity.this, DirectionClientActivity.class);
+                        /*ActivityOptions options = ActivityOptions
+                                .makeSceneTransitionAnimation(RegisterActivity.this,
+                                        cl_sectionreg_register,
+                                        "go_dirclient_transition");
+                        startActivity(intent, options.toBundle());*/
+                        startActivity(intent);
                         finish();
+                    } else if (response.body().get(0).getCode_server().equals("010")) {
+                        til_genero.setEnabled(true);
+                    } else if (response.body().get(0).getCode_server().equals("110")) {
+                        Toast.makeText(RegisterActivity.this, "Error de parametros. Intente mas tarde.", Toast.LENGTH_LONG).show();
                     }
 
-                }else{
+                } else {
                     pb_load.setVisibility(View.GONE);
                     btn_next.setEnabled(true);
+                    til_genero.setEnabled(true);
                     Toast.makeText(RegisterActivity.this, "No se logró registrar.", Toast.LENGTH_SHORT).show();
                 }
 
@@ -247,7 +268,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onFailure(Call<List<CustomerModel>> call, Throwable t) {
                 pb_load.setVisibility(View.GONE);
                 btn_next.setEnabled(true);
-                Log.e("Register_error", "error: "+t.getMessage().toString());
+                Log.e("Register_error", "error: " + t.getMessage().toString());
             }
         });
     }
@@ -255,10 +276,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        /*if (keyCode == KeyEvent.KEYCODE_BACK) {
             Toast.makeText(this, "Por favor finalice su registro.", Toast.LENGTH_SHORT).show();
             return false;
-        }
+        }*/
         return super.onKeyDown(keyCode, event);
     }
 

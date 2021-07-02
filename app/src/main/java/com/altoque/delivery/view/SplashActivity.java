@@ -1,19 +1,14 @@
 package com.altoque.delivery.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +17,9 @@ import com.altoque.delivery.R;
 import com.altoque.delivery.data.SessionSP;
 import com.altoque.delivery.utils.ConnectivityReceiver;
 import com.altoque.delivery.utils.initClass;
-import com.altoque.delivery.view.OAuth.OAuthActivity;
-import com.altoque.delivery.view.OAuth.RegisterActivity;
+import com.altoque.delivery.view.direction.DirectionClientActivity;
+import com.altoque.delivery.view.oauth.RegisterActivity;
 import com.altoque.delivery.view.initial.InitialActivity;
-
-import static android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
 
 public class SplashActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReciverListener {
 
@@ -78,6 +71,8 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
             startActivity(new Intent(SplashActivity.this, InitialActivity.class));
         }else if (SessionSP.get(SplashActivity.this).getStateLogin().equals("register")) {
             startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
+        }else if (SessionSP.get(SplashActivity.this).getStateLogin().equals("dirclient")) {
+            startActivity(new Intent(SplashActivity.this, DirectionClientActivity.class));
         }
         else {
             //final ImageView iv_logo = findViewById(R.id.iv_logo_splash);

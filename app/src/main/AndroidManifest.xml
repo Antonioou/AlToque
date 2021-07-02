@@ -17,6 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AlToque">
+        <activity android:name=".view.direction.DirectionClientActivity"
+            android:hardwareAccelerated="true"
+            android:theme="@style/Theme.AlToque.NoActionBar">
+
+        </activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -24,28 +29,29 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCYmReOyJ0fUiSvtP8lTeBJNdTnb1n9AGI" />
+            android:value="AIzaSyBsDmVESc0AhiWzK1Ae1ETvaYpZNmGkE54" />
 
         <activity
             android:name=".view.initial.InitialActivity"
             android:label="@string/title_activity_initial" />
         <activity
-            android:name=".view.OAuth.OAuthActivity"
+            android:name=".view.oauth.OAuthActivity"
             android:theme="@style/Theme.AlToque.NoActionBar" />
         <activity
             android:name=".view.SplashActivity"
             android:theme="@style/Theme.AlToque.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.OAuth.RegisterActivity"
+            android:name=".view.oauth.RegisterActivity"
             android:theme="@style/Theme.AlToque.NoActionBar" />
-
         <activity
             android:name=".MainActivity"
+            android:hardwareAccelerated="true"
             android:theme="@style/Theme.AlToque.NoActionBar" />
     </application>
 
