@@ -4,6 +4,7 @@ import com.altoque.delivery.model.CustomerModel;
 import com.altoque.delivery.model.DomicilioModel;
 import com.altoque.delivery.model.GeneroModel;
 import com.altoque.delivery.model.JoinResponseModel;
+import com.altoque.delivery.model.NegocioModel;
 
 import java.util.List;
 
@@ -60,9 +61,18 @@ public interface ApiInterface {
             @Field("referencia") String referencia,
             @Field("lat") String lat,
             @Field("lng") String lng,
-            @Field("iddistrito") String iddistrito,
+            //@Field("iddistrito") String iddistrito,
             @Field("idcliente") String idcliente
     );
+
+    @FormUrlEncoded
+    @POST("controller/rdomicilio.php")
+    Call<List<DomicilioModel>> getDataDirection(
+            @Field("op") String operation,
+            @Field("param_process") String param_process,
+            @Field("idcliente") String idcliente
+    );
+
 
 
     /**************************** RELACINATED TO GENEROS ********************************/
@@ -71,5 +81,14 @@ public interface ApiInterface {
     @POST("controller/rgenero.php")
     Call<List<GeneroModel>> getGenero(
             @Field("op") String operation
+    );
+
+    /**************************** RELACINATED TO BUSINESS ********************************/
+
+    @FormUrlEncoded
+    @POST("controller/rnegocio.php")
+    Call<List<NegocioModel>> getBusinessListByProv(
+            @Field("op") String operation,
+            @Field("idprovincia") String idprovincia
     );
 }

@@ -118,7 +118,7 @@
             android:inputType="text"
             android:maxLines="1"
             android:padding="@dimen/dp_10"
-            app:layout_constraintBottom_toTopOf="@id/et_distrito_dirclient"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -132,6 +132,7 @@
             android:drawablePadding="@dimen/dp_5"
             android:fontFamily="@font/productsansregular"
             android:hint="Distrito"
+            android:visibility="gone"
             android:inputType="none"
             android:maxLines="1"
             android:padding="@dimen/dp_10"
