@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_oauth"
+    app:startDestination="@id/OAuthInitialFragment">
+
+
+    <fragment
+        android:id="@+id/OAuthInitialFragment"
+        android:name="com.altoque.delivery.view.oauth.OAuthInitialFragment"
+        android:label="OAuthInitialFragment"
+        tools:layout="@layout/fragment_oauth_initial">
+        <action
+            android:id="@+id/action_OAuthInitialFragment_to_OAuthVerifyFragment"
+            app:destination="@id/OAuthVerifyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/OAuthVerifyFragment"
+        android:name="com.altoque.delivery.view.oauth.OAuthVerifyFragment"
+        android:label="OAuthVerifyFragment"
+        tools:layout="@layout/fragment_oauth_verify"/>
+</navigation>

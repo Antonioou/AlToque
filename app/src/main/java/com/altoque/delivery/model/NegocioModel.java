@@ -87,6 +87,8 @@ public class NegocioModel {
     private String codigotel;
     @SerializedName("estado_pais")
     private String estado_pais;
+    @SerializedName("rating")
+    private String rating;
 
     // Getter Methods
 
@@ -139,12 +141,22 @@ public class NegocioModel {
                 ", codigopais='" + codigopais + '\'' +
                 ", codigotel='" + codigotel + '\'' +
                 ", estado_pais='" + estado_pais + '\'' +
+                ", rating='" + rating + '\'' +
                 '}';
     }
 
-    public NegocioModel(String code_server, String res_server, String msg_server, String status, String idnegocio, String rsocial_neg, String ruc_neg, String celular_neg, String correo_neg, String clave_neg, String foto_neg, String ainicio_neg, String acierre_neg, String activo_neg, String online_neg, String estado_neg, String dir_fiscal_neg, String lat_neg, String long_neg, String isban, String idrubro, String idtarifario, String iddistrito, String nom_rubro, String foto_rubro, String estado_rubro, String costo_envio, String distancia_envio, String estado_envio, String nombre_distrito, String idprovincia, String iddepartamento, String estado_distrito, String nombre_prov, String estado_prov, String nombre_dep, String estado_dep, String idpais, String nombre_pais, String codigopais, String codigotel, String estado_pais) {
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public NegocioModel(String code_server, String res_server, String msg_server, String status, String idnegocio, String rsocial_neg, String ruc_neg, String celular_neg, String correo_neg, String clave_neg, String foto_neg, String ainicio_neg, String acierre_neg, String activo_neg, String online_neg, String estado_neg, String dir_fiscal_neg, String lat_neg, String long_neg, String isban, String idrubro, String idtarifario, String iddistrito, String nom_rubro, String foto_rubro, String estado_rubro, String costo_envio, String distancia_envio, String estado_envio, String nombre_distrito, String idprovincia, String iddepartamento, String estado_distrito, String nombre_prov, String estado_prov, String nombre_dep, String estado_dep, String idpais, String nombre_pais, String codigopais, String codigotel, String estado_pais, String rating) {
         this.code_server = code_server;
-        this.res_server = res_server;
+       this.res_server = res_server;
         this.msg_server = msg_server;
         this.status = status;
         this.idnegocio = idnegocio;
@@ -185,6 +197,7 @@ public class NegocioModel {
         this.codigopais = codigopais;
         this.codigotel = codigotel;
         this.estado_pais = estado_pais;
+        this.rating = rating;
     }
 
     public String getCode_server() {

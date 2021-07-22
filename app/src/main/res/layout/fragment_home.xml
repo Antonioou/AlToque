@@ -126,10 +126,12 @@
         </com.google.android.material.card.MaterialCardView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_BusinessBySugg"
+            android:id="@+id/rv_BusinessByRate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/title_store"
             app:layout_constraintTop_toBottomOf="@id/cv_directionuser_home" />
 
@@ -145,9 +147,7 @@
             android:textSize="22sp"
             app:layout_constraintEnd_toStartOf="@id/fab_filterstore_home"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_BusinessBySugg" />
-
-
+            app:layout_constraintTop_toBottomOf="@id/rv_BusinessByRate" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_filterstore_home"

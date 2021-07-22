@@ -238,9 +238,9 @@ public class OAuthBottomSheet extends BottomSheetDialogFragment {
                         pb_tstep.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Log.e("LogUser", "" + user.getUid().toString());
+                            //Log.e("LogUser", "" + user.getUid().toString());
 
-                            showToast(user.getUid().toString());
+                            //showToast(user.getUid().toString());
                             //SessionSP.get(requireContext()).saveStateLogin("yes");
                             pinView.setLineColor(Color.GREEN);
                             startActivity(new Intent(requireContext(), InitialActivity.class));
@@ -251,7 +251,7 @@ public class OAuthBottomSheet extends BottomSheetDialogFragment {
                             btn_next_tstep.setEnabled(true);
                             pinView.setEnabled(true);
 
-                            Toast.makeText(requireContext(), "Codigo  OC FAIL", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "No se logró ingresar.", Toast.LENGTH_SHORT).show();
                             Toast.makeText(requireContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
 

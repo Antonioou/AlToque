@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.altoque.delivery.view.direction.DirectionClientActivity;
 import com.altoque.delivery.view.oauth.OAuthActivity;
+import com.altoque.delivery.view.oauth.OAuthMainActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         feb_next_fstep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, OAuthActivity.class);
+                Intent intent = new Intent(MainActivity.this, OAuthMainActivity.class);
                 ActivityOptions options = ActivityOptions
                         .makeSceneTransitionAnimation(MainActivity.this,
                                 cl_sectionlogo,
@@ -246,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                             location.getLongitude(),
                             1);
                     String dir = String.valueOf(list.get(0));
-                    //Log.e(TAG, "direcc " + dir);
+                    Log.e(TAG, "direcc " + dir);
                     //Toast.makeText(this, ""+dir, Toast.LENGTH_LONG).show();
 
 

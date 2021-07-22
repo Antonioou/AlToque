@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_section_item_direction_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:selectableItemBackground"
+        android:visibility="visible"
+        app:cardCornerRadius="@dimen/dp_15"
+        app:cardElevation="2dp"
+        app:contentPadding="@dimen/dp_5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_section_one"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_setuse_item_direction_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:src="@drawable/ic_baseline_where_to_vote_24"
+                    app:backgroundTint="@color/colorWhite"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:layout_constraintBottom_toTopOf="@id/fab_view_item_direction_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_view_item_direction_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:src="@drawable/ic_baseline_map_24"
+                    app:backgroundTint="@color/colorWhite"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:layout_constraintBottom_toTopOf="@id/fab_edit_item_direction_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fab_setuse_item_direction_list"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_edit_item_direction_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:src="@drawable/ic_outline_edit_location_alt_24"
+                    app:backgroundTint="@color/colorWhite"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:layout_constraintBottom_toTopOf="@id/fab_delete_item_direction_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fab_view_item_direction_list" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_delete_item_direction_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:src="@drawable/ic_baseline_delete_outline_24"
+                    app:backgroundTint="@color/colorWhite"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fab_edit_item_direction_list" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/title1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:fontFamily="@font/latoregular"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:text="Dirección"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="14sp"
+                    app:drawableStartCompat="@drawable/ic_outline_location_on_24"
+                    app:drawableTint="#F9A825"
+                    app:layout_constraintBottom_toTopOf="@id/tv_name_item_direction_list"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_name_item_direction_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/latoregular"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_15"
+
+                    android:paddingEnd="@dimen/dp_10"
+                    android:text="-"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@id/view_divider1"
+                    app:layout_constraintTop_toBottomOf="@id/title1" />
+
+                <View
+                    android:id="@+id/view_divider1"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="@dimen/dp_10"
+                    android:background="@color/colorGrey"
+                    app:layout_constraintBottom_toTopOf="@id/title2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_name_item_direction_list" />
+
+                <TextView
+                    android:id="@+id/title2"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:fontFamily="@font/latoregular"
+
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_5"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:text="Referencia"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="14sp"
+                    app:drawableStartCompat="@drawable/ic_outline_directions_24"
+                    app:drawableTint="#F9A825"
+                    app:layout_constraintBottom_toTopOf="@id/tv_reference_item_direction_list"
+
+                    app:layout_constraintTop_toBottomOf="@id/view_divider1" />
+
+                <TextView
+                    android:id="@+id/tv_reference_item_direction_list"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/latoregular"
+
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_15"
+
+                    android:paddingEnd="@dimen/dp_10"
+
+                    android:text="-"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@id/view_divider2"
+
+                    app:layout_constraintTop_toBottomOf="@id/title2" />
+
+                <View
+                    android:id="@+id/view_divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="@dimen/dp_10"
+                    android:background="@color/colorGrey"
+                    app:layout_constraintBottom_toTopOf="@id/title3"
+
+                    app:layout_constraintTop_toBottomOf="@id/tv_reference_item_direction_list" />
+
+                <TextView
+                    android:id="@+id/title3"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:fontFamily="@font/latoregular"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_5"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:text="Número de piso"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="14sp"
+                    app:drawableStartCompat="@drawable/ic_baseline_location_city_24"
+                    app:drawableTint="#F9A825"
+                    app:layout_constraintBottom_toTopOf="@id/tv_numberfloat_item_direction_list"
+                    app:layout_constraintTop_toBottomOf="@id/view_divider2" />
+
+                <TextView
+                    android:id="@+id/tv_numberfloat_item_direction_list"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/latoregular"
+
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_10"
+
+                    android:text="-"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title3" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,13 +18,11 @@ import androidx.navigation.ui.NavigationUI;
 
 public class InitialActivity extends AppCompatActivity {
 
-    private ActivityInitialBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityInitialBinding.inflate(getLayoutInflater());
+        ActivityInitialBinding binding = ActivityInitialBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         getSupportActionBar().hide();
@@ -38,6 +36,7 @@ public class InitialActivity extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_initial);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_initial);
+        assert navHostFragment != null;
         KeepStateNavigator navigator = new KeepStateNavigator(this, navHostFragment.getChildFragmentManager(), R.id.nav_host_fragment_activity_initial);
         navController.getNavigatorProvider().addNavigator(navigator);
         navController.setGraph(R.navigation.mobile_navigation);

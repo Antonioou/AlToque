@@ -419,6 +419,7 @@ public class OAuthActivity extends AppCompatActivity {
         SessionSP.get(OAuthActivity.this).saveStateLogin("register");
         SessionSP.get(OAuthActivity.this).setPhoneSessSp(et_ncel.getText().toString().trim());
         Intent intent = new Intent(OAuthActivity.this, RegisterActivity.class);
+
         startActivity(intent);
         finishAffinity();
     }

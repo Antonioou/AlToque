@@ -13,14 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.altoque.delivery.R;
 import com.altoque.delivery.model.NegocioModel;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class BusinessStyleOneAdapter extends RecyclerView.Adapter<BusinessStyleOneAdapter.ViewHolder>
+public class BusinessStyleTwoAdapter extends RecyclerView.Adapter<BusinessStyleTwoAdapter.ViewHolder>
         implements View.OnClickListener {
 
     List<NegocioModel> list;
@@ -29,47 +26,47 @@ public class BusinessStyleOneAdapter extends RecyclerView.Adapter<BusinessStyleO
 
     int pos;
 
-    public BusinessStyleOneAdapter(List<NegocioModel> list) {
+    private final float mShrinkAmount = 0.15f;
+    private final float mShrinkDistance = 0.9f;
+
+    public BusinessStyleTwoAdapter(List<NegocioModel> list) {
         this.list = list;
     }
 
-    public BusinessStyleOneAdapter(Context context) {
+    public BusinessStyleTwoAdapter(Context context) {
         this.context = context;
     }
 
-    @NotNull
     @Override
-    public BusinessStyleOneAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BusinessStyleTwoAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
         View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.item_list_business_style_one, null, false);
+                inflate(R.layout.item_list_business_style_two, null, false);
         view.setOnClickListener(this);
         context = parent.getContext();
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BusinessStyleOneAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BusinessStyleTwoAdapter.ViewHolder holder, int position) {
 
-        pos = position;
+        pos = position % list.size();
 
         //name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 
-        String name = list.get(position).getRsocial_neg();
+        String name = list.get(pos).getRsocial_neg();
         holder.name.setText(name);
-        String direction = list.get(position).getDir_fiscal_neg();
+        String direction = list.get(pos).getDir_fiscal_neg();
         holder.direction.setText(direction);
-        String cost = list.get(position).getCosto_envio();
+        String cost = list.get(pos).getCosto_envio();
         holder.cost.setText(cost);
         String rate = list.get(position).getRating();
         holder.rate.setText(rate);
-        /*String name = list.get(position).getRsocial_neg();
-        holder.name.setText(name);*/
 
         try {
-            if (list.get(position).getFoto_neg() != null) {
-                String url = String.valueOf(list.get(position).getFoto_neg());
+            if (list.get(pos).getFoto_neg() != null) {
+                String url = String.valueOf(list.get(pos).getFoto_neg());
 
                 Picasso.get().load(url)
                         .placeholder(R.drawable.second_image)
@@ -82,7 +79,7 @@ public class BusinessStyleOneAdapter extends RecyclerView.Adapter<BusinessStyleO
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list == null ? 0 : list.size() * 2;
     }
 
     public void setOnClickListener(View.OnClickListener listener) {
@@ -96,18 +93,20 @@ public class BusinessStyleOneAdapter extends RecyclerView.Adapter<BusinessStyleO
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, cost, direction, rate;
         ImageView url;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.tv_name__business_style_one);
-            url = itemView.findViewById(R.id.iv_photo_business_style_one);
-            cost = itemView.findViewById(R.id.tv_cost__business_style_one);
-            rate = itemView.findViewById(R.id.tv_rate_business_style_one);
-            direction = itemView.findViewById(R.id.tv_direction__business_style_one);
+            name = itemView.findViewById(R.id.tv_name__business_style_two);
+            url = itemView.findViewById(R.id.iv_photo_business_style_two);
+            cost = itemView.findViewById(R.id.tv_cost__business_style_two);
+            direction = itemView.findViewById(R.id.tv_direction_business_style_two);
+            rate = itemView.findViewById(R.id.tv_rate_business_style_two);
         }
     }
 }

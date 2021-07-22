@@ -1,13 +1,19 @@
 package com.altoque.delivery.view.oauth;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,12 +35,28 @@ import com.altoque.delivery.model.CustomerModel;
 import com.altoque.delivery.model.GeneroModel;
 import com.altoque.delivery.view.direction.DirectionClientActivity;
 import com.altoque.delivery.view.initial.InitialActivity;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,6 +75,23 @@ public class RegisterActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
+    /**
+     * FOTO
+     **/
+    CircularImageView civ_picprofile;
+    MaterialButton btn_setphoto;
+
+    private StorageReference mStorageRef;
+    Uri selectedImage;
+    private static final int REQUEST_TAKE_GALLERY_PHOTO = 2;
+    StorageReference firebaseRef;
+
+    ProgressBar pb_uploadfoto;
+
+    String imageURL = "";
+    String keyProd = "";
+    String keyNode = "";
+
     /* genero */
     List<String> idgeneroList;
     List<String> namegeneroList;
@@ -66,17 +105,23 @@ public class RegisterActivity extends AppCompatActivity {
         til_name = findViewById(R.id.til_firstname_register);
         til_lastname = findViewById(R.id.til_lastname_register);
         til_genero = findViewById(R.id.til_genero_register);
-        til_genero.setEnabled(false);
-
 
         pb_load = findViewById(R.id.pb_load_register);
+        pb_uploadfoto = binding.pbUploadfotoRegister;
 
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        civ_picprofile = binding.civPicprofileRegister;
+        btn_setphoto = binding.btnSetphotoRegister;
+
+
     }
 
     private void initResources() {
         idgeneroList = new ArrayList<>();
         namegeneroList = new ArrayList<>();
+        til_genero.setEnabled(false);
+
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
     }
 
 
@@ -106,6 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+        assert user != null;
         guid = user.getUid().toString();
 
         //Toast.makeText(this, ""+guid, Toast.LENGTH_SHORT).show();
@@ -128,6 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
                         idgeneroList.removeAll(idgeneroList);
                     }
                     //Log.e("Reg_error", "Success " + response.body().toString());
+                    assert response.body() != null;
                     if (response.body().get(0).getCode_server().equals("010")) {
 
                         Toast.makeText(RegisterActivity.this, "Hubo un problema al cargar los datos.", Toast.LENGTH_SHORT).show();
@@ -162,21 +209,130 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<GeneroModel>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<GeneroModel>> call, Throwable t) {
                 Log.e("Reg_error", "Fail " + t.getMessage());
             }
         });
     }
 
 
+    public void openGallery(View view) {
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)
+                && !Environment.getExternalStorageState().equals(
+                Environment.MEDIA_CHECKING)) {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent, 2);
+        } else {
+            Toast.makeText(RegisterActivity.this, "Galeria no encontrada.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 2) {
+                Bitmap originBitmap = null;
+                selectedImage = data.getData();
+                InputStream imageStream;
+                try {
+                    //pbbar.setVisibility(View.VISIBLE);
+                    imageStream = getContentResolver().openInputStream(selectedImage);
+                    originBitmap = BitmapFactory.decodeStream(imageStream);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                if (originBitmap != null) {
+                    {
+                        this.civ_picprofile.setImageBitmap(originBitmap);
+
+                    }
+                } else
+                    selectedImage = null;
+            }
+
+        }
+    }
+
+    public String GetDate() {
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("MMddHHmm");
+        return df.format(Calendar.getInstance().getTime());
+    }
+
+    public void UploadImages() {
+        try {
+            pb_uploadfoto.setVisibility(View.VISIBLE);
+            btn_setphoto.setEnabled(false);
+            til_genero.setEnabled(false);
+
+            btn_next.setEnabled(false);
+
+            String strFileName = "picprof" + til_name.getEditText().getText().toString() + "-" + GetDate() + ".jpg";
+
+            Uri file = null;
+            file = selectedImage;
+
+            if (file != null) {
+
+                firebaseRef = mStorageRef.child("assets" + "/" + "profile" + "/" + "customer" + "/" + strFileName);
+
+                UploadTask uploadTask = firebaseRef.putFile(file);
+                Log.e("Fire Path", firebaseRef.toString());
+                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw Objects.requireNonNull(task.getException());
+                        }
+                        return firebaseRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        pb_uploadfoto.setVisibility(View.GONE);
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            selectedImage = null;
+                            imageURL = downloadUri.toString();
+                            String name = til_name.getEditText().getText().toString();
+                            String lname = Objects.requireNonNull(til_lastname.getEditText()).getText().toString();
+                            registerCustomer(name, lname, imageURL);
+
+                        } else {
+                            //simpleProgressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(RegisterActivity.this, "No se logró subir la foto."
+                                    , Toast.LENGTH_LONG).show();
+                            pb_load.setVisibility(View.GONE);
+                            btn_next.setEnabled(true);
+                            btn_setphoto.setEnabled(true);
+                            til_genero.setEnabled(true);
+                        }
+                    }
+                });
+            } else {
+                Toast.makeText(this, "Por favor seleccione una imagen.", Toast.LENGTH_SHORT).show();
+
+                pb_uploadfoto.setVisibility(View.GONE);
+                pb_load.setVisibility(View.GONE);
+            }
+        } catch (Exception ex) {
+            Toast.makeText(RegisterActivity.this, ex.getMessage().toString(), Toast.LENGTH_LONG).show();
+            pb_uploadfoto.setVisibility(View.GONE);
+        }
+
+
+    }
+
     private void validateInput() {
         if (!guid.isEmpty()) {
             String name = til_name.getEditText().getText().toString();
             String lname = til_lastname.getEditText().getText().toString();
-
             if (name.isEmpty()) {
                 til_name.setError("Ingrese su Nombre");
-                return;
+
             } else if (lname.isEmpty()) {
                 til_lastname.setError("Ingrese su Apellido");
                 til_name.setError(null);
@@ -191,20 +347,18 @@ public class RegisterActivity extends AppCompatActivity {
                 til_name.setError(null);
                 til_lastname.setError(null);
                 til_genero.setError(null);
-                registerCustomer(name, lname);
+                UploadImages();
+
                 pb_load.setVisibility(View.VISIBLE);
                 btn_next.setEnabled(false);
             }
         }
     }
 
-    private void registerCustomer(String name, String lname) {
-
-        til_genero.setEnabled(false);
+    private void registerCustomer(String name, String lname, String photo) {
 
         String token = "111";
         String phone = "";
-        String photo = "foto.img";
 
         if (!SessionSP.get(RegisterActivity.this).getPhoneSessSp().isEmpty()) {
             phone = SessionSP.get(RegisterActivity.this).getPhoneSessSp();
@@ -226,33 +380,42 @@ public class RegisterActivity extends AppCompatActivity {
                         guid, phone, name, lname, photo, posGenero, token);
         ApiHelper.enqueueWithRetry(call, new Callback<List<CustomerModel>>() {
             @Override
-            public void onResponse(Call<List<CustomerModel>> call, Response<List<CustomerModel>> response) {
+            public void onResponse(@NotNull Call<List<CustomerModel>> call, @NotNull Response<List<CustomerModel>> response) {
 
                 if (response.isSuccessful()) {
-                    Log.e("Register_error", "uid: "+guid+"\nbody: "+response.body());
-                    if (response.body().get(0).getCode_server().equals("221")) {
-                        pb_load.setVisibility(View.GONE);
-                        btn_next.setEnabled(true);
-                        til_genero.setEnabled(true);
+                    //Log.e("Register_error", "uid: "+guid+"\nbody: "+response.body());
+                    assert response.body() != null;
+                    switch (response.body().get(0).getCode_server()) {
+                        case "221":
+                            pb_load.setVisibility(View.GONE);
+                            btn_next.setEnabled(true);
+                            til_genero.setEnabled(true);
 
-                        c.setIdcliente(response.body().get(0).getIdcliente());
-                        SessionSP.get(RegisterActivity.this).saveDataCustomer(c);
-                        SessionSP.get(RegisterActivity.this).saveStateLogin("dirclient");
+                            c.setIdcliente(response.body().get(0).getIdcliente());
+                            SessionSP.get(RegisterActivity.this).saveDataCustomer(c);
+                            SessionSP.get(RegisterActivity.this).saveStateLogin("dirclient");
 
-                        final ConstraintLayout cl_sectionreg_register = findViewById(R.id.cl_sectionreg_register);
+                            final ConstraintLayout cl_sectionreg_register = findViewById(R.id.cl_sectionreg_register);
 
-                        Intent intent = new Intent(RegisterActivity.this, DirectionClientActivity.class);
+                            Intent intent = new Intent(RegisterActivity.this, DirectionClientActivity.class);
                         /*ActivityOptions options = ActivityOptions
                                 .makeSceneTransitionAnimation(RegisterActivity.this,
                                         cl_sectionreg_register,
                                         "go_dirclient_transition");
                         startActivity(intent, options.toBundle());*/
-                        startActivity(intent);
-                        finish();
-                    } else if (response.body().get(0).getCode_server().equals("010")) {
-                        til_genero.setEnabled(true);
-                    } else if (response.body().get(0).getCode_server().equals("110")) {
-                        Toast.makeText(RegisterActivity.this, "Error de parametros. Intente mas tarde.", Toast.LENGTH_LONG).show();
+                            intent.putExtra("action", "register_data");
+                            intent.putExtra("state_use", "1");
+                            startActivity(intent);
+                            finish();
+                            break;
+                        case "010":
+                            til_genero.setEnabled(true);
+                            btn_next.setEnabled(true);
+                            pb_load.setVisibility(View.GONE);
+                            break;
+                        case "110":
+                            Toast.makeText(RegisterActivity.this, "Error de parametros. Intente mas tarde.", Toast.LENGTH_LONG).show();
+                            break;
                     }
 
                 } else {
@@ -265,7 +428,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<CustomerModel>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<CustomerModel>> call, @NotNull Throwable t) {
                 pb_load.setVisibility(View.GONE);
                 btn_next.setEnabled(true);
                 Log.e("Register_error", "error: " + t.getMessage().toString());
@@ -276,10 +439,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        /*if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             Toast.makeText(this, "Por favor finalice su registro.", Toast.LENGTH_SHORT).show();
             return false;
-        }*/
+        }
         return super.onKeyDown(keyCode, event);
     }
 

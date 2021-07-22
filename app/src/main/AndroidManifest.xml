@@ -17,11 +17,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AlToque">
-        <activity android:name=".view.direction.DirectionClientActivity"
+        <activity android:name=".view.oauth.OAuthMainActivity"
+            android:theme="@style/Theme.AlToque.NoActionBar"></activity>
+        <activity
+            android:name=".view.direction.DirectionStaticActivity"
             android:hardwareAccelerated="true"
-            android:theme="@style/Theme.AlToque.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.AlToque.NoActionBar" />
+        <activity
+            android:name=".view.direction.DirectionClientActivity"
+            android:hardwareAccelerated="true"
+            android:theme="@style/Theme.AlToque.NoActionBar" />
 
         <uses-library
             android:name="org.apache.http.legacy"

@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -63,6 +64,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,9 +72,13 @@ import retrofit2.Response;
 
 public class DirectionClientActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    ExtendedFloatingActionButton feb_next;
+    ExtendedFloatingActionButton feb_next, feb_update;
     EditText et_name, et_reference, et_numberflat;
     //, et_distrito;
+
+    String value_action = "";
+    String value_iddom = "";
+    String value_use = "";
 
 
     private FirebaseAuth mAuth;
@@ -82,9 +88,13 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
     private Marker globalMarker;
     private double globalLat = 0.0;
     private double globalLng = 0.0;
+    private Marker globalMarkerOld;
+    private double globalLatOld = 0.0;
+    private double globalLngOld = 0.0;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private SupportMapFragment mapFragment;
     LatLng globalCoords;
+    LatLng globalCoordsOld;
 
     AlertDialog mat;
 
@@ -93,6 +103,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
     int PERMISSION_ID = 44;
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    Boolean value_state = false;
 
     private void initView() {
 
@@ -102,12 +113,28 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
         //et_distrito = findViewById(R.id.et_distrito_dirclient);
 
         feb_next = findViewById(R.id.feb_next_dirclient);
+        feb_update = findViewById(R.id.feb_update_dirclient);
 
     }
 
     private void eventListener() {
 
-        feb_next.setOnClickListener(v -> validateRegister());
+        feb_next.setOnClickListener(v -> {
+            Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
+            validateRegister();
+        });
+        feb_update.setOnClickListener(v -> {
+            //feb_update.
+            if (value_state) {
+                validateRegister();
+            } else {
+                feb_update.setText("Guardar dirección");
+                value_state = true;
+                et_name.setEnabled(true);
+                et_numberflat.setEnabled(true);
+                et_reference.setEnabled(true);
+            }
+        });
 
     }
 
@@ -129,7 +156,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
         initView();
         initResources();
         eventListener();
-        getLastLocation();
+
     }
 
     @Override
@@ -144,8 +171,44 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
             getWindow()
                     .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
-
         compilateInit();
+
+        if (getIntent().getExtras() != null) {
+            String action = getIntent().getExtras().getString("action");
+            String iddom = getIntent().getExtras().getString("value_id");
+            value_use = getIntent().getExtras().getString("state_use");
+
+            Toast.makeText(this, "" + value_use, Toast.LENGTH_SHORT).show();
+            //Log.e("DirectionClient_log", "intent "+iddom);
+            //Log.e("DirectionClient_log", "action "+action);
+
+            if (!action.isEmpty()) {
+
+                if (action.equals("edit_data")) {
+                    if (!iddom.isEmpty()) {
+                        value_action = action;
+                        value_iddom = iddom;
+                        et_name.setEnabled(false);
+                        et_numberflat.setEnabled(false);
+                        et_reference.setEnabled(false);
+                        feb_update.setVisibility(View.VISIBLE);
+                        TextView tv_dir = findViewById(R.id.tv_directionOld_dirclient);
+                        tv_dir.setVisibility(View.VISIBLE);
+                    } else {
+                        Toast.makeText(this, "No se cargaron los datos correctamente.", Toast.LENGTH_SHORT).show();
+                        mapFragment.onDestroy();
+                        finish();
+                    }
+
+                } else if (action.equals("register_data")) {
+                    value_action = action;
+                    feb_next.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+
+        getLastLocation();
 
 
     }
@@ -160,6 +223,12 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
     protected void onStop() {
         super.onStop();
         mapFragment.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapFragment.onDestroy();
     }
 
     @Override
@@ -181,11 +250,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
-                        Location location = task.getResult();
-                        /*Integer retry = 0;
-                        if (retry == 0) {
-                            if (location == null) {
-                                retry += 1;*/
+
                         requestNewLocationData();
 
                         if (ActivityCompat.checkSelfPermission(DirectionClientActivity.this,
@@ -196,21 +261,23 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                         mMap.setMyLocationEnabled(true);
                         mMap.getUiSettings().setCompassEnabled(false);
 
-                        View locationButton = ((View) mapFragment.getView().findViewById(Integer.parseInt("1")).
+                        View locationButton = ((View) mapFragment.requireView().findViewById(Integer.parseInt("1")).
                                 getParent()).findViewById(Integer.parseInt("2"));
 
                         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
                         rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
                         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
-                        rlp.setMargins(0, 200, 30, 0);
+                        rlp.setMargins(0, 500, 30, 0);
 
-
-                            /*} else {
-                                getNameDirection(location);
-                            }
-                        }*/
                     }
                 });
+                //Log.e("DirectionClient_log", "getlast "+value_action);
+                if (value_action.equals("edit_data")) {
+                    //Log.e("DirectionClient_log", " validete getlast "+value_action);
+                    getDataDefaultDirection(value_iddom);
+                }
+
+
             } else {
                 Toast.makeText(this, "Por favor active su GPS.", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -265,13 +332,11 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
     }
 
-    private LocationCallback mLocationCallback = new LocationCallback() {
+    private final LocationCallback mLocationCallback = new LocationCallback() {
 
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            //Log.e("Dir_error", "Latitude: " + mLastLocation.getLatitude() + "");
-            //Log.e("Dir_error", "Longitude: " + mLastLocation.getLongitude() + "");
 
             globalLat = mLastLocation.getLatitude();
             globalLng = mLastLocation.getLongitude();
@@ -286,17 +351,18 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                             1);
                     String dir = String.valueOf(list.get(0).getAddressLine(0));
 
-                    TextView tv_dir = findViewById(R.id.tv_namedirection_dirclient);
-                    tv_dir.setText(dir);
+                    TextView tv_dir = findViewById(R.id.tv_directionnew_dirclient);
 
-                    Log.e("DirectionClient_log", ""+list.get(0).toString());
+                    tv_dir.setText("Dirección actual: " + dir);
+
+                    //Log.e("DirectionClient_log", ""+list.get(0).toString());
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
 
-            agregarMarcador(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            agregarMarcadorActual(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
         }
     };
@@ -336,15 +402,91 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
         }
     }
 
-    private void agregarMarcador(double lat, double lng) {
+    private void agregarMarcadorActual(double lat, double lng) {
         globalCoords = new LatLng(lat, lng);
 
         if (globalMarker != null) globalMarker.remove();
         globalMarker = mMap.addMarker(new MarkerOptions()
                 .position(globalCoords)
-                .title("MI UBICACIÓN"));
+                .title("Ubicación actual"));
         //.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconomarkusuario)));
         CameraUpdate miU = CameraUpdateFactory.newLatLngZoom(globalCoords, 15);
+        mMap.moveCamera(miU);
+    }
+
+    private void getDataDefaultDirection(String iddomicilio) {
+
+        String idclient = SessionSP.get(this).getIdClientSessSp();
+        try {
+            Call<List<DomicilioModel>> call = apiInterface.
+                    getDataByIdDirection("insert_select_adress", "6", iddomicilio, idclient);
+            ApiHelper.enqueueWithRetry(call, new Callback<List<DomicilioModel>>() {
+                @Override
+                public void onResponse(@NotNull Call<List<DomicilioModel>> call,
+                                       @NotNull Response<List<DomicilioModel>> response) {
+                    //pb_load_direction.setVisibility(View.GONE);
+                    Log.e("DirectionClient_log", "body: " + response.body());
+                    if (response.isSuccessful()) {
+                        assert response.body() != null;
+                        String code = response.body().get(0).getCode_server().toString();
+                        Log.e("DirectionClient_log", "body: " + response.body());
+
+                        if (code.equals("221")) {
+                            String namedir = response.body().get(0).getDireccion_dom().toString();
+                            String ref = response.body().get(0).getReferencia_dom().toString();
+                            String numberf = response.body().get(0).getPiso_dom().toString();
+                            String lat = response.body().get(0).getLat_dom().toString();
+                            String lng = response.body().get(0).getLong_dom().toString();
+
+                            et_name.setText(namedir);
+                            et_reference.setText(ref);
+                            et_numberflat.setText(numberf);
+                            agregarMarcadorGuardado(Double.parseDouble(lat), Double.parseDouble(lng));
+                            getDirectionDefault(Double.parseDouble(lat), Double.parseDouble(lng));
+
+                        } else if (code.equals("010")) {
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<List<DomicilioModel>> call, @NotNull Throwable t) {
+                    //pb_load_direction.setVisibility(View.GONE);
+
+                }
+            });
+        } catch (Exception e) {
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void getDirectionDefault(double lat, double lng) {
+        try {
+
+            Geocoder geocoder = new Geocoder(DirectionClientActivity.this, Locale.getDefault());
+            list = geocoder.getFromLocation(
+                    lat,
+                    lng,
+                    1);
+            String dir = String.valueOf(list.get(0).getAddressLine(0));
+
+            TextView tv_dir = findViewById(R.id.tv_directionOld_dirclient);
+            tv_dir.setText("Dirección guardada: " + dir);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void agregarMarcadorGuardado(double lat, double lng) {
+        globalCoordsOld = new LatLng(lat, lng);
+
+        if (globalMarkerOld != null) globalMarkerOld.remove();
+        globalMarkerOld = mMap.addMarker(new MarkerOptions()
+                .position(globalCoordsOld)
+                .title("Ubicación guardada"));
+        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconomarkusuario)));
+        CameraUpdate miU = CameraUpdateFactory.newLatLngZoom(globalCoordsOld, 15);
         mMap.moveCamera(miU);
     }
 
@@ -359,16 +501,18 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
     }
 
     private void validateRegister() {
-        if (!globalMarker.getTitle().isEmpty()) {
+        if (!Objects.requireNonNull(globalMarker.getTitle()).isEmpty()) {
             if (globalLat != 0.0 && globalLng != 0.0) {
+
                 String name = et_name.getText().toString();
+                Log.e("DirectionClient_log", "reg 00" + name);
                 String reference = et_reference.getText().toString();
                 //String distrito = et_distrito.getText().toString();
-                Integer numberf = Integer.valueOf(et_numberflat.getText().toString());
+                int numberf = Integer.parseInt(et_numberflat.getText().toString());
 
                 String idcliente = SessionSP.get(DirectionClientActivity.this).
                         getIdClientSessSp();
-                Log.e("DirectionClient_log", "ID CLIENTE: " + idcliente);
+                //Log.e("DirectionClient_log", "ID CLIENTE: " + idcliente);
                 String lat = String.valueOf(globalLat);
                 String lng = String.valueOf(globalLng);
 
@@ -380,28 +524,36 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                     et_name.setError(null);
                     et_numberflat.setError(null);
                     return;
-                } else if (numberf < 1 || numberf >99 || numberf == null) {
+                } else if (numberf < 1 || numberf > 99) {
                     et_numberflat.setError("Número incorrecto. Máximo hasta 99.");
                     et_reference.setError(null);
                     et_name.setError(null);
                     return;
                 } else {
+                    Log.e("DirectionClient_log", "reg 0" + idcliente);
+                    disableInput();
                     et_name.setError(null);
                     et_reference.setError(null);
                     et_numberflat.setError(null);
                     //et_distrito.setError(null);
-                    registerDirection(name, String.valueOf(numberf), reference, lat, lng, idcliente);
-                    disableInput();
+                    if (value_action.equals("edit_data")) {
+                        updateDirection(name, String.valueOf(numberf), reference, lat, lng, idcliente, value_iddom);
+                        //Toast.makeText(this, "to Update", Toast.LENGTH_SHORT).show();
+                    } else if (value_action.equals("register_data")) {
+                        Log.e("DirectionClient_log", "reg 1" + idcliente);
+                        registerDirection(name, String.valueOf(numberf), reference, lat, lng, idcliente);
+                    }
+
+                    //disableInput();
                 }
             }
 
-        }else{
+        } else {
             Toast.makeText(this, "Por favor espere que se cargue.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void disableInput() {
-        feb_next.setEnabled(false);
         et_name.setEnabled(false);
         //et_distrito.setEnabled(false);
         et_numberflat.setEnabled(false);
@@ -410,6 +562,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
 
     private void enableInput() {
         feb_next.setEnabled(true);
+        feb_update.setEnabled(true);
         et_name.setEnabled(true);
         //et_distrito.setEnabled(true);
         et_numberflat.setEnabled(true);
@@ -420,26 +573,88 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
     private void registerDirection(String namedir, String numberflat, String reference,
                                    String lat, String lng, String idcliente) {
 
-        Call<List<DomicilioModel>> call = apiInterface.DirectionRegister("insert_select_adress",
-                "2", namedir, numberflat, reference, lat, lng, idcliente);
+        String estado_uso = value_use;
+        if (!estado_uso.isEmpty()) {
+
+            Call<List<DomicilioModel>> call = apiInterface.setDirectionRegister("insert_select_adress",
+                    "2", namedir, numberflat, reference, lat, lng, idcliente, estado_uso);
+
+            ApiHelper.enqueueWithRetry(call, new Callback<List<DomicilioModel>>() {
+                @Override
+                public void onResponse(@NotNull Call<List<DomicilioModel>> call,
+                                       @NotNull Response<List<DomicilioModel>> response) {
+                    if (response.isSuccessful()) {
+                        Log.e("DirectionClient_log", "body: " + response.body());
+                        assert response.body() != null;
+                        switch (response.body().get(0).getCode_server()) {
+                            case "221":
+                                SessionSP.get(DirectionClientActivity.this).saveStateLogin("yes");
+
+                                if (value_action.equals("register_data")) {
+                                    finish();
+                                }
+
+                                Intent intent = new Intent(DirectionClientActivity.this, InitialActivity.class);
+                                startActivity(intent);
+                                finish();
+                                break;
+                            case "110":
+                                Toast.makeText(DirectionClientActivity.this,
+                                        "Error de parametros. Intente mas tarde.", Toast.LENGTH_LONG).show();
+                                enableInput();
+                                break;
+                            case "010":
+                                Toast.makeText(DirectionClientActivity.this,
+                                        "Máxima cantidad de direcciones excedidas.", Toast.LENGTH_LONG).show();
+                                //disableInput();
+
+                                break;
+                        }
+
+                    } else {
+                        Toast.makeText(DirectionClientActivity.this, "No se logró registrar.", Toast.LENGTH_SHORT).show();
+                        enableInput();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<DomicilioModel>> call, Throwable t) {
+                    Log.e("DirClient_error", "error: " + t.getMessage());
+                    enableInput();
+                }
+            });
+
+        }
+    }
+
+    private void updateDirection(String namedir, String numberflat, String reference,
+                                 String lat, String lng, String idcliente, String iddom) {
+
+        Call<List<DomicilioModel>> call = apiInterface.setDirectionUpdate("insert_select_adress",
+                "5", namedir, numberflat, reference, lat, lng, idcliente, iddom);
 
         ApiHelper.enqueueWithRetry(call, new Callback<List<DomicilioModel>>() {
             @Override
-            public void onResponse(Call<List<DomicilioModel>> call, Response<List<DomicilioModel>> response) {
+            public void onResponse(@NotNull Call<List<DomicilioModel>> call,
+                                   @NotNull Response<List<DomicilioModel>> response) {
                 if (response.isSuccessful()) {
-                    Log.e("DirectionClient_log", "body: " + response.body());
-                    if (response.body().get(0).getCode_server().equals("221")) {
+                    //Log.e("DirectionClient_log", "body: " + response.body());
+                    assert response.body() != null;
+                    switch (response.body().get(0).getCode_server()) {
+                        case "221":
+                            Toast.makeText(DirectionClientActivity.this, "Actualización completa.", Toast.LENGTH_SHORT).show();
+                            disableInput();
+                            feb_update.setText("Actualizar dirección");
+                            value_state = false;
+                            break;
+                        case "110":
+                            Toast.makeText(DirectionClientActivity.this,
+                                    "Error de parametros. Intente mas tarde.", Toast.LENGTH_LONG).show();
+                            enableInput();
+                            break;
+                        case "010":
 
-                        SessionSP.get(DirectionClientActivity.this).saveStateLogin("yes");
-
-                        Intent intent = new Intent(DirectionClientActivity.this, InitialActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else if (response.body().get(0).getCode_server().equals("110")) {
-                        Toast.makeText(DirectionClientActivity.this, "Error de parametros. Intente mas tarde.", Toast.LENGTH_LONG).show();
-                        enableInput();
-                    } else{
-
+                            break;
                     }
 
                 } else {
@@ -450,7 +665,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
 
             @Override
             public void onFailure(Call<List<DomicilioModel>> call, Throwable t) {
-                Log.e("DirClient_error", "error: " + t.getMessage().toString());
+                Log.e("DirClient_error", "error: " + t.getMessage());
                 enableInput();
             }
         });

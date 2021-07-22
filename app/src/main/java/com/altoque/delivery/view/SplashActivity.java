@@ -70,7 +70,9 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
         if (SessionSP.get(SplashActivity.this).getStateLogin().equals("yes")) {
             startActivity(new Intent(SplashActivity.this, InitialActivity.class));
         }else if (SessionSP.get(SplashActivity.this).getStateLogin().equals("register")) {
-            startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
+            Intent intent = new Intent(SplashActivity.this, DirectionClientActivity.class);
+            intent.putExtra("action", "register_data");
+            startActivity(intent);
         }else if (SessionSP.get(SplashActivity.this).getStateLogin().equals("dirclient")) {
             startActivity(new Intent(SplashActivity.this, DirectionClientActivity.class));
         }
