@@ -13,7 +13,6 @@ public class initClass extends Application {
         mInstance = this;
     }
 
-
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);

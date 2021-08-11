@@ -16,12 +16,10 @@ public class OAuthMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oauth_main);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow()
-                    .setStatusBarColor(ContextCompat.getColor(OAuthMainActivity.this, R.color.colorWhite));
-            getWindow()
-                    .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        getWindow()
+                .setStatusBarColor(ContextCompat.getColor(OAuthMainActivity.this, R.color.colorWhite));
+        getWindow()
+                .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     @Override

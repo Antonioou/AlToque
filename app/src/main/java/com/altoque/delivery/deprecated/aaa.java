@@ -1,4 +1,4 @@
-package com.altoque.delivery.view.direction;
+package com.altoque.delivery.deprecated;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -134,7 +134,7 @@ public class aaa extends BottomSheetDialogFragment implements OnMapReadyCallback
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
 
-        view = View.inflate(getContext(), R.layout.aaa, null);
+        //view = View.inflate(getContext(), R.layout.aaa, null);
         dialog.setContentView(view);
         mBehavior = BottomSheetBehavior.from((View) view.getParent());
 

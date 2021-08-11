@@ -1,5 +1,6 @@
 package com.altoque.delivery.view.initial.ui.home;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,16 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.altoque.delivery.MainActivity;
 import com.altoque.delivery.R;
-import com.altoque.delivery.adapter.BusinessStyleOneAdapter;
+import com.altoque.delivery.adapter.BusinessStyleThreeAdapter;
 import com.altoque.delivery.adapter.BusinessStyleTwoAdapter;
 import com.altoque.delivery.adapter.CenterZoomLayoutManager;
 import com.altoque.delivery.api.ApiClient;
@@ -33,10 +31,9 @@ import com.altoque.delivery.databinding.FragmentHomeBinding;
 import com.altoque.delivery.model.DomicilioModel;
 import com.altoque.delivery.model.NegocioModel;
 import com.altoque.delivery.view.direction.DirectionListBottomSheet;
-import com.altoque.delivery.view.oauth.OAuthActivity;
+import com.altoque.delivery.view.initial.ui.detail.DetailBusinessActivity;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
@@ -61,7 +58,9 @@ public class HomeFragment extends Fragment {
     CircularImageView civ_picprofile;
 
 
-    /** DIRECCION **/
+    /**
+     * DIRECCION
+     **/
     TextView tv_namedirection;
     ProgressBar pb_load_direction;
     MaterialCardView cv_directionuser;
@@ -75,7 +74,7 @@ public class HomeFragment extends Fragment {
     /* UBICATION BUSINESS */
     private RecyclerView recviewBusinessByProv;
     private List<NegocioModel> listBusinessByProv;
-    private BusinessStyleOneAdapter adapterBusinessByProv;
+    private BusinessStyleThreeAdapter adapterBusinessByProv;
     private LinearLayoutManager layoutManBusinessByProv;
 
 
@@ -93,7 +92,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void initResources(){
+    private void initResources() {
         listBusinessByRate = new ArrayList<>();
         listBusinessByProv = new ArrayList<>();
 
@@ -148,7 +147,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
         initView();
         initResources();
 
@@ -164,6 +162,14 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+
+
+
+
+
+
+    /****************************************************************************/
+
     public void autoScroll() {
         final Handler handler = new Handler();
         final Runnable runnable = new Runnable() {
@@ -176,7 +182,7 @@ public class HomeFragment extends Fragment {
         handler.postDelayed(runnable, 30);
     }
 
-    private void getDataDirections(){
+    private void getDataDirections() {
 
         String idclient = SessionSP.get(requireContext()).getIdClientSessSp();
         //Log.e("Home_log", "OnFailure " + idclient);
@@ -190,7 +196,7 @@ public class HomeFragment extends Fragment {
                     pb_load_direction.setVisibility(View.GONE);
 
                     if (response.isSuccessful()) {
-                        if (response.body().size()>0) {
+                        if (response.body().size() > 0) {
                             String code = response.body().get(0).getCode_server().toString();
                             String namedir = response.body().get(0).getDireccion_dom().toString();
 
@@ -202,8 +208,8 @@ public class HomeFragment extends Fragment {
                                 tv_namedirection.setText("No se cargó correctamente");
                                 tv_namedirection.setTextColor(getResources().getColor(R.color.colorRedMatiz3));
                             }
-                        }else{
-                            tv_namedirection.setText("Ninguna dirección guardada");
+                        } else {
+                            tv_namedirection.setText("No se obtuvo sus direcciones");
                         }
                     }
                 }
@@ -216,15 +222,15 @@ public class HomeFragment extends Fragment {
                     tv_namedirection.setTextColor(getResources().getColor(R.color.colorRedMatiz3));
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             pb_load_direction.setVisibility(View.GONE);
             tv_namedirection.setText("No se cargó correctamente");
             tv_namedirection.setTextColor(getResources().getColor(R.color.colorRedMatiz3));
         }
     }
 
-    private void showDirections(){
-        cv_directionuser.setOnClickListener(v->{
+    private void showDirections() {
+        cv_directionuser.setOnClickListener(v -> {
             DirectionListBottomSheet res = new DirectionListBottomSheet();
             res.show(getChildFragmentManager(), "tag");
             res.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -235,24 +241,25 @@ public class HomeFragment extends Fragment {
                     //getReservations(id_cust);
                 }
             });
-                });
+        });
 
 
     }
 
 
-    private void getBusinessListByRate(){
+    private void getBusinessListByRate() {
 
         try {
             Call<List<NegocioModel>> call = apiInterface.
-                    getBusinessListByRate("list_business_by_province", "134");
+                    getBusinessListByRate("list_business_by_rating_district", "1");
             ApiHelper.enqueueWithRetry(call, new Callback<List<NegocioModel>>() {
                 @Override
-                public void onResponse(Call<List<NegocioModel>> call, Response<List<NegocioModel>> response) {
+                public void onResponse(@NotNull Call<List<NegocioModel>> call, Response<List<NegocioModel>> response) {
 
                     if (response.isSuccessful()) {
-                        if (response.body().size()>0) {
-                            String code = response.body().get(0).getCode_server().toString();
+                        assert response.body() != null;
+                        if (response.body().size() > 0) {
+                            String code = response.body().get(0).getCodeServer().toString();
 
                             if (code.equals("221")) {
 
@@ -261,69 +268,73 @@ public class HomeFragment extends Fragment {
                                 recviewBusinessByRate.setAdapter(adapterBusinessByRate);
                                 adapterBusinessByRate.notifyDataSetChanged();
                                 recviewBusinessByRate.setVisibility(View.VISIBLE);
-
+                                eventAdapterBusinessListByRate();
                             } else if (code.equals("010")) {
 
                             }
-                        }else {
+                        } else {
                             Toast.makeText(requireContext(), "Sin Negocios por cargar.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
 
                 @Override
-                public void onFailure(Call<List<NegocioModel>> call, Throwable t) {
+                public void onFailure(@NotNull Call<List<NegocioModel>> call, Throwable t) {
 
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
 
 
         }
     }
 
-    private void getBusinessListByProv(){
+    private void getBusinessListByProv() {
 
         try {
             Call<List<NegocioModel>> call = apiInterface.
-                    getBusinessListByProv("list_business_by_province", "134");
+                    getBusinessListByProv("list_business_by_district", "2");
             ApiHelper.enqueueWithRetry(call, new Callback<List<NegocioModel>>() {
                 @Override
-                public void onResponse(Call<List<NegocioModel>> call, Response<List<NegocioModel>> response) {
+                public void onResponse(@NotNull Call<List<NegocioModel>> call, @NotNull Response<List<NegocioModel>> response) {
 
                     if (response.isSuccessful()) {
-                        String code = response.body().get(0).getCode_server().toString();
+                        assert response.body() != null;
+                        if (response.body().size() > 0) {
+                            String code = response.body().get(0).getCodeServer().toString();
 
-                        if (code.equals("221")) {
+                            if (code.equals("221")) {
 
-                            listBusinessByProv = response.body();
-                            adapterBusinessByProv = new BusinessStyleOneAdapter(listBusinessByProv);
-                            recviewBusinessByProv.setAdapter(adapterBusinessByProv);
-                            adapterBusinessByProv.notifyDataSetChanged();
-                            recviewBusinessByProv.setVisibility(View.VISIBLE);
+                                listBusinessByProv = response.body();
+                                adapterBusinessByProv = new BusinessStyleThreeAdapter(listBusinessByProv, requireContext());
+                                recviewBusinessByProv.setAdapter(adapterBusinessByProv);
+                                adapterBusinessByProv.notifyDataSetChanged();
+                                recviewBusinessByProv.setVisibility(View.VISIBLE);
+                                eventAdapterBusinessListByProv();
+                            } else if (code.equals("010")) {
 
-                        }
-                        else if (code.equals("010")) {
-
+                            }
+                        }else {
+                            Toast.makeText(requireContext(), "No se logró cargar correctamente.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
 
                 @Override
-                public void onFailure(Call<List<NegocioModel>> call, Throwable t) {
+                public void onFailure(@NotNull Call<List<NegocioModel>> call, Throwable t) {
 
                 }
             });
-        }catch (Exception e){
+        } catch (Exception ignored) {
 
 
         }
     }
 
-    private void setPictureProfile(){
+    private void setPictureProfile() {
         String photoUrl = SessionSP.get(requireContext()).getPhotoSessSp().toString();
-        Log.e("Error_log_home", photoUrl);
-        if (!photoUrl.isEmpty()){
+        //Log.e("Error_log_home", photoUrl);
+        if (!photoUrl.isEmpty()) {
             Picasso.get()
                     .load(photoUrl)
                     .into(civ_picprofile, new com.squareup.picasso.Callback() {
@@ -338,14 +349,35 @@ public class HomeFragment extends Fragment {
                                     "No se logró cargar la foto.", Toast.LENGTH_SHORT).show();
                         }
                     });
-        }else {
+        } else {
             Toast.makeText(requireContext(),
                     "No se logró cargar la foto.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void setUserName(){
-        tv_username.setText("Hola, "+SessionSP.get(requireContext()).getNameSessSp().toString().trim());
+    @SuppressLint("SetTextI18n")
+    private void setUserName() {
+        tv_username.setText("Hola, " + SessionSP.get(requireContext()).getNameSessSp().toString().trim());
+    }
+
+    private void eventAdapterBusinessListByRate() {
+        adapterBusinessByRate.setOnClickListener(v -> {
+            int pos = recviewBusinessByRate.getChildAdapterPosition(v);
+            Intent intent = new Intent(requireContext(), DetailBusinessActivity.class);
+            intent.putExtra("value_idnegocio", listBusinessByRate.get(pos).getIdnegocio().toString());
+            //Toast.makeText(requireContext(), "pos "+pos+"\n id "+listBusinessByRate.get(pos).getIdnegocio(), Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+        });
+    }
+
+    private void eventAdapterBusinessListByProv() {
+        adapterBusinessByProv.setOnClickListener(v -> {
+            int pos = recviewBusinessByProv.getChildAdapterPosition(v);
+            Intent intent = new Intent(requireContext(), DetailBusinessActivity.class);
+            intent.putExtra("value_idnegocio", listBusinessByProv.get(pos).getIdnegocio().toString());
+            //Toast.makeText(requireContext(), "pos "+pos+"\n id "+listBusinessByProv.get(pos).getIdnegocio(), Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -353,4 +385,6 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
 }

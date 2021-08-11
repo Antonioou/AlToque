@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/btmsheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_20"
+            android:fontFamily="@font/productsansbold"
+            android:text="Acerca del Negocio"
+            android:textAlignment="center"
+            android:textSize="23sp"
+            app:layout_constraintBottom_toTopOf="@id/mcv_timeservice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_timeservice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:visibility="visible"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_0"
+            app:contentPadding="@dimen/dp_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:strokeColor="@color/colorGreyMatiz3"
+            app:strokeWidth="2dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_timeservice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_access_time_24"
+                    app:backgroundTint="@color/colorGreyMatiz3"
+                    app:fabSize="mini"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_blank_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/latoregular"
+                    android:maxLines="1"
+                    android:text="Horario de Atención"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fab_timeservice"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/fab_timeservice"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_blank_1">
+
+                    <ImageView
+                        android:id="@+id/imageopentime"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginStart="@dimen/dp_3"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/ic_baseline_check_circle_outline_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/tv_timeclose_businessdata"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_timeopen_businessdata"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text=""
+                        android:textColor="@color/colorBlackMatiz1"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="@id/imageopentime"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/imageopentime"
+                        app:layout_constraintTop_toTopOf="@id/imageopentime" />
+
+                    <ImageView
+                        android:id="@+id/imageclosetime"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginStart="@dimen/dp_3"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/ic_baseline_not_interested_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/imageopentime"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_timeclose_businessdata"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text=""
+                        android:textColor="@color/colorBlackMatiz1"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="@id/imageclosetime"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/imageclosetime"
+                        app:layout_constraintTop_toTopOf="@id/imageclosetime" />
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:visibility="visible"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_0"
+            app:contentPadding="@dimen/dp_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mcv_timeservice"
+            app:strokeColor="@color/colorGreyMatiz3"
+            app:strokeWidth="2dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_outline_location_on_24"
+                    app:backgroundTint="@color/colorGreyMatiz3"
+                    app:fabSize="mini"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_blank_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/latoregular"
+                    android:maxLines="1"
+                    android:text="Ubicación del negocio"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fab_map"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/fab_map"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_blank_2">
+
+                    <ImageView
+                        android:id="@+id/imagemarker"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginStart="@dimen/dp_3"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/ic_baseline_map_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_map_businessdata"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text="-"
+                        android:textColor="@color/colorBlackMatiz1"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="@id/imagemarker"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/imagemarker"
+                        app:layout_constraintTop_toTopOf="@id/imagemarker" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:visibility="visible"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_0"
+            app:contentPadding="@dimen/dp_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mcv_map"
+            app:strokeColor="@color/colorGreyMatiz3"
+            app:strokeWidth="2dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_contact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_call_24"
+                    app:backgroundTint="@color/colorGreyMatiz3"
+                    app:fabSize="mini"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_blank_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/latoregular"
+                    android:maxLines="1"
+                    android:text="Datos de Contacto"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fab_contact"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/fab_contact"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_blank_3">
+
+                    <ImageView
+                        android:id="@+id/imagephone"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginStart="@dimen/dp_3"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:padding="@dimen/dp_10"
+                        app:layout_constraintBottom_toTopOf="@id/tv_mail_businessdata"
+                        android:src="@drawable/ic_baseline_phone_android_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_phone_businessdata"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text="-"
+                        android:textColor="@color/colorBlackMatiz1"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="@id/imagephone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/imagephone"
+                        app:layout_constraintTop_toTopOf="@id/imagephone" />
+
+                    <ImageView
+                        android:id="@+id/imagemail"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginStart="@dimen/dp_3"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/ic_baseline_mail_outline_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/imagephone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tv_mail_businessdata"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text="-"
+                        android:textColor="@color/colorBlackMatiz1"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="@id/imagemail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/imagemail"
+                        app:layout_constraintTop_toTopOf="@id/imagemail" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

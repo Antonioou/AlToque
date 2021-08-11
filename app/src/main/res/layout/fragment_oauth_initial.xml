@@ -95,11 +95,13 @@
         android:textAlignment="center"
         android:layout_marginTop="@dimen/dp_5"
         android:textSize="15sp"
+        android:ellipsize="middle"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@id/mc_form_sstep"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pb_load_sstep" />
+        app:layout_constraintTop_toBottomOf="@id/pb_load_sstep"
+        android:singleLine="true" />
 
 
     <com.google.android.material.card.MaterialCardView

@@ -1,150 +1,633 @@
 package com.altoque.delivery.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class NegocioModel {
+
     @SerializedName("code_server")
-    String code_server;
+    @Expose
+    private String codeServer;
     @SerializedName("res_server")
-    String res_server;
+    @Expose
+    private String resServer;
     @SerializedName("msg_server")
-    String msg_server;
+    @Expose
+    private String msgServer;
     @SerializedName("status")
+    @Expose
     private String status;
     @SerializedName("idnegocio")
+    @Expose
     private String idnegocio;
     @SerializedName("rsocial_neg")
-    private String rsocial_neg;
-    @SerializedName("ruc_neg")
-    private String ruc_neg;
-    @SerializedName("celular_neg")
-    private String celular_neg;
-    @SerializedName("correo_neg")
-    private String correo_neg;
-    @SerializedName("clave_neg")
-    private String clave_neg;
+    @Expose
+    private String rsocialNeg;
     @SerializedName("foto_neg")
-    private String foto_neg;
+    @Expose
+    private String fotoNeg;
+    @SerializedName("celular_neg")
+    @Expose
+    private String celularNeg;
+    @SerializedName("correo_neg")
+    @Expose
+    private String correoNeg;
     @SerializedName("ainicio_neg")
-    private String ainicio_neg;
+    @Expose
+    private String ainicioNeg;
     @SerializedName("acierre_neg")
-    private String acierre_neg;
-    @SerializedName("activo_neg")
-    private String activo_neg;
-    @SerializedName("online_neg")
-    private String online_neg;
-    @SerializedName("estado_neg")
-    private String estado_neg;
+    @Expose
+    private String acierreNeg;
     @SerializedName("dir_fiscal_neg")
-    private String dir_fiscal_neg;
-    @SerializedName("lat_neg")
-    private String lat_neg;
-    @SerializedName("long_neg")
-    private String long_neg;
-    @SerializedName("isban")
-    private String isban;
-    @SerializedName("idrubro")
-    private String idrubro;
-    @SerializedName("idtarifario")
-    private String idtarifario;
-    @SerializedName("iddistrito")
-    private String iddistrito;
-    @SerializedName("nom_rubro")
-    private String nom_rubro;
-    @SerializedName("foto_rubro")
-    private String foto_rubro;
-    @SerializedName("estado_rubro")
-    private String estado_rubro;
+    @Expose
+    private String dirFiscalNeg;
     @SerializedName("costo_envio")
-    private String costo_envio;
+    @Expose
+    private String costoEnvio;
     @SerializedName("distancia_envio")
-    private String distancia_envio;
-    @SerializedName("estado_envio")
-    private String estado_envio;
+    @Expose
+    private String distanciaEnvio;
+    @SerializedName("banner_neg")
+    @Expose
+    private String bannerNeg;
+    @SerializedName("nom_rubro")
+    @Expose
+    private String nomRubro;
+    @SerializedName("foto_rubro")
+    @Expose
+    private String fotoRubro;
+    @SerializedName("iddistrito")
+    @Expose
+    private String iddistrito;
     @SerializedName("nombre_distrito")
-    private String nombre_distrito;
+    @Expose
+    private String nombreDistrito;
     @SerializedName("idprovincia")
+    @Expose
     private String idprovincia;
     @SerializedName("iddepartamento")
+    @Expose
     private String iddepartamento;
     @SerializedName("estado_distrito")
-    private String estado_distrito;
+    @Expose
+    private String estadoDistrito;
+    @SerializedName("idcodigo_postal")
+    @Expose
+    private String idcodigoPostal;
+    @SerializedName("habilitado_distrito")
+    @Expose
+    private String habilitadoDistrito;
     @SerializedName("nombre_prov")
-    private String nombre_prov;
+    @Expose
+    private String nombreProv;
     @SerializedName("estado_prov")
-    private String estado_prov;
+    @Expose
+    private String estadoProv;
     @SerializedName("nombre_dep")
-    private String nombre_dep;
+    @Expose
+    private String nombreDep;
     @SerializedName("estado_dep")
-    private String estado_dep;
+    @Expose
+    private String estadoDep;
     @SerializedName("idpais")
+    @Expose
     private String idpais;
     @SerializedName("nombre_pais")
-    private String nombre_pais;
+    @Expose
+    private String nombrePais;
     @SerializedName("codigopais")
+    @Expose
     private String codigopais;
     @SerializedName("codigotel")
+    @Expose
     private String codigotel;
     @SerializedName("estado_pais")
-    private String estado_pais;
+    @Expose
+    private String estadoPais;
     @SerializedName("rating")
+    @Expose
     private String rating;
+    @SerializedName("estimacion_demora")
+    @Expose
+    private String estimacionDemora;
+    @SerializedName("calificadores")
+    @Expose
+    private String calificadores;
 
-    // Getter Methods
-
-
+    /**
+     * No args constructor for use in serialization
+     *
+     */
     public NegocioModel() {
     }
 
-    @Override
-    public String toString() {
-        return "NegocioModel{" +
-                "code_server='" + code_server + '\'' +
-                ", res_server='" + res_server + '\'' +
-                ", msg_server='" + msg_server + '\'' +
-                ", status='" + status + '\'' +
-                ", idnegocio='" + idnegocio + '\'' +
-                ", rsocial_neg='" + rsocial_neg + '\'' +
-                ", ruc_neg='" + ruc_neg + '\'' +
-                ", celular_neg='" + celular_neg + '\'' +
-                ", correo_neg='" + correo_neg + '\'' +
-                ", clave_neg='" + clave_neg + '\'' +
-                ", foto_neg='" + foto_neg + '\'' +
-                ", ainicio_neg='" + ainicio_neg + '\'' +
-                ", acierre_neg='" + acierre_neg + '\'' +
-                ", activo_neg='" + activo_neg + '\'' +
-                ", online_neg='" + online_neg + '\'' +
-                ", estado_neg='" + estado_neg + '\'' +
-                ", dir_fiscal_neg='" + dir_fiscal_neg + '\'' +
-                ", lat_neg='" + lat_neg + '\'' +
-                ", long_neg='" + long_neg + '\'' +
-                ", isban='" + isban + '\'' +
-                ", idrubro='" + idrubro + '\'' +
-                ", idtarifario='" + idtarifario + '\'' +
-                ", iddistrito='" + iddistrito + '\'' +
-                ", nom_rubro='" + nom_rubro + '\'' +
-                ", foto_rubro='" + foto_rubro + '\'' +
-                ", estado_rubro='" + estado_rubro + '\'' +
-                ", costo_envio='" + costo_envio + '\'' +
-                ", distancia_envio='" + distancia_envio + '\'' +
-                ", estado_envio='" + estado_envio + '\'' +
-                ", nombre_distrito='" + nombre_distrito + '\'' +
-                ", idprovincia='" + idprovincia + '\'' +
-                ", iddepartamento='" + iddepartamento + '\'' +
-                ", estado_distrito='" + estado_distrito + '\'' +
-                ", nombre_prov='" + nombre_prov + '\'' +
-                ", estado_prov='" + estado_prov + '\'' +
-                ", nombre_dep='" + nombre_dep + '\'' +
-                ", estado_dep='" + estado_dep + '\'' +
-                ", idpais='" + idpais + '\'' +
-                ", nombre_pais='" + nombre_pais + '\'' +
-                ", codigopais='" + codigopais + '\'' +
-                ", codigotel='" + codigotel + '\'' +
-                ", estado_pais='" + estado_pais + '\'' +
-                ", rating='" + rating + '\'' +
-                '}';
+    /**
+     *
+     * @param calificadores
+     * @param estadoPais
+     * @param fotoRubro
+     * @param costoEnvio
+     * @param nombreDep
+     * @param rating
+     * @param estadoProv
+     * @param acierreNeg
+     * @param codeServer
+     * @param idpais
+     * @param nombreDistrito
+     * @param fotoNeg
+     * @param estimacionDemora
+     * @param idcodigoPostal
+     * @param nomRubro
+     * @param resServer
+     * @param iddistrito
+     * @param idnegocio
+     * @param rsocialNeg
+     * @param nombreProv
+     * @param ainicioNeg
+     * @param celularNeg
+     * @param idprovincia
+     * @param estadoDistrito
+     * @param bannerNeg
+     * @param correoNeg
+     * @param habilitadoDistrito
+     * @param msgServer
+     * @param codigotel
+     * @param dirFiscalNeg
+     * @param distanciaEnvio
+     * @param iddepartamento
+     * @param estadoDep
+     * @param codigopais
+     * @param status
+     * @param nombrePais
+     */
+    public NegocioModel(String codeServer, String resServer, String msgServer, String status, String idnegocio, String rsocialNeg, String fotoNeg, String celularNeg, String correoNeg, String ainicioNeg, String acierreNeg, String dirFiscalNeg, String costoEnvio, String distanciaEnvio, String bannerNeg, String nomRubro, String fotoRubro, String iddistrito, String nombreDistrito, String idprovincia, String iddepartamento, String estadoDistrito, String idcodigoPostal, String habilitadoDistrito, String nombreProv, String estadoProv, String nombreDep, String estadoDep, String idpais, String nombrePais, String codigopais, String codigotel, String estadoPais, String rating, String estimacionDemora, String calificadores) {
+        super();
+        this.codeServer = codeServer;
+        this.resServer = resServer;
+        this.msgServer = msgServer;
+        this.status = status;
+        this.idnegocio = idnegocio;
+        this.rsocialNeg = rsocialNeg;
+        this.fotoNeg = fotoNeg;
+        this.celularNeg = celularNeg;
+        this.correoNeg = correoNeg;
+        this.ainicioNeg = ainicioNeg;
+        this.acierreNeg = acierreNeg;
+        this.dirFiscalNeg = dirFiscalNeg;
+        this.costoEnvio = costoEnvio;
+        this.distanciaEnvio = distanciaEnvio;
+        this.bannerNeg = bannerNeg;
+        this.nomRubro = nomRubro;
+        this.fotoRubro = fotoRubro;
+        this.iddistrito = iddistrito;
+        this.nombreDistrito = nombreDistrito;
+        this.idprovincia = idprovincia;
+        this.iddepartamento = iddepartamento;
+        this.estadoDistrito = estadoDistrito;
+        this.idcodigoPostal = idcodigoPostal;
+        this.habilitadoDistrito = habilitadoDistrito;
+        this.nombreProv = nombreProv;
+        this.estadoProv = estadoProv;
+        this.nombreDep = nombreDep;
+        this.estadoDep = estadoDep;
+        this.idpais = idpais;
+        this.nombrePais = nombrePais;
+        this.codigopais = codigopais;
+        this.codigotel = codigotel;
+        this.estadoPais = estadoPais;
+        this.rating = rating;
+        this.estimacionDemora = estimacionDemora;
+        this.calificadores = calificadores;
     }
 
+    public String getCodeServer() {
+        return codeServer;
+    }
+
+    public void setCodeServer(String codeServer) {
+        this.codeServer = codeServer;
+    }
+
+    public NegocioModel withCodeServer(String codeServer) {
+        this.codeServer = codeServer;
+        return this;
+    }
+
+    public String getResServer() {
+        return resServer;
+    }
+
+    public void setResServer(String resServer) {
+        this.resServer = resServer;
+    }
+
+    public NegocioModel withResServer(String resServer) {
+        this.resServer = resServer;
+        return this;
+    }
+
+    public String getMsgServer() {
+        return msgServer;
+    }
+
+    public void setMsgServer(String msgServer) {
+        this.msgServer = msgServer;
+    }
+
+    public NegocioModel withMsgServer(String msgServer) {
+        this.msgServer = msgServer;
+        return this;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public NegocioModel withStatus(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public String getIdnegocio() {
+        return idnegocio;
+    }
+
+    public void setIdnegocio(String idnegocio) {
+        this.idnegocio = idnegocio;
+    }
+
+    public NegocioModel withIdnegocio(String idnegocio) {
+        this.idnegocio = idnegocio;
+        return this;
+    }
+
+    public String getRsocialNeg() {
+        return rsocialNeg;
+    }
+
+    public void setRsocialNeg(String rsocialNeg) {
+        this.rsocialNeg = rsocialNeg;
+    }
+
+    public NegocioModel withRsocialNeg(String rsocialNeg) {
+        this.rsocialNeg = rsocialNeg;
+        return this;
+    }
+
+    public String getFotoNeg() {
+        return fotoNeg;
+    }
+
+    public void setFotoNeg(String fotoNeg) {
+        this.fotoNeg = fotoNeg;
+    }
+
+    public NegocioModel withFotoNeg(String fotoNeg) {
+        this.fotoNeg = fotoNeg;
+        return this;
+    }
+
+    public String getCelularNeg() {
+        return celularNeg;
+    }
+
+    public void setCelularNeg(String celularNeg) {
+        this.celularNeg = celularNeg;
+    }
+
+    public NegocioModel withCelularNeg(String celularNeg) {
+        this.celularNeg = celularNeg;
+        return this;
+    }
+
+    public String getCorreoNeg() {
+        return correoNeg;
+    }
+
+    public void setCorreoNeg(String correoNeg) {
+        this.correoNeg = correoNeg;
+    }
+
+    public NegocioModel withCorreoNeg(String correoNeg) {
+        this.correoNeg = correoNeg;
+        return this;
+    }
+
+    public String getAinicioNeg() {
+        return ainicioNeg;
+    }
+
+    public void setAinicioNeg(String ainicioNeg) {
+        this.ainicioNeg = ainicioNeg;
+    }
+
+    public NegocioModel withAinicioNeg(String ainicioNeg) {
+        this.ainicioNeg = ainicioNeg;
+        return this;
+    }
+
+    public String getAcierreNeg() {
+        return acierreNeg;
+    }
+
+    public void setAcierreNeg(String acierreNeg) {
+        this.acierreNeg = acierreNeg;
+    }
+
+    public NegocioModel withAcierreNeg(String acierreNeg) {
+        this.acierreNeg = acierreNeg;
+        return this;
+    }
+
+    public String getDirFiscalNeg() {
+        return dirFiscalNeg;
+    }
+
+    public void setDirFiscalNeg(String dirFiscalNeg) {
+        this.dirFiscalNeg = dirFiscalNeg;
+    }
+
+    public NegocioModel withDirFiscalNeg(String dirFiscalNeg) {
+        this.dirFiscalNeg = dirFiscalNeg;
+        return this;
+    }
+
+    public String getCostoEnvio() {
+        return costoEnvio;
+    }
+
+    public void setCostoEnvio(String costoEnvio) {
+        this.costoEnvio = costoEnvio;
+    }
+
+    public NegocioModel withCostoEnvio(String costoEnvio) {
+        this.costoEnvio = costoEnvio;
+        return this;
+    }
+
+    public String getDistanciaEnvio() {
+        return distanciaEnvio;
+    }
+
+    public void setDistanciaEnvio(String distanciaEnvio) {
+        this.distanciaEnvio = distanciaEnvio;
+    }
+
+    public NegocioModel withDistanciaEnvio(String distanciaEnvio) {
+        this.distanciaEnvio = distanciaEnvio;
+        return this;
+    }
+
+    public String getBannerNeg() {
+        return bannerNeg;
+    }
+
+    public void setBannerNeg(String bannerNeg) {
+        this.bannerNeg = bannerNeg;
+    }
+
+    public NegocioModel withBannerNeg(String bannerNeg) {
+        this.bannerNeg = bannerNeg;
+        return this;
+    }
+
+    public String getNomRubro() {
+        return nomRubro;
+    }
+
+    public void setNomRubro(String nomRubro) {
+        this.nomRubro = nomRubro;
+    }
+
+    public NegocioModel withNomRubro(String nomRubro) {
+        this.nomRubro = nomRubro;
+        return this;
+    }
+
+    public String getFotoRubro() {
+        return fotoRubro;
+    }
+
+    public void setFotoRubro(String fotoRubro) {
+        this.fotoRubro = fotoRubro;
+    }
+
+    public NegocioModel withFotoRubro(String fotoRubro) {
+        this.fotoRubro = fotoRubro;
+        return this;
+    }
+
+    public String getIddistrito() {
+        return iddistrito;
+    }
+
+    public void setIddistrito(String iddistrito) {
+        this.iddistrito = iddistrito;
+    }
+
+    public NegocioModel withIddistrito(String iddistrito) {
+        this.iddistrito = iddistrito;
+        return this;
+    }
+
+    public String getNombreDistrito() {
+        return nombreDistrito;
+    }
+
+    public void setNombreDistrito(String nombreDistrito) {
+        this.nombreDistrito = nombreDistrito;
+    }
+
+    public NegocioModel withNombreDistrito(String nombreDistrito) {
+        this.nombreDistrito = nombreDistrito;
+        return this;
+    }
+
+    public String getIdprovincia() {
+        return idprovincia;
+    }
+
+    public void setIdprovincia(String idprovincia) {
+        this.idprovincia = idprovincia;
+    }
+
+    public NegocioModel withIdprovincia(String idprovincia) {
+        this.idprovincia = idprovincia;
+        return this;
+    }
+
+    public String getIddepartamento() {
+        return iddepartamento;
+    }
+
+    public void setIddepartamento(String iddepartamento) {
+        this.iddepartamento = iddepartamento;
+    }
+
+    public NegocioModel withIddepartamento(String iddepartamento) {
+        this.iddepartamento = iddepartamento;
+        return this;
+    }
+
+    public String getEstadoDistrito() {
+        return estadoDistrito;
+    }
+
+    public void setEstadoDistrito(String estadoDistrito) {
+        this.estadoDistrito = estadoDistrito;
+    }
+
+    public NegocioModel withEstadoDistrito(String estadoDistrito) {
+        this.estadoDistrito = estadoDistrito;
+        return this;
+    }
+
+    public String getIdcodigoPostal() {
+        return idcodigoPostal;
+    }
+
+    public void setIdcodigoPostal(String idcodigoPostal) {
+        this.idcodigoPostal = idcodigoPostal;
+    }
+
+    public NegocioModel withIdcodigoPostal(String idcodigoPostal) {
+        this.idcodigoPostal = idcodigoPostal;
+        return this;
+    }
+
+    public String getHabilitadoDistrito() {
+        return habilitadoDistrito;
+    }
+
+    public void setHabilitadoDistrito(String habilitadoDistrito) {
+        this.habilitadoDistrito = habilitadoDistrito;
+    }
+
+    public NegocioModel withHabilitadoDistrito(String habilitadoDistrito) {
+        this.habilitadoDistrito = habilitadoDistrito;
+        return this;
+    }
+
+    public String getNombreProv() {
+        return nombreProv;
+    }
+
+    public void setNombreProv(String nombreProv) {
+        this.nombreProv = nombreProv;
+    }
+
+    public NegocioModel withNombreProv(String nombreProv) {
+        this.nombreProv = nombreProv;
+        return this;
+    }
+
+    public String getEstadoProv() {
+        return estadoProv;
+    }
+
+    public void setEstadoProv(String estadoProv) {
+        this.estadoProv = estadoProv;
+    }
+
+    public NegocioModel withEstadoProv(String estadoProv) {
+        this.estadoProv = estadoProv;
+        return this;
+    }
+
+    public String getNombreDep() {
+        return nombreDep;
+    }
+
+    public void setNombreDep(String nombreDep) {
+        this.nombreDep = nombreDep;
+    }
+
+    public NegocioModel withNombreDep(String nombreDep) {
+        this.nombreDep = nombreDep;
+        return this;
+    }
+
+    public String getEstadoDep() {
+        return estadoDep;
+    }
+
+    public void setEstadoDep(String estadoDep) {
+        this.estadoDep = estadoDep;
+    }
+
+    public NegocioModel withEstadoDep(String estadoDep) {
+        this.estadoDep = estadoDep;
+        return this;
+    }
+
+    public String getIdpais() {
+        return idpais;
+    }
+
+    public void setIdpais(String idpais) {
+        this.idpais = idpais;
+    }
+
+    public NegocioModel withIdpais(String idpais) {
+        this.idpais = idpais;
+        return this;
+    }
+
+    public String getNombrePais() {
+        return nombrePais;
+    }
+
+    public void setNombrePais(String nombrePais) {
+        this.nombrePais = nombrePais;
+    }
+
+    public NegocioModel withNombrePais(String nombrePais) {
+        this.nombrePais = nombrePais;
+        return this;
+    }
+
+    public String getCodigopais() {
+        return codigopais;
+    }
+
+    public void setCodigopais(String codigopais) {
+        this.codigopais = codigopais;
+    }
+
+    public NegocioModel withCodigopais(String codigopais) {
+        this.codigopais = codigopais;
+        return this;
+    }
+
+    public String getCodigotel() {
+        return codigotel;
+    }
+
+    public void setCodigotel(String codigotel) {
+        this.codigotel = codigotel;
+    }
+
+    public NegocioModel withCodigotel(String codigotel) {
+        this.codigotel = codigotel;
+        return this;
+    }
+
+    public String getEstadoPais() {
+        return estadoPais;
+    }
+
+    public void setEstadoPais(String estadoPais) {
+        this.estadoPais = estadoPais;
+    }
+
+    public NegocioModel withEstadoPais(String estadoPais) {
+        this.estadoPais = estadoPais;
+        return this;
+    }
 
     public String getRating() {
         return rating;
@@ -154,387 +637,190 @@ public class NegocioModel {
         this.rating = rating;
     }
 
-    public NegocioModel(String code_server, String res_server, String msg_server, String status, String idnegocio, String rsocial_neg, String ruc_neg, String celular_neg, String correo_neg, String clave_neg, String foto_neg, String ainicio_neg, String acierre_neg, String activo_neg, String online_neg, String estado_neg, String dir_fiscal_neg, String lat_neg, String long_neg, String isban, String idrubro, String idtarifario, String iddistrito, String nom_rubro, String foto_rubro, String estado_rubro, String costo_envio, String distancia_envio, String estado_envio, String nombre_distrito, String idprovincia, String iddepartamento, String estado_distrito, String nombre_prov, String estado_prov, String nombre_dep, String estado_dep, String idpais, String nombre_pais, String codigopais, String codigotel, String estado_pais, String rating) {
-        this.code_server = code_server;
-       this.res_server = res_server;
-        this.msg_server = msg_server;
-        this.status = status;
-        this.idnegocio = idnegocio;
-        this.rsocial_neg = rsocial_neg;
-        this.ruc_neg = ruc_neg;
-        this.celular_neg = celular_neg;
-        this.correo_neg = correo_neg;
-        this.clave_neg = clave_neg;
-        this.foto_neg = foto_neg;
-        this.ainicio_neg = ainicio_neg;
-        this.acierre_neg = acierre_neg;
-        this.activo_neg = activo_neg;
-        this.online_neg = online_neg;
-        this.estado_neg = estado_neg;
-        this.dir_fiscal_neg = dir_fiscal_neg;
-        this.lat_neg = lat_neg;
-        this.long_neg = long_neg;
-        this.isban = isban;
-        this.idrubro = idrubro;
-        this.idtarifario = idtarifario;
-        this.iddistrito = iddistrito;
-        this.nom_rubro = nom_rubro;
-        this.foto_rubro = foto_rubro;
-        this.estado_rubro = estado_rubro;
-        this.costo_envio = costo_envio;
-        this.distancia_envio = distancia_envio;
-        this.estado_envio = estado_envio;
-        this.nombre_distrito = nombre_distrito;
-        this.idprovincia = idprovincia;
-        this.iddepartamento = iddepartamento;
-        this.estado_distrito = estado_distrito;
-        this.nombre_prov = nombre_prov;
-        this.estado_prov = estado_prov;
-        this.nombre_dep = nombre_dep;
-        this.estado_dep = estado_dep;
-        this.idpais = idpais;
-        this.nombre_pais = nombre_pais;
-        this.codigopais = codigopais;
-        this.codigotel = codigotel;
-        this.estado_pais = estado_pais;
+    public NegocioModel withRating(String rating) {
         this.rating = rating;
-    }
-
-    public String getCode_server() {
-        return code_server;
-    }
-
-    public String getRes_server() {
-        return res_server;
-    }
-
-    public String getMsg_server() {
-        return msg_server;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getIdnegocio() {
-        return idnegocio;
-    }
-
-    public String getRsocial_neg() {
-        return rsocial_neg;
-    }
-
-    public String getRuc_neg() {
-        return ruc_neg;
-    }
-
-    public String getCelular_neg() {
-        return celular_neg;
-    }
-
-    public String getCorreo_neg() {
-        return correo_neg;
-    }
-
-    public String getClave_neg() {
-        return clave_neg;
-    }
-
-    public String getFoto_neg() {
-        return foto_neg;
-    }
-
-    public String getAinicio_neg() {
-        return ainicio_neg;
-    }
-
-    public String getAcierre_neg() {
-        return acierre_neg;
-    }
-
-    public String getActivo_neg() {
-        return activo_neg;
-    }
-
-    public String getOnline_neg() {
-        return online_neg;
-    }
-
-    public String getEstado_neg() {
-        return estado_neg;
-    }
-
-    public String getDir_fiscal_neg() {
-        return dir_fiscal_neg;
-    }
-
-    public String getLat_neg() {
-        return lat_neg;
-    }
-
-    public String getLong_neg() {
-        return long_neg;
-    }
-
-    public String getIsban() {
-        return isban;
-    }
-
-    public String getIdrubro() {
-        return idrubro;
-    }
-
-    public String getIdtarifario() {
-        return idtarifario;
-    }
-
-    public String getIddistrito() {
-        return iddistrito;
-    }
-
-    public String getNom_rubro() {
-        return nom_rubro;
-    }
-
-    public String getFoto_rubro() {
-        return foto_rubro;
-    }
-
-    public String getEstado_rubro() {
-        return estado_rubro;
-    }
-
-    public String getCosto_envio() {
-        return costo_envio;
-    }
-
-    public String getDistancia_envio() {
-        return distancia_envio;
-    }
-
-    public String getEstado_envio() {
-        return estado_envio;
-    }
-
-    public String getNombre_distrito() {
-        return nombre_distrito;
-    }
-
-    public String getIdprovincia() {
-        return idprovincia;
-    }
-
-    public String getIddepartamento() {
-        return iddepartamento;
-    }
-
-    public String getEstado_distrito() {
-        return estado_distrito;
-    }
-
-    public String getNombre_prov() {
-        return nombre_prov;
-    }
-
-    public String getEstado_prov() {
-        return estado_prov;
-    }
-
-    public String getNombre_dep() {
-        return nombre_dep;
-    }
-
-    public String getEstado_dep() {
-        return estado_dep;
-    }
-
-    public String getIdpais() {
-        return idpais;
-    }
-
-    public String getNombre_pais() {
-        return nombre_pais;
-    }
-
-    public String getCodigopais() {
-        return codigopais;
-    }
-
-    public String getCodigotel() {
-        return codigotel;
-    }
-
-    public String getEstado_pais() {
-        return estado_pais;
-    }
-
-    // Setter Methods
-
-    public void setCode_server(String code_server) {
-        this.code_server = code_server;
-    }
-
-    public void setRes_server(String res_server) {
-        this.res_server = res_server;
-    }
-
-    public void setMsg_server(String msg_server) {
-        this.msg_server = msg_server;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setIdnegocio(String idnegocio) {
-        this.idnegocio = idnegocio;
-    }
-
-    public void setRsocial_neg(String rsocial_neg) {
-        this.rsocial_neg = rsocial_neg;
-    }
-
-    public void setRuc_neg(String ruc_neg) {
-        this.ruc_neg = ruc_neg;
-    }
-
-    public void setCelular_neg(String celular_neg) {
-        this.celular_neg = celular_neg;
-    }
-
-    public void setCorreo_neg(String correo_neg) {
-        this.correo_neg = correo_neg;
-    }
-
-    public void setClave_neg(String clave_neg) {
-        this.clave_neg = clave_neg;
-    }
-
-    public void setFoto_neg(String foto_neg) {
-        this.foto_neg = foto_neg;
-    }
-
-    public void setAinicio_neg(String ainicio_neg) {
-        this.ainicio_neg = ainicio_neg;
-    }
-
-    public void setAcierre_neg(String acierre_neg) {
-        this.acierre_neg = acierre_neg;
-    }
-
-    public void setActivo_neg(String activo_neg) {
-        this.activo_neg = activo_neg;
-    }
-
-    public void setOnline_neg(String online_neg) {
-        this.online_neg = online_neg;
-    }
-
-    public void setEstado_neg(String estado_neg) {
-        this.estado_neg = estado_neg;
-    }
-
-    public void setDir_fiscal_neg(String dir_fiscal_neg) {
-        this.dir_fiscal_neg = dir_fiscal_neg;
-    }
-
-    public void setLat_neg(String lat_neg) {
-        this.lat_neg = lat_neg;
-    }
-
-    public void setLong_neg(String long_neg) {
-        this.long_neg = long_neg;
-    }
-
-    public void setIsban(String isban) {
-        this.isban = isban;
-    }
-
-    public void setIdrubro(String idrubro) {
-        this.idrubro = idrubro;
-    }
-
-    public void setIdtarifario(String idtarifario) {
-        this.idtarifario = idtarifario;
-    }
-
-    public void setIddistrito(String iddistrito) {
-        this.iddistrito = iddistrito;
-    }
-
-    public void setNom_rubro(String nom_rubro) {
-        this.nom_rubro = nom_rubro;
-    }
-
-    public void setFoto_rubro(String foto_rubro) {
-        this.foto_rubro = foto_rubro;
-    }
-
-    public void setEstado_rubro(String estado_rubro) {
-        this.estado_rubro = estado_rubro;
-    }
-
-    public void setCosto_envio(String costo_envio) {
-        this.costo_envio = costo_envio;
-    }
-
-    public void setDistancia_envio(String distancia_envio) {
-        this.distancia_envio = distancia_envio;
-    }
-
-    public void setEstado_envio(String estado_envio) {
-        this.estado_envio = estado_envio;
-    }
-
-    public void setNombre_distrito(String nombre_distrito) {
-        this.nombre_distrito = nombre_distrito;
-    }
-
-    public void setIdprovincia(String idprovincia) {
-        this.idprovincia = idprovincia;
-    }
-
-    public void setIddepartamento(String iddepartamento) {
-        this.iddepartamento = iddepartamento;
-    }
-
-    public void setEstado_distrito(String estado_distrito) {
-        this.estado_distrito = estado_distrito;
-    }
-
-    public void setNombre_prov(String nombre_prov) {
-        this.nombre_prov = nombre_prov;
-    }
-
-    public void setEstado_prov(String estado_prov) {
-        this.estado_prov = estado_prov;
-    }
-
-    public void setNombre_dep(String nombre_dep) {
-        this.nombre_dep = nombre_dep;
-    }
-
-    public void setEstado_dep(String estado_dep) {
-        this.estado_dep = estado_dep;
-    }
-
-    public void setIdpais(String idpais) {
-        this.idpais = idpais;
-    }
-
-    public void setNombre_pais(String nombre_pais) {
-        this.nombre_pais = nombre_pais;
-    }
-
-    public void setCodigopais(String codigopais) {
-        this.codigopais = codigopais;
-    }
-
-    public void setCodigotel(String codigotel) {
-        this.codigotel = codigotel;
-    }
-
-    public void setEstado_pais(String estado_pais) {
-        this.estado_pais = estado_pais;
+        return this;
+    }
+
+    public String getEstimacionDemora() {
+        return estimacionDemora;
+    }
+
+    public void setEstimacionDemora(String estimacionDemora) {
+        this.estimacionDemora = estimacionDemora;
+    }
+
+    public NegocioModel withEstimacionDemora(String estimacionDemora) {
+        this.estimacionDemora = estimacionDemora;
+        return this;
+    }
+
+    public String getCalificadores() {
+        return calificadores;
+    }
+
+    public void setCalificadores(String calificadores) {
+        this.calificadores = calificadores;
+    }
+
+    public NegocioModel withCalificadores(String calificadores) {
+        this.calificadores = calificadores;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(NegocioModel.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append("codeServer");
+        sb.append('=');
+        sb.append(((this.codeServer == null)?"<null>":this.codeServer));
+        sb.append(',');
+        sb.append("resServer");
+        sb.append('=');
+        sb.append(((this.resServer == null)?"<null>":this.resServer));
+        sb.append(',');
+        sb.append("msgServer");
+        sb.append('=');
+        sb.append(((this.msgServer == null)?"<null>":this.msgServer));
+        sb.append(',');
+        sb.append("status");
+        sb.append('=');
+        sb.append(((this.status == null)?"<null>":this.status));
+        sb.append(',');
+        sb.append("idnegocio");
+        sb.append('=');
+        sb.append(((this.idnegocio == null)?"<null>":this.idnegocio));
+        sb.append(',');
+        sb.append("rsocialNeg");
+        sb.append('=');
+        sb.append(((this.rsocialNeg == null)?"<null>":this.rsocialNeg));
+        sb.append(',');
+        sb.append("fotoNeg");
+        sb.append('=');
+        sb.append(((this.fotoNeg == null)?"<null>":this.fotoNeg));
+        sb.append(',');
+        sb.append("celularNeg");
+        sb.append('=');
+        sb.append(((this.celularNeg == null)?"<null>":this.celularNeg));
+        sb.append(',');
+        sb.append("correoNeg");
+        sb.append('=');
+        sb.append(((this.correoNeg == null)?"<null>":this.correoNeg));
+        sb.append(',');
+        sb.append("ainicioNeg");
+        sb.append('=');
+        sb.append(((this.ainicioNeg == null)?"<null>":this.ainicioNeg));
+        sb.append(',');
+        sb.append("acierreNeg");
+        sb.append('=');
+        sb.append(((this.acierreNeg == null)?"<null>":this.acierreNeg));
+        sb.append(',');
+        sb.append("dirFiscalNeg");
+        sb.append('=');
+        sb.append(((this.dirFiscalNeg == null)?"<null>":this.dirFiscalNeg));
+        sb.append(',');
+        sb.append("costoEnvio");
+        sb.append('=');
+        sb.append(((this.costoEnvio == null)?"<null>":this.costoEnvio));
+        sb.append(',');
+        sb.append("distanciaEnvio");
+        sb.append('=');
+        sb.append(((this.distanciaEnvio == null)?"<null>":this.distanciaEnvio));
+        sb.append(',');
+        sb.append("bannerNeg");
+        sb.append('=');
+        sb.append(((this.bannerNeg == null)?"<null>":this.bannerNeg));
+        sb.append(',');
+        sb.append("nomRubro");
+        sb.append('=');
+        sb.append(((this.nomRubro == null)?"<null>":this.nomRubro));
+        sb.append(',');
+        sb.append("fotoRubro");
+        sb.append('=');
+        sb.append(((this.fotoRubro == null)?"<null>":this.fotoRubro));
+        sb.append(',');
+        sb.append("iddistrito");
+        sb.append('=');
+        sb.append(((this.iddistrito == null)?"<null>":this.iddistrito));
+        sb.append(',');
+        sb.append("nombreDistrito");
+        sb.append('=');
+        sb.append(((this.nombreDistrito == null)?"<null>":this.nombreDistrito));
+        sb.append(',');
+        sb.append("idprovincia");
+        sb.append('=');
+        sb.append(((this.idprovincia == null)?"<null>":this.idprovincia));
+        sb.append(',');
+        sb.append("iddepartamento");
+        sb.append('=');
+        sb.append(((this.iddepartamento == null)?"<null>":this.iddepartamento));
+        sb.append(',');
+        sb.append("estadoDistrito");
+        sb.append('=');
+        sb.append(((this.estadoDistrito == null)?"<null>":this.estadoDistrito));
+        sb.append(',');
+        sb.append("idcodigoPostal");
+        sb.append('=');
+        sb.append(((this.idcodigoPostal == null)?"<null>":this.idcodigoPostal));
+        sb.append(',');
+        sb.append("habilitadoDistrito");
+        sb.append('=');
+        sb.append(((this.habilitadoDistrito == null)?"<null>":this.habilitadoDistrito));
+        sb.append(',');
+        sb.append("nombreProv");
+        sb.append('=');
+        sb.append(((this.nombreProv == null)?"<null>":this.nombreProv));
+        sb.append(',');
+        sb.append("estadoProv");
+        sb.append('=');
+        sb.append(((this.estadoProv == null)?"<null>":this.estadoProv));
+        sb.append(',');
+        sb.append("nombreDep");
+        sb.append('=');
+        sb.append(((this.nombreDep == null)?"<null>":this.nombreDep));
+        sb.append(',');
+        sb.append("estadoDep");
+        sb.append('=');
+        sb.append(((this.estadoDep == null)?"<null>":this.estadoDep));
+        sb.append(',');
+        sb.append("idpais");
+        sb.append('=');
+        sb.append(((this.idpais == null)?"<null>":this.idpais));
+        sb.append(',');
+        sb.append("nombrePais");
+        sb.append('=');
+        sb.append(((this.nombrePais == null)?"<null>":this.nombrePais));
+        sb.append(',');
+        sb.append("codigopais");
+        sb.append('=');
+        sb.append(((this.codigopais == null)?"<null>":this.codigopais));
+        sb.append(',');
+        sb.append("codigotel");
+        sb.append('=');
+        sb.append(((this.codigotel == null)?"<null>":this.codigotel));
+        sb.append(',');
+        sb.append("estadoPais");
+        sb.append('=');
+        sb.append(((this.estadoPais == null)?"<null>":this.estadoPais));
+        sb.append(',');
+        sb.append("rating");
+        sb.append('=');
+        sb.append(((this.rating == null)?"<null>":this.rating));
+        sb.append(',');
+        sb.append("estimacionDemora");
+        sb.append('=');
+        sb.append(((this.estimacionDemora == null)?"<null>":this.estimacionDemora));
+        sb.append(',');
+        sb.append("calificadores");
+        sb.append('=');
+        sb.append(((this.calificadores == null)?"<null>":this.calificadores));
+        sb.append(',');
+        if (sb.charAt((sb.length()- 1)) == ',') {
+            sb.setCharAt((sb.length()- 1), ']');
+        } else {
+            sb.append(']');
+        }
+        return sb.toString();
     }
 }

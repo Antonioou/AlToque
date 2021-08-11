@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.altoque.delivery.view.initial.ui.detail.DetailBusinessActivity">
+    <item
+        android:id="@+id/action_addfav"
+        android:orderInCategory="100"
+        android:title="@string/action_addfav"
+        app:showAsAction="never" />
+</menu>

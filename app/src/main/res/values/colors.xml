@@ -11,6 +11,8 @@
     <color name="colorSecundary">#FBD127</color>
     <color name="colorAccent">#03D1B4</color>
 
+    <color name="transparent">#00000000</color>
+
 
     <color name="colorWhite">#fff</color>
 

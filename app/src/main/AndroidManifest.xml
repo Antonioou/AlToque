@@ -17,8 +17,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AlToque">
-        <activity android:name=".view.oauth.OAuthMainActivity"
-            android:theme="@style/Theme.AlToque.NoActionBar"></activity>
+        <activity
+            android:name=".view.AccessRestrictActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AlToque.NoActionBar"/>
+        <activity
+            android:name=".view.initial.ui.detail.DetailBusinessActivity"
+            android:label=""
+            android:theme="@style/AppTheme.TranslucentSystemBars" />
+        <activity
+            android:name=".view.initial.ui.services.ListBusinessByRubroActivity"
+            android:theme="@style/Theme.AlToque.NoActionBar" />
+        <activity
+            android:name=".view.initial.ui.services.SearchAccessActivity"
+            android:theme="@style/Theme.AlToque.NoActionBar" />
+        <activity
+            android:name=".view.oauth.OAuthMainActivity"
+            android:theme="@style/Theme.AlToque.NoActionBar" />
         <activity
             android:name=".view.direction.DirectionStaticActivity"
             android:hardwareAccelerated="true"
@@ -40,11 +55,11 @@
             android:name=".view.initial.InitialActivity"
             android:label="@string/title_activity_initial" />
         <activity
-            android:name=".view.oauth.OAuthActivity"
+            android:name=".deprecated.OAuthActivity"
             android:theme="@style/Theme.AlToque.NoActionBar" />
         <activity
             android:name=".view.SplashActivity"
-            android:theme="@style/Theme.AlToque.NoActionBar">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

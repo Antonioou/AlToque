@@ -2,7 +2,6 @@ package com.altoque.delivery.view.direction;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -21,7 +20,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
-import android.se.omapi.SEService;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -37,8 +35,6 @@ import com.altoque.delivery.apiInterface.ApiInterface;
 import com.altoque.delivery.data.SessionSP;
 import com.altoque.delivery.model.DomicilioModel;
 import com.altoque.delivery.view.initial.InitialActivity;
-import com.altoque.delivery.view.oauth.OAuthActivity;
-import com.altoque.delivery.view.oauth.RegisterActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -49,7 +45,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -120,7 +115,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
     private void eventListener() {
 
         feb_next.setOnClickListener(v -> {
-            Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
             validateRegister();
         });
         feb_update.setOnClickListener(v -> {
@@ -178,7 +173,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
             String iddom = getIntent().getExtras().getString("value_id");
             value_use = getIntent().getExtras().getString("state_use");
 
-            Toast.makeText(this, "" + value_use, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "" + value_use, Toast.LENGTH_SHORT).show();
             //Log.e("DirectionClient_log", "intent "+iddom);
             //Log.e("DirectionClient_log", "action "+action);
 
@@ -425,11 +420,11 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                 public void onResponse(@NotNull Call<List<DomicilioModel>> call,
                                        @NotNull Response<List<DomicilioModel>> response) {
                     //pb_load_direction.setVisibility(View.GONE);
-                    Log.e("DirectionClient_log", "body: " + response.body());
+                    //Log.e("DirectionClient_log", "body: " + response.body());
                     if (response.isSuccessful()) {
                         assert response.body() != null;
                         String code = response.body().get(0).getCode_server().toString();
-                        Log.e("DirectionClient_log", "body: " + response.body());
+                        //Log.e("DirectionClient_log", "body: " + response.body());
 
                         if (code.equals("221")) {
                             String namedir = response.body().get(0).getDireccion_dom().toString();
@@ -505,7 +500,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
             if (globalLat != 0.0 && globalLng != 0.0) {
 
                 String name = et_name.getText().toString();
-                Log.e("DirectionClient_log", "reg 00" + name);
+                //Log.e("DirectionClient_log", "reg 00" + name);
                 String reference = et_reference.getText().toString();
                 //String distrito = et_distrito.getText().toString();
                 int numberf = Integer.parseInt(et_numberflat.getText().toString());
@@ -530,7 +525,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                     et_name.setError(null);
                     return;
                 } else {
-                    Log.e("DirectionClient_log", "reg 0" + idcliente);
+                    //Log.e("DirectionClient_log", "reg 0" + idcliente);
                     disableInput();
                     et_name.setError(null);
                     et_reference.setError(null);
@@ -540,7 +535,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                         updateDirection(name, String.valueOf(numberf), reference, lat, lng, idcliente, value_iddom);
                         //Toast.makeText(this, "to Update", Toast.LENGTH_SHORT).show();
                     } else if (value_action.equals("register_data")) {
-                        Log.e("DirectionClient_log", "reg 1" + idcliente);
+                        //Log.e("DirectionClient_log", "reg 1" + idcliente);
                         registerDirection(name, String.valueOf(numberf), reference, lat, lng, idcliente);
                     }
 
@@ -584,7 +579,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                 public void onResponse(@NotNull Call<List<DomicilioModel>> call,
                                        @NotNull Response<List<DomicilioModel>> response) {
                     if (response.isSuccessful()) {
-                        Log.e("DirectionClient_log", "body: " + response.body());
+                        //Log.e("DirectionClient_log", "body: " + response.body());
                         assert response.body() != null;
                         switch (response.body().get(0).getCode_server()) {
                             case "221":

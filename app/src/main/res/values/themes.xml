@@ -34,7 +34,32 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.AlToque.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.AlToque.NoActionBar.Primary">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimary</item>
+    </style>
 
+    <style name="Theme.Toolbar" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.TranslucentSystemBars" parent="Theme.AlToque.NoActionBar">
+
+        <item name="windowNoTitle">true</item>
+        <!--<item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        -->
+    </style>
+    <style name="Theme.AlToque.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.AlToque.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="SplashTheme" parent="Theme.AlToque.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimary</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+
 </resources>

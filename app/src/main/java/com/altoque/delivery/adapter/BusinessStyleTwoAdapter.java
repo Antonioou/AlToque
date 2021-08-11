@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.altoque.delivery.R;
 import com.altoque.delivery.model.NegocioModel;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -55,22 +56,37 @@ public class BusinessStyleTwoAdapter extends RecyclerView.Adapter<BusinessStyleT
 
         //name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 
-        String name = list.get(pos).getRsocial_neg();
+        String name = list.get(pos).getRsocialNeg();
         holder.name.setText(name);
-        String direction = list.get(pos).getDir_fiscal_neg();
+        String direction = list.get(pos).getDirFiscalNeg();
         holder.direction.setText(direction);
-        String cost = list.get(pos).getCosto_envio();
+        String cost = list.get(pos).getCostoEnvio();
         holder.cost.setText(cost);
-        String rate = list.get(position).getRating();
+        String rate = list.get(pos).getRating();
         holder.rate.setText(rate);
+        String time = list.get(pos).getEstimacionDemora();
+        holder.time.setText(time);
 
         try {
-            if (list.get(pos).getFoto_neg() != null) {
-                String url = String.valueOf(list.get(pos).getFoto_neg());
+            if (list.get(pos).getFotoNeg() != null) {
+                String url = String.valueOf(list.get(pos).getFotoNeg());
 
                 Picasso.get().load(url)
                         .placeholder(R.drawable.second_image)
-                        .into(holder.url);
+                        .into(holder.logo);
+            }
+        } catch (Exception e) {
+            Log.e("Debug_error", "" + e);
+        }
+
+
+        try {
+            if (list.get(pos).getBannerNeg() != null) {
+                String url = String.valueOf(list.get(pos).getBannerNeg());
+
+                Picasso.get().load(url)
+                        .placeholder(R.drawable.second_image)
+                        .into(holder.banner);
             }
         } catch (Exception e) {
             Log.e("Debug_error", "" + e);
@@ -96,17 +112,20 @@ public class BusinessStyleTwoAdapter extends RecyclerView.Adapter<BusinessStyleT
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, cost, direction, rate;
-        ImageView url;
+        TextView name, cost, direction, rate, time;
+        ImageView banner;
+        CircularImageView logo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.tv_name__business_style_two);
-            url = itemView.findViewById(R.id.iv_photo_business_style_two);
+            banner = itemView.findViewById(R.id.iv_banner_business_style_two);
+            logo = itemView.findViewById(R.id.iv_logo_business_style_two);
             cost = itemView.findViewById(R.id.tv_cost__business_style_two);
             direction = itemView.findViewById(R.id.tv_direction_business_style_two);
             rate = itemView.findViewById(R.id.tv_rate_business_style_two);
+            time = itemView.findViewById(R.id.tv_time_business_style_two);
         }
     }
 }

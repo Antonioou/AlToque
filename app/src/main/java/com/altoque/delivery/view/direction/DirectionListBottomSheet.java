@@ -116,12 +116,10 @@ public class DirectionListBottomSheet extends BottomSheetDialogFragment implemen
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            requireActivity().getWindow()
-                    .setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
-            requireActivity().getWindow()
-                    .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        requireActivity().getWindow()
+                .setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
+        requireActivity().getWindow()
+                .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     @NonNull

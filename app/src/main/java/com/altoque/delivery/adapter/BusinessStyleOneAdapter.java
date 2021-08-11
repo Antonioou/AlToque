@@ -52,24 +52,26 @@ public class BusinessStyleOneAdapter extends RecyclerView.Adapter<BusinessStyleO
     @Override
     public void onBindViewHolder(@NonNull BusinessStyleOneAdapter.ViewHolder holder, int position) {
 
-        pos = position;
+        pos = holder.getAdapterPosition();
 
         //name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 
-        String name = list.get(position).getRsocial_neg();
+        String name = list.get(position).getRsocialNeg();
         holder.name.setText(name);
-        String direction = list.get(position).getDir_fiscal_neg();
+        String direction = list.get(position).getDirFiscalNeg();
         holder.direction.setText(direction);
-        String cost = list.get(position).getCosto_envio();
+        String cost = list.get(position).getCostoEnvio();
         holder.cost.setText(cost);
         String rate = list.get(position).getRating();
         holder.rate.setText(rate);
+        String time = list.get(pos).getEstimacionDemora();
+        holder.time.setText(time);
         /*String name = list.get(position).getRsocial_neg();
         holder.name.setText(name);*/
 
         try {
-            if (list.get(position).getFoto_neg() != null) {
-                String url = String.valueOf(list.get(position).getFoto_neg());
+            if (list.get(position).getFotoNeg() != null) {
+                String url = String.valueOf(list.get(position).getFotoNeg());
 
                 Picasso.get().load(url)
                         .placeholder(R.drawable.second_image)
@@ -97,7 +99,7 @@ public class BusinessStyleOneAdapter extends RecyclerView.Adapter<BusinessStyleO
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, cost, direction, rate;
+        TextView name, cost, direction, rate, time;
         ImageView url;
 
         public ViewHolder(@NonNull View itemView) {
@@ -108,6 +110,7 @@ public class BusinessStyleOneAdapter extends RecyclerView.Adapter<BusinessStyleO
             cost = itemView.findViewById(R.id.tv_cost__business_style_one);
             rate = itemView.findViewById(R.id.tv_rate_business_style_one);
             direction = itemView.findViewById(R.id.tv_direction__business_style_one);
+            time = itemView.findViewById(R.id.tv_time_business_style_one);
         }
     }
 }

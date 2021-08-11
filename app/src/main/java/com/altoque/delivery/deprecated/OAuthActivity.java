@@ -1,4 +1,4 @@
-package com.altoque.delivery.view.oauth;
+package com.altoque.delivery.deprecated;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +24,7 @@ import com.altoque.delivery.data.SessionSP;
 import com.altoque.delivery.model.CustomerModel;
 import com.altoque.delivery.model.JoinResponseModel;
 import com.altoque.delivery.view.initial.InitialActivity;
+import com.altoque.delivery.view.oauth.RegisterActivity;
 import com.chaos.view.PinView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
@@ -145,7 +146,7 @@ public class OAuthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_oauth);
+        //setContentView(R.layout.activity_oauth);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow()
@@ -155,7 +156,7 @@ public class OAuthActivity extends AppCompatActivity {
         }
 
         //BOTTOM SHEET
-        layout_bottomsheet = findViewById(R.id.bottomsheet_oauth);
+        //layout_bottomsheet = findViewById(R.id.bottomsheet_oauth);
         bottomsheetbehavior = BottomSheetBehavior.from(layout_bottomsheet);
         bottomsheetbehavior.setState(bottomsheetbehavior.STATE_HIDDEN);
 

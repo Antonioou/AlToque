@@ -1,5 +1,6 @@
 package com.altoque.delivery.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,7 +57,7 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
         this.bottomSheet = bottomSheet;
     }
 
-
+    @NonNull
     @Override
     public DirectionClientListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
@@ -74,14 +75,14 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
     @Override
     public void onBindViewHolder(@NonNull DirectionClientListAdapter.ViewHolder holder, int position) {
 
-        pos = position;
+        pos = holder.getAdapterPosition();
 
         String name = list.get(position).getDireccion_dom();
         holder.name.setText(name);
         String reference = list.get(position).getReferencia_dom();
         holder.reference.setText(reference);
-        String numberfloat = list.get(position).getPiso_dom();
-        holder.numberfloat.setText(numberfloat);
+        /*String numberfloat = list.get(position).getPiso_dom();
+        holder.numberfloat.setText(numberfloat);*/
 
         String iddom = list.get(position).getIddomicilio();
         value_use = list.get(position).getUso_dom();
@@ -104,8 +105,6 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
                 holder.fab_setuse.setImageResource(R.drawable.ic_baseline_where_to_vote_24);
                 break;
         }
-
-
 
         holder.fab_view.setOnClickListener(view -> {
             context.startActivity(new Intent(context, DirectionStaticActivity.class));
@@ -157,9 +156,10 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
                                         "4", iddom, idclient);
                         ApiHelper.enqueueWithRetry(call, new Callback<List<DomicilioModel>>() {
                             @Override
-                            public void onResponse(Call<List<DomicilioModel>> call, Response<List<DomicilioModel>> response) {
+                            public void onResponse(@NonNull Call<List<DomicilioModel>> call, @NonNull Response<List<DomicilioModel>> response) {
                                 if (response.isSuccessful()) {
-                                    Log.e("Error_log_adapter", "pos: "+iddom+"\n"+ "idcli: "+idclient+"\n"+response.body().toString());
+                                    assert response.body() != null;
+                                    //Log.e("Error_log_adapter", "pos: "+iddom+"\n"+ "idcli: "+idclient+"\n"+response.body().toString());
                                     if (response.body().get(0).getCode_server().equals("221")) {
                                         list.remove(pos);
                                         notifyDataSetChanged();
@@ -172,7 +172,7 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
                             }
 
                             @Override
-                            public void onFailure(Call<List<DomicilioModel>> call, Throwable t) {
+                            public void onFailure(@NonNull Call<List<DomicilioModel>> call, @NonNull Throwable t) {
 
                             }
                         });
@@ -220,7 +220,7 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
             }
 
             @Override
-            public void onFailure(Call<List<DomicilioModel>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<DomicilioModel>> call, @NonNull Throwable t) {
                 Log.e("adapterDirClient_error", "error: " + t.getMessage());
 
             }
@@ -247,7 +247,7 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, reference, numberfloat;
+        TextView name, reference;
         ImageView url;
         FloatingActionButton fab_view, fab_delete, fab_edit, fab_setuse;
         MaterialCardView cv_section;
@@ -257,7 +257,7 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
 
             name = itemView.findViewById(R.id.tv_name_item_direction_list);
             reference = itemView.findViewById(R.id.tv_reference_item_direction_list);
-            numberfloat = itemView.findViewById(R.id.tv_numberfloat_item_direction_list);
+            //numberfloat numberfloat = itemView.findViewById(R.id.tv_numberfloat_item_direction_list);
             fab_view = itemView.findViewById(R.id.fab_view_item_direction_list);
             fab_delete = itemView.findViewById(R.id.fab_delete_item_direction_list);
             fab_edit = itemView.findViewById(R.id.fab_edit_item_direction_list);

@@ -7,13 +7,11 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dp_15"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="@dimen/dp_15"
-
-        android:clickable="true"
-        android:focusable="true"
         android:foreground="?android:selectableItemBackground"
         android:visibility="visible"
+
         app:cardBackgroundColor="@color/colorWhite"
         app:cardCornerRadius="@dimen/dp_30"
         app:cardElevation="@dimen/dp_5"
@@ -47,7 +45,7 @@
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/productsansregular"
                 android:gravity="center"
-                android:text="Comida"
+                android:text="-"
                 android:textColor="@color/colorGrey"
                 android:textSize="12sp" />
 

@@ -182,7 +182,7 @@ public class OAuthInitialFragment extends Fragment {
                 //int minutes = seconds / 60;
                 seconds = seconds % 60;
                 tv_count.setVisibility(View.VISIBLE);
-                tv_count.setText("Tiempo para intentar nuevamente: "+ String.format("%02d", seconds));
+                tv_count.setText("Tiempo para intentar nuevamente: "+ String.format("%02d", seconds)+" segundos.");
             }
 
             public void onFinish() {

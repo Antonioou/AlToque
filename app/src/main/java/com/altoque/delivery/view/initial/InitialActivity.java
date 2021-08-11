@@ -27,12 +27,10 @@ public class InitialActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow()
-                    .setStatusBarColor(ContextCompat.getColor(InitialActivity.this, R.color.colorWhite));
-            getWindow()
-                    .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        getWindow()
+                .setStatusBarColor(ContextCompat.getColor(InitialActivity.this, R.color.colorWhite));
+        getWindow()
+                .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_initial);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_initial);

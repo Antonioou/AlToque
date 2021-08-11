@@ -1,5 +1,6 @@
 package com.altoque.delivery.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.altoque.delivery.R;
-import com.altoque.delivery.model.NegocioModel;
+import com.altoque.delivery.model.RubroModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -23,13 +24,13 @@ import java.util.List;
 public class ServicesStyleOneAdapter extends RecyclerView.Adapter<ServicesStyleOneAdapter.ViewHolder>
         implements View.OnClickListener {
 
-    List<NegocioModel> list;
+    List<RubroModel> list;
     Context context;
     private View.OnClickListener listener;
 
     int pos;
 
-    public ServicesStyleOneAdapter(List<NegocioModel> list) {
+    public ServicesStyleOneAdapter(List<RubroModel> list) {
         this.list = list;
     }
 
@@ -50,13 +51,13 @@ public class ServicesStyleOneAdapter extends RecyclerView.Adapter<ServicesStyleO
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ServicesStyleOneAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ServicesStyleOneAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         pos = position;
 
         //name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 
-        String name = list.get(position).getRsocial_neg();
+        String name = list.get(position).getNom_rubro();
         holder.name.setText(name);
         //String icon = list.get(position).getDir_fiscal_neg();
         //holder.direction.setText(direction);
