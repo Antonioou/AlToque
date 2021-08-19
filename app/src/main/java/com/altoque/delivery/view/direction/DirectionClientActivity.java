@@ -74,6 +74,7 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
     String value_action = "";
     String value_iddom = "";
     String value_use = "";
+    String value_source = "";
 
 
     private FirebaseAuth mAuth;
@@ -112,26 +113,6 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
 
     }
 
-    private void eventListener() {
-
-        feb_next.setOnClickListener(v -> {
-            //Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
-            validateRegister();
-        });
-        feb_update.setOnClickListener(v -> {
-            //feb_update.
-            if (value_state) {
-                validateRegister();
-            } else {
-                feb_update.setText("Guardar dirección");
-                value_state = true;
-                et_name.setEnabled(true);
-                et_numberflat.setEnabled(true);
-                et_reference.setEnabled(true);
-            }
-        });
-
-    }
 
     private void initResources() {
 
@@ -139,7 +120,8 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_dirclient);
-        mapFragment.getMapAsync(this::onMapReady);
+        assert mapFragment != null;
+        mapFragment.getMapAsync(this);
 
         mat = new AlertDialog.Builder(DirectionClientActivity.this).create();
 
@@ -159,19 +141,18 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_direction_client);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow()
-                    .setStatusBarColor(ContextCompat.getColor(DirectionClientActivity.this,
-                            R.color.colorWhite));
-            getWindow()
-                    .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        getWindow()
+                .setStatusBarColor(ContextCompat.getColor(DirectionClientActivity.this,
+                        R.color.colorWhite));
+        getWindow()
+                .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         compilateInit();
 
         if (getIntent().getExtras() != null) {
             String action = getIntent().getExtras().getString("action");
             String iddom = getIntent().getExtras().getString("value_id");
             value_use = getIntent().getExtras().getString("state_use");
+            value_source = getIntent().getExtras().getString("value_source");
 
             //Toast.makeText(this, "" + value_use, Toast.LENGTH_SHORT).show();
             //Log.e("DirectionClient_log", "intent "+iddom);
@@ -496,61 +477,66 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
     }
 
     private void validateRegister() {
-        if (!Objects.requireNonNull(globalMarker.getTitle()).isEmpty()) {
-            if (globalLat != 0.0 && globalLng != 0.0) {
 
-                String name = et_name.getText().toString();
-                //Log.e("DirectionClient_log", "reg 00" + name);
-                String reference = et_reference.getText().toString();
-                //String distrito = et_distrito.getText().toString();
-                int numberf = Integer.parseInt(et_numberflat.getText().toString());
+        try {
 
-                String idcliente = SessionSP.get(DirectionClientActivity.this).
-                        getIdClientSessSp();
-                //Log.e("DirectionClient_log", "ID CLIENTE: " + idcliente);
-                String lat = String.valueOf(globalLat);
-                String lng = String.valueOf(globalLng);
 
-                if (name.isEmpty()) {
-                    et_name.setError("Ingrese un nombre");
-                    return;
-                } else if (reference.isEmpty()) {
-                    et_reference.setError("Ingrese alguna referencia");
-                    et_name.setError(null);
-                    et_numberflat.setError(null);
-                    return;
-                } else if (numberf < 1 || numberf > 99) {
-                    et_numberflat.setError("Número incorrecto. Máximo hasta 99.");
-                    et_reference.setError(null);
-                    et_name.setError(null);
-                    return;
-                } else {
-                    //Log.e("DirectionClient_log", "reg 0" + idcliente);
-                    disableInput();
-                    et_name.setError(null);
-                    et_reference.setError(null);
-                    et_numberflat.setError(null);
-                    //et_distrito.setError(null);
-                    if (value_action.equals("edit_data")) {
-                        updateDirection(name, String.valueOf(numberf), reference, lat, lng, idcliente, value_iddom);
-                        //Toast.makeText(this, "to Update", Toast.LENGTH_SHORT).show();
-                    } else if (value_action.equals("register_data")) {
-                        //Log.e("DirectionClient_log", "reg 1" + idcliente);
-                        registerDirection(name, String.valueOf(numberf), reference, lat, lng, idcliente);
-                    }
+            //if (!Objects.requireNonNull(globalMarker.getTitle()).isEmpty()) {
+            //if (globalLat != 0.0 && globalLng != 0.0) {
 
-                    //disableInput();
+            String name = et_name.getText().toString();
+            String reference = et_reference.getText().toString();
+            Integer numberf = Integer.parseInt(et_numberflat.getText().toString());
+
+
+            String idcliente = SessionSP.get(DirectionClientActivity.this).
+                    getIdClientSessSp();
+            String lat = String.valueOf(globalLat);
+            String lng = String.valueOf(globalLng);
+
+            if (name.isEmpty()) {
+                et_name.setError("Ingrese un nombre a la dirección");
+                return;
+            } else if (reference.isEmpty()) {
+                et_reference.setError("Ingrese alguna referencia");
+                et_name.setError(null);
+                et_numberflat.setError(null);
+                return;
+            } else if (numberf < 1 || numberf > 99) {
+                et_numberflat.setError("Número incorrecto. Máximo hasta 99.");
+                et_reference.setError(null);
+                et_name.setError(null);
+                return;
+            } else {
+                Log.e("DirectionClient_log", "reg 0" + idcliente);
+                disableInput();
+                et_name.setError(null);
+                et_reference.setError(null);
+                et_numberflat.setError(null);
+
+                if (value_action.equals("edit_data")) {
+                    updateDirection(name, String.valueOf(numberf), reference, lat, lng, idcliente, value_iddom);
+                    //Toast.makeText(this, "to Update", Toast.LENGTH_SHORT).show();
+                } else if (value_action.equals("register_data")) {
+                    Log.e("DirectionClient_log", "reg 1" + idcliente);
+                    registerDirection(name, String.valueOf(numberf), reference, lat, lng, idcliente);
                 }
-            }
 
-        } else {
+                //disableInput();
+            }
+            /*}*/
+
+        /*} else {
             Toast.makeText(this, "Por favor espere que se cargue.", Toast.LENGTH_SHORT).show();
+        }*/
+
+        } catch (Exception e) {
+            Log.e("DirectionClient_log", "TRY " + e.getMessage().toString());
         }
     }
 
     private void disableInput() {
         et_name.setEnabled(false);
-        //et_distrito.setEnabled(false);
         et_numberflat.setEnabled(false);
         et_reference.setEnabled(false);
     }
@@ -559,7 +545,6 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
         feb_next.setEnabled(true);
         feb_update.setEnabled(true);
         et_name.setEnabled(true);
-        //et_distrito.setEnabled(true);
         et_numberflat.setEnabled(true);
         et_reference.setEnabled(true);
     }
@@ -579,19 +564,22 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                 public void onResponse(@NotNull Call<List<DomicilioModel>> call,
                                        @NotNull Response<List<DomicilioModel>> response) {
                     if (response.isSuccessful()) {
-                        //Log.e("DirectionClient_log", "body: " + response.body());
+                        Log.e("DirectionClient_log", "body: " + response.body());
                         assert response.body() != null;
                         switch (response.body().get(0).getCode_server()) {
                             case "221":
                                 SessionSP.get(DirectionClientActivity.this).saveStateLogin("yes");
 
-                                if (value_action.equals("register_data")) {
+                                if (value_source.equals("actv_register_client")) {
+                                    Intent intent = new Intent(DirectionClientActivity.this, InitialActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }else if (value_action.equals("bts_list_direction")) {
+                                    Toast.makeText(DirectionClientActivity.this,
+                                            "Registro exitoso.", Toast.LENGTH_LONG).show();
                                     finish();
                                 }
 
-                                Intent intent = new Intent(DirectionClientActivity.this, InitialActivity.class);
-                                startActivity(intent);
-                                finish();
                                 break;
                             case "110":
                                 Toast.makeText(DirectionClientActivity.this,
@@ -602,7 +590,6 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                                 Toast.makeText(DirectionClientActivity.this,
                                         "Máxima cantidad de direcciones excedidas.", Toast.LENGTH_LONG).show();
                                 //disableInput();
-
                                 break;
                         }
 
@@ -635,21 +622,23 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                 if (response.isSuccessful()) {
                     //Log.e("DirectionClient_log", "body: " + response.body());
                     assert response.body() != null;
-                    switch (response.body().get(0).getCode_server()) {
-                        case "221":
-                            Toast.makeText(DirectionClientActivity.this, "Actualización completa.", Toast.LENGTH_SHORT).show();
-                            disableInput();
-                            feb_update.setText("Actualizar dirección");
-                            value_state = false;
-                            break;
-                        case "110":
-                            Toast.makeText(DirectionClientActivity.this,
-                                    "Error de parametros. Intente mas tarde.", Toast.LENGTH_LONG).show();
-                            enableInput();
-                            break;
-                        case "010":
+                    if (response.body().size() > 0) {
+                        switch (response.body().get(0).getCode_server()) {
+                            case "221":
+                                Toast.makeText(DirectionClientActivity.this, "Actualización completa.", Toast.LENGTH_SHORT).show();
+                                disableInput();
+                                feb_update.setText("Actualizar dirección");
+                                value_state = false;
+                                break;
+                            case "110":
+                                Toast.makeText(DirectionClientActivity.this,
+                                        "Error de parametros. Intente mas tarde.", Toast.LENGTH_LONG).show();
+                                enableInput();
+                                break;
+                            case "010":
 
-                            break;
+                                break;
+                        }
                     }
 
                 } else {
@@ -664,5 +653,33 @@ public class DirectionClientActivity extends AppCompatActivity implements OnMapR
                 enableInput();
             }
         });
+    }
+
+
+    private void eventListener() {
+
+        feb_next.setOnClickListener(v -> {
+            Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
+            validateRegister();
+        });
+
+        feb_update.setOnClickListener(v -> {
+            //feb_update.
+            //Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
+            if (value_state == false) {
+                //Toast.makeText(this, "VALUE GUARDAR" + value_state, Toast.LENGTH_SHORT).show();
+
+                feb_update.setText("Guardar dirección");
+                value_state = true;
+                et_name.setEnabled(true);
+                et_numberflat.setEnabled(true);
+                et_reference.setEnabled(true);
+
+            } else {
+                //Toast.makeText(this, "VALUE " + value_state, Toast.LENGTH_SHORT).show();
+                validateRegister();
+            }
+        });
+
     }
 }

@@ -48,8 +48,6 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
 
     String value_use = "";
 
-    int pos;
-
     public DirectionClientListAdapter(List<DomicilioModel> list, Context context,
                                       DirectionListBottomSheet bottomSheet) {
         this.list = list;
@@ -75,7 +73,6 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
     @Override
     public void onBindViewHolder(@NonNull DirectionClientListAdapter.ViewHolder holder, int position) {
 
-        pos = holder.getAdapterPosition();
 
         String name = list.get(position).getDireccion_dom();
         holder.name.setText(name);
@@ -96,6 +93,7 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
                 holder.cv_section.setStrokeWidth(3);
                 holder.cv_section.setStrokeColor(context.getResources().getColor(R.color.colorPrimary));
                 holder.fab_delete.setVisibility(View.GONE);
+                //holder.fab_edit.setVisibility(View.GONE);
                 break;
             case "0":
                 value_use = "0";
@@ -112,10 +110,10 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
         });
 
         holder.fab_edit.setOnClickListener(v -> {
-            //Log.e("DirectionClient_log", "iddom adapter " + iddom);
             Intent intent = new Intent(context, DirectionClientActivity.class);
             intent.putExtra("action", "edit_data");
             intent.putExtra("value_id", iddom);
+            intent.putExtra("value_source", "bts_list_direction");
             context.startActivity(intent);
         });
 
@@ -161,9 +159,9 @@ public class DirectionClientListAdapter extends RecyclerView.Adapter<DirectionCl
                                     assert response.body() != null;
                                     //Log.e("Error_log_adapter", "pos: "+iddom+"\n"+ "idcli: "+idclient+"\n"+response.body().toString());
                                     if (response.body().get(0).getCode_server().equals("221")) {
-                                        list.remove(pos);
+                                        list.remove(position);
+                                        notifyItemRemoved(position);
                                         notifyDataSetChanged();
-                                        notifyItemRemoved(pos);
                                         Toast.makeText(context, "Eliminado correctamente.", Toast.LENGTH_SHORT).show();
                                     } else if (response.body().get(0).getCode_server().equals("010")) {
                                         Toast.makeText(context, "No se logró eliminar.", Toast.LENGTH_SHORT).show();

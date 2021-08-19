@@ -24,8 +24,6 @@ public class RecentSearchAdapter extends RecyclerView.Adapter<RecentSearchAdapte
     Context context;
     private View.OnClickListener listener;
 
-    int pos;
-
     public RecentSearchAdapter(List<String> list) {
         this.list = list;
     }
@@ -48,8 +46,6 @@ public class RecentSearchAdapter extends RecyclerView.Adapter<RecentSearchAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecentSearchAdapter.ViewHolder holder, int position) {
-
-        pos = position;
         
         String name = list.get(position);
         holder.name.setText(name);

@@ -140,10 +140,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow()
-                    .setStatusBarColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary));
-        }
+        getWindow()
+                .setStatusBarColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorPrimary));
 
         initView();
         initResources();
@@ -165,7 +163,7 @@ public class RegisterActivity extends AppCompatActivity {
         Call<List<GeneroModel>> call = apiInterface.getGenero("select_gender");
         ApiHelper.enqueueWithRetry(call, new Callback<List<GeneroModel>>() {
             @Override
-            public void onResponse(Call<List<GeneroModel>> call, Response<List<GeneroModel>> response) {
+            public void onResponse(@NonNull Call<List<GeneroModel>> call, @NonNull Response<List<GeneroModel>> response) {
                 if (response.isSuccessful()) {
 
 
@@ -270,7 +268,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             btn_next.setEnabled(false);
 
-            String strFileName = "picprof" + til_name.getEditText().getText().toString() + "-" + GetDate() + ".jpg";
+            String strFileName = "picprof" + Objects.requireNonNull(til_name.getEditText()).getText().toString() + "-" + GetDate() + ".jpg";
 
             Uri file = null;
             file = selectedImage;
@@ -319,7 +317,7 @@ public class RegisterActivity extends AppCompatActivity {
                 pb_load.setVisibility(View.GONE);
             }
         } catch (Exception ex) {
-            Toast.makeText(RegisterActivity.this, ex.getMessage().toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity.this, ex.getMessage(), Toast.LENGTH_LONG).show();
             pb_uploadfoto.setVisibility(View.GONE);
         }
 
@@ -328,8 +326,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void validateInput() {
         if (!guid.isEmpty()) {
-            String name = til_name.getEditText().getText().toString();
-            String lname = til_lastname.getEditText().getText().toString();
+            String name = Objects.requireNonNull(til_name.getEditText()).getText().toString();
+            String lname = Objects.requireNonNull(til_lastname.getEditText()).getText().toString();
             if (name.isEmpty()) {
                 til_name.setError("Ingrese su Nombre");
 
@@ -395,16 +393,10 @@ public class RegisterActivity extends AppCompatActivity {
                             SessionSP.get(RegisterActivity.this).saveDataCustomer(c);
                             SessionSP.get(RegisterActivity.this).saveStateLogin("dirclient");
 
-                            final ConstraintLayout cl_sectionreg_register = findViewById(R.id.cl_sectionreg_register);
-
                             Intent intent = new Intent(RegisterActivity.this, DirectionClientActivity.class);
-                        /*ActivityOptions options = ActivityOptions
-                                .makeSceneTransitionAnimation(RegisterActivity.this,
-                                        cl_sectionreg_register,
-                                        "go_dirclient_transition");
-                        startActivity(intent, options.toBundle());*/
                             intent.putExtra("action", "register_data");
                             intent.putExtra("state_use", "1");
+                            intent.putExtra("value_source", "actv_register_client");
                             startActivity(intent);
                             finish();
                             break;

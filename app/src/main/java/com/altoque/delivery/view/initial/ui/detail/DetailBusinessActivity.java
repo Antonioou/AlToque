@@ -1,7 +1,12 @@
 package com.altoque.delivery.view.initial.ui.detail;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 
@@ -19,11 +24,13 @@ import com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness.FourthDeta
 import com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness.SecondDetailBusinessFragment;
 import com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness.ThirdDetailBusinessFragment;
 import com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness.ViewPagerAdapter;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.palette.graphics.Palette;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
@@ -57,6 +64,7 @@ public class DetailBusinessActivity extends AppCompatActivity {
     public ApiInterface apiInterface;
 
     private TabLayout tabLayout;
+    CollapsingToolbarLayout toolBarLayout;
     private ViewPager viewPager;
     private MaterialCardView cv_about;
 
@@ -69,6 +77,7 @@ public class DetailBusinessActivity extends AppCompatActivity {
 
     TextView tv_time, tv_rate, tv_cost, tv_name, tv_state, tv_info;
     ImageView iv_banner, iv_logo;
+    ImageView view_gradient;
 
     String global_idnegocio = "";
 
@@ -86,20 +95,28 @@ public class DetailBusinessActivity extends AppCompatActivity {
 
         /*Window w = getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
-        setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+*/
+        //setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+        //getWindow().setStatusBarColor(Color.TRANSPARENT);
         /*getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+*/
 
-        */
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
-        toolBarLayout.setTitle("");
+        toolBarLayout = binding.toolbarLayout;
+
+
+
+        /*getWindow()
+                .setStatusBarColor(ContextCompat.getColor(DetailBusinessActivity.this, R.color.colorWhite));
+        getWindow()
+                .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);*/
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         listCateg = new ArrayList<CategoriaModel>();
         listBusiness = new ArrayList<NegocioModel>();
+
+        view_gradient = binding.viewGradientDetailbusiness;
 
         viewPager = (ViewPager) findViewById(R.id.viewPager_detailbusinness);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout_detailbusinness);
@@ -114,7 +131,6 @@ public class DetailBusinessActivity extends AppCompatActivity {
         iv_banner = binding.ivBannerDetailbusiness;
         tv_state = view.findViewById(R.id.tv_state_detailbusiness);
         tv_info = view.findViewById(R.id.tv_infobusiness_detailbusiness);
-
         cv_about = view.findViewById(R.id.cv_about_detailbusiness);
 
 
@@ -182,6 +198,7 @@ public class DetailBusinessActivity extends AppCompatActivity {
                                 }*/
 
                                 eventListener(listBusiness);
+                                scrollListener(listBusiness.get(0).getRsocialNeg());
                                 try {
                                     Picasso.get()
                                             .load(listBusiness.get(0).getFotoNeg())
@@ -194,7 +211,27 @@ public class DetailBusinessActivity extends AppCompatActivity {
                                             .load(listBusiness.get(0).getBannerNeg())
                                             .placeholder(R.drawable.second_image)
                                             .into(iv_banner);
+
+
+                                    Bitmap bitmap = ((BitmapDrawable) iv_banner.getDrawable()).getBitmap();
+                                    Palette.from(bitmap).generate(palette -> {
+                                        assert palette != null;
+                                        int vibrant = palette.getVibrantColor(0x000000);
+                                        int vibrantLight = palette.getLightVibrantColor(0x000000);
+                                        int vibrantDark = palette.getDarkVibrantColor(0x000000);
+                                        int muted = palette.getMutedColor(0x000000);
+                                        int mutedLight = palette.getLightMutedColor(0x000000);
+                                        int mutedDark = palette.getDarkMutedColor(0x000000);
+
+                                        //int colorCode = Color.parseColor(vibrant) ;
+                                        //view_gradient.setImageTintList(ColorStateList.valueOf(getResources().getColor(vibrant)));
+
+
+
+                                    });
+
                                 } catch (Exception ignored) {}
+
 
 
                             } else if (code.equals("010")) {
@@ -215,6 +252,33 @@ public class DetailBusinessActivity extends AppCompatActivity {
 
         }
     }
+
+    private void scrollListener(String title){
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = true;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    toolBarLayout.setTitle(title);
+                    isShow = true;
+                } else if(isShow) {
+                    toolBarLayout.setTitle(" ");//careful there should a space between double quote otherwise it wont work
+                    isShow = false;
+                }
+            }
+        });
+    }
+
+    private Bitmap convertImageViewToBitmap(ImageView v){
+        return ((BitmapDrawable)v.getDrawable()).getBitmap();
+    }
+
 
     private void getListCategories(String id) {
 

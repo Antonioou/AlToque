@@ -28,8 +28,6 @@ public class ServicesStyleOneAdapter extends RecyclerView.Adapter<ServicesStyleO
     Context context;
     private View.OnClickListener listener;
 
-    int pos;
-
     public ServicesStyleOneAdapter(List<RubroModel> list) {
         this.list = list;
     }
@@ -53,15 +51,8 @@ public class ServicesStyleOneAdapter extends RecyclerView.Adapter<ServicesStyleO
     @Override
     public void onBindViewHolder(@NonNull ServicesStyleOneAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        pos = position;
-
-        //name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
-
         String name = list.get(position).getNom_rubro();
         holder.name.setText(name);
-        //String icon = list.get(position).getDir_fiscal_neg();
-        //holder.direction.setText(direction);
-
 
     }
 

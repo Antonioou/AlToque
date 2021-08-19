@@ -47,9 +47,9 @@ import retrofit2.Response;
 
 public class OAuthVerifyFragment extends Fragment {
 
-   View root;
+    View root;
 
-   private FragmentOauthVerifyBinding binding;
+    private FragmentOauthVerifyBinding binding;
 
     String name = "";
     String phone = "";
@@ -104,7 +104,6 @@ public class OAuthVerifyFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,8 +116,9 @@ public class OAuthVerifyFragment extends Fragment {
             verificationId = getArguments().getString("verificationId");
             numberPhone = getArguments().getString("numberPhone");
 
-        }else{
-            Toast.makeText(requireContext(), "Nulo arg", Toast.LENGTH_SHORT).show();}
+        } else {
+            Toast.makeText(requireContext(), "Nulo arg", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -134,12 +134,11 @@ public class OAuthVerifyFragment extends Fragment {
         eventListener();
 
 
-
         return root;
     }
 
     private void verifyCode() {
-        String OTP = pinView.getText().toString().trim();
+        String OTP = Objects.requireNonNull(pinView.getText()).toString().trim();
         if (!OTP.isEmpty()) {
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, OTP);
             signInWithCredential(credential);
@@ -166,7 +165,7 @@ public class OAuthVerifyFragment extends Fragment {
                         pinView.setEnabled(true);
                         pinView.setLineColor(Color.RED);
                         Toast.makeText(requireContext(), "Codigo  OC FAIL", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(requireContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(requireContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
                     }
 
                 }).addOnFailureListener(e -> {
@@ -184,7 +183,7 @@ public class OAuthVerifyFragment extends Fragment {
                 ClientLogin("valid_login_users", "1", "1", codeUID);
         ApiHelper.enqueueWithRetry(call, new Callback<List<JoinResponseModel>>() {
             @Override
-            public void onResponse(@NotNull Call<List<JoinResponseModel>> call, Response<List<JoinResponseModel>> response) {
+            public void onResponse(@NotNull Call<List<JoinResponseModel>> call, @NonNull Response<List<JoinResponseModel>> response) {
 
                 if (response.isSuccessful()) {
                     assert response.body() != null;
@@ -192,7 +191,7 @@ public class OAuthVerifyFragment extends Fragment {
                     String result = response.body().get(0).getRes_server().toString();
                     String msg = response.body().get(0).getMsg_server();
 
-                    Log.e("OAuth_res", "OnFailure " + response.body().toString() + "\nUID: " + codeUID);
+                    //Log.e("OAuth_res", "OnFailure " + response.body().toString() + "\nUID: " + codeUID);
 
                     //ENVIA LA VARIABLE Y VALIDA CON BOOLEAN SI ES VACIO
                     if (validateEmpty(result) || validateEmpty(msg)) {
@@ -200,23 +199,26 @@ public class OAuthVerifyFragment extends Fragment {
                         return;
                     }
                     //INVOCA METODO DE CAPTURA DE DATOS PRE GUARDADOS
-                    if (code.equals("221")) {
-                        getDataUser(codeUID);
-                    }//BANEADO
-                    else if (code.equals("322")) {
-                        Toast.makeText(requireContext(), "Usuario baneado.", Toast.LENGTH_LONG).show();
-                    } //REDIRECCIONA AL REGISTRO
-                    else if (code.equals("010")) {
-                        launchRegisterActivity();
-                    } else if (code.equals("110")) {
-                        Toast.makeText(requireContext(), "Error de parametros. Intente mas tarde.", Toast.LENGTH_LONG).show();
+                    switch (code) {
+                        case "221":
+                            getDataUser(codeUID);
+                            break;
+                        case "322":
+                            Toast.makeText(requireContext(), "Usuario baneado.", Toast.LENGTH_LONG).show();
+                            break;
+                        case "010":
+                            launchRegisterActivity();
+                            break;
+                        case "110":
+                            Toast.makeText(requireContext(), "Error de parametros. Intente mas tarde.", Toast.LENGTH_LONG).show();
+                            break;
                     }
                 }
 
             }
 
             @Override
-            public void onFailure(@NotNull Call<List<JoinResponseModel>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<JoinResponseModel>> call, @NonNull Throwable t) {
                 Toast.makeText(requireContext(), "Error de conexión en el servidor. Intente mas tarde.", Toast.LENGTH_LONG).show();
                 Log.e("OAuth_res", "OnFailure " + t.getMessage());
             }
@@ -232,7 +234,7 @@ public class OAuthVerifyFragment extends Fragment {
                 getClientData("insert_select_user", "1", "1", codeUID);
         ApiHelper.enqueueWithRetry(call, new Callback<List<CustomerModel>>() {
             @Override
-            public void onResponse(@NotNull Call<List<CustomerModel>> call, Response<List<CustomerModel>> response) {
+            public void onResponse(@NotNull Call<List<CustomerModel>> call, @NonNull Response<List<CustomerModel>> response) {
 
                 if (response.isSuccessful()) {
                     assert response.body() != null;
@@ -277,8 +279,6 @@ public class OAuthVerifyFragment extends Fragment {
 
     //ENVIARA AL SIGT ACTIVITY PARA SU REGiSTRO
     private void launchRegisterActivity() {
-
-
         SessionSP.get(requireContext()).saveStateLogin("register");
         SessionSP.get(requireContext()).setPhoneSessSp(numberPhone);
         Intent intent = new Intent(requireContext(), RegisterActivity.class);

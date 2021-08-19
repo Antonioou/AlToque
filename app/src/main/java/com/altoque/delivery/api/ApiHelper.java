@@ -1,5 +1,7 @@
 package com.altoque.delivery.api;
 
+import androidx.annotation.NonNull;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -12,12 +14,12 @@ public class ApiHelper {
         call.enqueue(new RetryableCallback<T>(call, retryCount) {
 
             @Override
-            public void onFinalResponse(Call<T> call, Response<T> response) {
+            public void onFinalResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
                 callback.onResponse(call, response);
             }
 
             @Override
-            public void onFinalFailure(Call<T> call, Throwable t) {
+            public void onFinalFailure(@NonNull Call<T> call, @NonNull Throwable t) {
                 callback.onFailure(call, t);
             }
         });
@@ -27,7 +29,7 @@ public class ApiHelper {
         enqueueWithRetry(call, DEFAULT_RETRIES, callback);
     }
 
-    public static boolean isCallSuccess(Response response) {
+    public static boolean isCallSuccess(@NonNull Response response) {
         int code = response.code();
         return (code >= 200 && code < 400);
     }

@@ -108,7 +108,8 @@ public class FourthDetailBusinessFragment extends Fragment {
                             if (code.equals("221")) {
 
                                 listProducts = response.body();
-                                adapterProduct = new ProductStyleOneAdapter(listProducts);
+                                adapterProduct =
+                                        new ProductStyleOneAdapter(listProducts, requireContext(), getChildFragmentManager());
                                 recviewProducts.setAdapter(adapterProduct);
                                 adapterProduct.notifyDataSetChanged();
 
@@ -137,7 +138,7 @@ public class FourthDetailBusinessFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (mContext == null)
             mContext = context.getApplicationContext();

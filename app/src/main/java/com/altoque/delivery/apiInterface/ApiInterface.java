@@ -193,11 +193,20 @@ public interface ApiInterface {
             @Field("idnegocio") String idnegocio
     );
 
+    /**************************** RELACINATED TO PRODUCTS ********************************/
+
     @FormUrlEncoded
     @POST("controller/rproducto.php")
     Call<List<ProductoModel>> getItemListByCategoryAndBusiness(
             @Field("op") String operation,
             @Field("idnegocio") String idnegocio,
             @Field("idcategoria") String idcategoria
+    );
+
+    @FormUrlEncoded
+    @POST("controller/rproducto.php")
+    Call<List<ProductoModel>> getDataProduct(
+            @Field("op") String operation,
+            @Field("idproducto") String idproduct
     );
 }

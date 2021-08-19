@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,7 +74,7 @@ public class ThirdDetailBusinessFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentThirdDetailBusinessBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -109,7 +110,8 @@ public class ThirdDetailBusinessFragment extends Fragment {
                             if (code.equals("221")) {
 
                                 listProducts = response.body();
-                                adapterProduct = new ProductStyleOneAdapter(listProducts);
+                                adapterProduct =
+                                        new ProductStyleOneAdapter(listProducts, requireContext(), getChildFragmentManager());
                                 recviewProducts.setAdapter(adapterProduct);
                                 adapterProduct.notifyDataSetChanged();
 
@@ -138,7 +140,7 @@ public class ThirdDetailBusinessFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (mContext == null)
             mContext = context.getApplicationContext();

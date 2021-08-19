@@ -1,5 +1,6 @@
 package com.altoque.delivery.view.oauth;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -83,7 +84,7 @@ public class OAuthInitialFragment extends Fragment {
     }
 
 
-        @Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -109,7 +110,6 @@ public class OAuthInitialFragment extends Fragment {
 
         initView();
         eventListener();
-
 
 
         return root;
@@ -148,8 +148,6 @@ public class OAuthInitialFragment extends Fragment {
                 }
 
 
-
-
             }
         });
     }
@@ -173,16 +171,17 @@ public class OAuthInitialFragment extends Fragment {
         }
     }
 
-    private void countReverse(){
+    private void countReverse() {
         TextView tv_count = binding.tvCountSstep;
-        new CountDownTimer(59 * 1000+1000, 1000) {
+        new CountDownTimer(59 * 1000 + 1000, 1000) {
 
+            @SuppressLint("SetTextI18n")
             public void onTick(long millisUntilFinished) {
                 int seconds = (int) (millisUntilFinished / 1000);
                 //int minutes = seconds / 60;
                 seconds = seconds % 60;
                 tv_count.setVisibility(View.VISIBLE);
-                tv_count.setText("Tiempo para intentar nuevamente: "+ String.format("%02d", seconds)+" segundos.");
+                tv_count.setText("Tiempo para intentar nuevamente: " + String.format("%02d", seconds) + " segundos.");
             }
 
             public void onFinish() {
@@ -228,12 +227,9 @@ public class OAuthInitialFragment extends Fragment {
             if (code != null) {
 
                 try {
-
                     Integer val = Integer.valueOf(code);
-
-
                 } catch (Exception e) {
-                    Toast.makeText(requireContext(), "Errror: " + e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Errror: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -253,22 +249,10 @@ public class OAuthInitialFragment extends Fragment {
 
     public void fragmentNavigation() {
 
-        /*Button btn = binding.btnGoFragmentVerify;
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(requireContext(), "click", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-        /*binding.btnGoFragmentVerify.setOnClickListener(v ->{*/
-            //Toast.makeText(requireContext(), "click", Toast.LENGTH_SHORT).show();
-            Bundle bundle = new Bundle();
-            bundle.putString("verificationId", verificationId);
-            bundle.putString("numberPhone", et_ncel.getText().toString().trim());
-            Navigation.findNavController(rootView).navigate(R.id.action_OAuthInitialFragment_to_OAuthVerifyFragment, bundle);
-
-        /*});*/
+        Bundle bundle = new Bundle();
+        bundle.putString("verificationId", verificationId);
+        bundle.putString("numberPhone", et_ncel.getText().toString().trim());
+        Navigation.findNavController(rootView).navigate(R.id.action_OAuthInitialFragment_to_OAuthVerifyFragment, bundle);
 
     }
 

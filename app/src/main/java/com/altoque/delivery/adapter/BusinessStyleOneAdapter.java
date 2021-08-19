@@ -27,7 +27,7 @@ public class BusinessStyleOneAdapter extends RecyclerView.Adapter<BusinessStyleO
     Context context;
     private View.OnClickListener listener;
 
-    int pos;
+
 
     public BusinessStyleOneAdapter(List<NegocioModel> list) {
         this.list = list;
@@ -52,7 +52,7 @@ public class BusinessStyleOneAdapter extends RecyclerView.Adapter<BusinessStyleO
     @Override
     public void onBindViewHolder(@NonNull BusinessStyleOneAdapter.ViewHolder holder, int position) {
 
-        pos = holder.getAdapterPosition();
+
 
         //name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 
@@ -64,9 +64,9 @@ public class BusinessStyleOneAdapter extends RecyclerView.Adapter<BusinessStyleO
         holder.cost.setText(cost);
         String rate = list.get(position).getRating();
         holder.rate.setText(rate);
-        String time = list.get(pos).getEstimacionDemora();
+        String time = list.get(position).getEstimacionDemora();
         holder.time.setText(time);
-        /*String name = list.get(position).getRsocial_neg();
+        /*String name = list.get(positionition).getRsocial_neg();
         holder.name.setText(name);*/
 
         try {

@@ -8,9 +8,7 @@
         android:id="@+id/cv_section_item_direction_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_margin="@dimen/dp_10"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:selectableItemBackground"
@@ -150,8 +148,8 @@
             <View
                 android:id="@+id/view_divider2"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_margin="@dimen/dp_10"
+                android:layout_height="0.1dp"
+                android:visibility="invisible"
                 android:background="@color/colorGrey" />
 
             <androidx.constraintlayout.widget.ConstraintLayout

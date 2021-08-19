@@ -2,20 +2,21 @@ package com.altoque.delivery.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.altoque.delivery.R;
-import com.altoque.delivery.model.NegocioModel;
 import com.altoque.delivery.model.ProductoModel;
+import com.altoque.delivery.view.initial.ui.detail.viewdetailproduct.AccessDetailProductBottomSheet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -30,14 +31,16 @@ public class ProductStyleOneAdapter extends RecyclerView.Adapter<ProductStyleOne
     Context context;
     private View.OnClickListener listener;
 
-    int pos;
+    public FragmentManager fragmentManager;
 
     public ProductStyleOneAdapter(List<ProductoModel> list) {
         this.list = list;
     }
 
-    public ProductStyleOneAdapter(Context context) {
+    public ProductStyleOneAdapter(List<ProductoModel> list, Context context, FragmentManager fragmentManager) {
         this.context = context;
+        this.fragmentManager = fragmentManager;
+        this.list = list;
     }
 
     @NotNull
@@ -53,20 +56,20 @@ public class ProductStyleOneAdapter extends RecyclerView.Adapter<ProductStyleOne
     @Override
     public void onBindViewHolder(@NonNull ProductStyleOneAdapter.ViewHolder holder, int position) {
 
-        pos = holder.getAdapterPosition();
 
-        String name = list.get(pos).getNom_prod();
+
+        String name = list.get(position).getNom_prod();
         holder.name.setText(name);
-        String detail = list.get(pos).getDesc_prod();
+        String detail = list.get(position).getDesc_prod();
         holder.detail.setText(detail);
-        String cost = list.get(pos).getPrecio_ventaprod();
+        String cost = list.get(position).getPrecio_ventaprod();
         holder.cost.setText("S/. " + cost);
 
-        Log.e("Debug_error", "" + list.get(pos).toString());
+        //Log.e("Debug_error", "" + list.get(pos).toString());
 
         try {
-            if (list.get(pos).getImage_prod() != null) {
-                String url = String.valueOf(list.get(pos).getImage_prod());
+            if (list.get(position).getImage_prod() != null) {
+                String url = String.valueOf(list.get(position).getImage_prod());
 
                 Picasso.get().load(url)
                         .placeholder(R.drawable.second_image)
@@ -76,7 +79,7 @@ public class ProductStyleOneAdapter extends RecyclerView.Adapter<ProductStyleOne
             Log.e("Debug_error", "" + e);
         }
 
-        String state = list.get(pos).getStatus().toLowerCase().trim().toString();
+        String state = list.get(position).getStatus().toLowerCase().trim().toString();
 
         if (state.equals("agotado")) {
             holder.add.setEnabled(false);
@@ -85,7 +88,12 @@ public class ProductStyleOneAdapter extends RecyclerView.Adapter<ProductStyleOne
         }
 
         holder.add.setOnClickListener(v -> {
-            Toast.makeText(context, "add", Toast.LENGTH_SHORT).show();
+
+            AccessDetailProductBottomSheet accessBottomSheet = new AccessDetailProductBottomSheet();
+            Bundle bundle = new Bundle();
+            bundle.putString("value_idproduct", list.get(position).getIdproducto().toString());
+            accessBottomSheet.setArguments(bundle);
+            accessBottomSheet.show(fragmentManager, "");
         });
 
     }

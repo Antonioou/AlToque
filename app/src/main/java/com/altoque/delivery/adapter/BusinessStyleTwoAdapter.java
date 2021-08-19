@@ -25,8 +25,6 @@ public class BusinessStyleTwoAdapter extends RecyclerView.Adapter<BusinessStyleT
     Context context;
     private View.OnClickListener listener;
 
-    int pos;
-
     private final float mShrinkAmount = 0.15f;
     private final float mShrinkDistance = 0.9f;
 
@@ -38,6 +36,7 @@ public class BusinessStyleTwoAdapter extends RecyclerView.Adapter<BusinessStyleT
         this.context = context;
     }
 
+    @NonNull
     @Override
     public BusinessStyleTwoAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
@@ -52,7 +51,7 @@ public class BusinessStyleTwoAdapter extends RecyclerView.Adapter<BusinessStyleT
     @Override
     public void onBindViewHolder(@NonNull BusinessStyleTwoAdapter.ViewHolder holder, int position) {
 
-        pos = position % list.size();
+        int pos = position % list.size();
 
         //name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 
@@ -111,7 +110,7 @@ public class BusinessStyleTwoAdapter extends RecyclerView.Adapter<BusinessStyleT
 
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, cost, direction, rate, time;
         ImageView banner;
         CircularImageView logo;

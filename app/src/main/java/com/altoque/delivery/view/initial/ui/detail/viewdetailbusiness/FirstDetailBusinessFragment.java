@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +26,8 @@ import com.altoque.delivery.apiInterface.ApiInterface;
 import com.altoque.delivery.databinding.FragmentFirstDetailBusinessBinding;
 import com.altoque.delivery.model.NegocioModel;
 import com.altoque.delivery.model.ProductoModel;
+import com.altoque.delivery.view.initial.ui.detail.viewdetailproduct.AccessDetailProductBottomSheet;
+import com.altoque.delivery.view.initial.ui.detail.viewdetailproduct.DetailProductBottomSheet;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -89,6 +93,8 @@ public class FirstDetailBusinessFragment extends Fragment {
                 new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false);
         recviewProducts.setLayoutManager(layoutMan);
 
+        mContext = mContext.getApplicationContext();
+
         getItemList();
         return root;
     }
@@ -113,9 +119,17 @@ public class FirstDetailBusinessFragment extends Fragment {
                             if (code.equals("221")) {
 
                                 listProducts = response.body();
-                                adapterProduct = new ProductStyleOneAdapter(listProducts);
-                                recviewProducts.setAdapter(adapterProduct);
-                                adapterProduct.notifyDataSetChanged();
+                                if (listProducts.size() > 0) {
+                                    adapterProduct =
+                                            new ProductStyleOneAdapter(listProducts, requireContext(), getChildFragmentManager());
+                                    recviewProducts.setAdapter(adapterProduct);
+                                    adapterProduct.notifyDataSetChanged();
+
+                                    eventAdapter();
+                                } else {
+                                    Toast.makeText(mContext, "No se cargó productos.", Toast.LENGTH_SHORT).show();
+                                }
+
 
                             } else if (code.equals("010")) {
 
@@ -140,8 +154,20 @@ public class FirstDetailBusinessFragment extends Fragment {
         }
     }
 
+    private void eventAdapter() {
+        adapterProduct.setOnClickListener(v -> {
+            int position = recviewProducts.getChildAdapterPosition(v);
+
+            DetailProductBottomSheet productBottomSheet = new DetailProductBottomSheet();
+            Bundle bundle = new Bundle();
+            bundle.putString("value_idproduct", listProducts.get(position).getIdproducto().toString());
+            productBottomSheet.setArguments(bundle);
+            productBottomSheet.show(getChildFragmentManager(), "");
+        });
+    }
+
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (mContext == null)
             mContext = context.getApplicationContext();

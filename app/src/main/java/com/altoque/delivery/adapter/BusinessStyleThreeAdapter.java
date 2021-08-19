@@ -24,7 +24,6 @@ public class BusinessStyleThreeAdapter extends RecyclerView.Adapter<BusinessStyl
     Context context;
     private View.OnClickListener listener;
 
-    int pos;
 
     public BusinessStyleThreeAdapter(List<NegocioModel> list, Context context) {
         this.list = list;
@@ -47,9 +46,9 @@ public class BusinessStyleThreeAdapter extends RecyclerView.Adapter<BusinessStyl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BusinessStyleThreeAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BusinessStyleThreeAdapter.ViewHolder holder, int pos) {
 
-        pos = holder.getAdapterPosition();
+
 
         //name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
         //Log.e("Error_log_serices", "ADAPTER: "+list.get(position).toString());

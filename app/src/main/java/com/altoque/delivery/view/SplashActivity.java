@@ -388,8 +388,8 @@ public class SplashActivity extends AppCompatActivity
                         case "221":
                             if (response.body().get(0).getHabilitado_distrito().equals("1")) {
 
-                                Toast.makeText(SplashActivity.this, "Distrito  habilitado.",
-                                        Toast.LENGTH_SHORT).show();
+                                /*Toast.makeText(SplashActivity.this, "Distrito  habilitado.",
+                                        Toast.LENGTH_SHORT).show();*/
                                 tv_state.setText("Ubicación valida...");
 
                                 nextActivity("allowed");
@@ -465,15 +465,14 @@ public class SplashActivity extends AppCompatActivity
                 case "yes":
                     startActivity(new Intent(SplashActivity.this, InitialActivity.class));
                     break;
-                case "register": {
+                case "register":
+                case "dirclient": {
                     Intent intent = new Intent(SplashActivity.this, DirectionClientActivity.class);
                     intent.putExtra("action", "register_data");
+                    intent.putExtra("state_use", "1");
                     startActivity(intent);
                     break;
                 }
-                case "dirclient":
-                    startActivity(new Intent(SplashActivity.this, DirectionClientActivity.class));
-                    break;
                 default: {
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);

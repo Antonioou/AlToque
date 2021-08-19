@@ -27,7 +27,7 @@ public class ServicesStyleTwoAdapter extends RecyclerView.Adapter<ServicesStyleT
     Context context;
     private View.OnClickListener listener;
 
-    int pos;
+
 
     public ServicesStyleTwoAdapter(List<RubroModel> list) {
         this.list = list;
@@ -52,8 +52,6 @@ public class ServicesStyleTwoAdapter extends RecyclerView.Adapter<ServicesStyleT
     @Override
     public void onBindViewHolder(@NonNull ServicesStyleTwoAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        pos = position;
-
         //name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 
         String name = list.get(position).getNom_rubro();
@@ -62,8 +60,8 @@ public class ServicesStyleTwoAdapter extends RecyclerView.Adapter<ServicesStyleT
         //holder.direction.setText(direction);
 
         try {
-            if (list.get(pos).getFoto_rubro() != null) {
-                String url = String.valueOf(list.get(pos).getFoto_rubro());
+            if (list.get(position).getFoto_rubro() != null) {
+                String url = String.valueOf(list.get(position).getFoto_rubro());
 
                 Picasso.get().load(url)
                         .placeholder(R.drawable.second_image)

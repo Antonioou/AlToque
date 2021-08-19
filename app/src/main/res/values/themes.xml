@@ -13,6 +13,8 @@
         <!-- enable window content transitions -->
         <item name="android:windowActivityTransitions">true</item>
 
+
+
         <!-- specify enter and exit transitions
         <item name="android:windowEnterTransition">@transition/ex</item>
         <item name="android:windowExitTransition">@transition/explode</item>-->
@@ -47,10 +49,11 @@
     <style name="AppTheme.TranslucentSystemBars" parent="Theme.AlToque.NoActionBar">
 
         <item name="windowNoTitle">true</item>
-        <!--<item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        -->
+        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
+
     </style>
     <style name="Theme.AlToque.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.AlToque.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

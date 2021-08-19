@@ -236,9 +236,9 @@ public class HomeFragment extends Fragment {
             res.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    String id_cust = "";
-                    //id_cust = sessionSP.getIdSessSp();
-                    //getReservations(id_cust);
+                    pb_load_direction.setVisibility(View.VISIBLE);
+                    tv_namedirection.setText("");
+                    getDataDirections();
                 }
             });
         });

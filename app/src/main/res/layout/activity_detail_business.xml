@@ -18,165 +18,178 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/transparent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:collapsedTitleGravity="center"
+            app:contentScrim="@color/colorBlackMatiz1"
+            app:layout_scrollFlags="exitUntilCollapsed|scroll"
+            app:titleCollapseMode="scale"
             app:toolbarId="@+id/toolbar">
 
-            <ImageView
-                android:id="@+id/iv_banner_detailbusiness"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_150"
-                android:minHeight="100dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/second_image"
-                app:layout_collapseMode="parallax"/>
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_200"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/iv_banner_detailbusiness"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/second_image"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/view_gradient_detailbusiness"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:background="@drawable/gradient_overlay"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_banner_detailbusiness"
+                        app:layout_constraintEnd_toEndOf="@id/iv_banner_detailbusiness"
+                        app:layout_constraintStart_toStartOf="@id/iv_banner_detailbusiness" />
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/iv_logo_detailbusiness"
+                        android:layout_width="@dimen/dp_80"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:elevation="0dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/food_reference_img"
+                        app:layout_constraintBottom_toTopOf="@id/cl_sectiondata_detailbusinesss"
+                        app:layout_constraintStart_toStartOf="@id/iv_banner_detailbusiness" />
+
+                    <TextView
+                        android:id="@+id/tv_name_detailbusiness"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/latobold"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="21sp"
+                        app:layout_constraintBottom_toTopOf="@id/cl_sectiondata_detailbusinesss"
+                        app:layout_constraintEnd_toEndOf="@id/iv_banner_detailbusiness"
+                        app:layout_constraintStart_toEndOf="@id/iv_logo_detailbusiness"
+                        app:layout_constraintTop_toTopOf="@id/iv_logo_detailbusiness" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_sectiondata_detailbusinesss"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginBottom="@dimen/dp_5"
+                        android:padding="@dimen/dp_10"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_banner_detailbusiness"
+                        app:layout_constraintEnd_toEndOf="@id/iv_banner_detailbusiness"
+                        app:layout_constraintStart_toStartOf="@id/iv_banner_detailbusiness">
+
+                        <TextView
+                            android:id="@+id/tv_time_detailbusiness"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginHorizontal="@dimen/dp_5"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/latoregular"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:minWidth="@dimen/dp_50"
+                            android:text="-"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="16sp"
+                            app:drawableStartCompat="@drawable/ic_baseline_access_time_filled_24"
+                            app:drawableTint="#81D4FA"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/tv_rate_detailbusiness"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_rate_detailbusiness"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginHorizontal="@dimen/dp_5"
+                            android:layout_toStartOf="@id/tv_cost_detailbusiness"
+                            android:layout_toEndOf="@id/tv_time_detailbusiness"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/latoregular"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:minWidth="@dimen/dp_50"
+                            android:text="-"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="16sp"
+                            app:drawableStartCompat="@drawable/ic_baseline_star_24"
+                            app:drawableTint="@color/colorYellowMatiz1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/tv_cost_detailbusiness"
+                            app:layout_constraintStart_toEndOf="@id/tv_time_detailbusiness"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_cost_detailbusiness"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginHorizontal="@dimen/dp_5"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/latoregular"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:minWidth="@dimen/dp_50"
+                            android:text="-"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="16sp"
+                            app:drawableStartCompat="@drawable/ic_baseline_attach_money_24"
+                            app:drawableTint="#B2FF59"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/tv_rate_detailbusiness"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_collapseMode="pin" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
-
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_10"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:selectableItemBackground"
-        app:cardCornerRadius="@dimen/dp_5"
-        app:cardElevation="7dp"
-        app:contentPadding="3dp"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom">
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/iv_logo_detailbusiness"
-                android:layout_width="@dimen/dp_80"
-                android:layout_height="@dimen/dp_80"
-                android:elevation="0dp"
-                android:scaleType="centerCrop"
-
-                android:src="@drawable/food_reference_img"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_name_detailbusiness"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginBottom="5dp"
-                android:autoSizeTextType="uniform"
-                android:ellipsize="end"
-                android:fontFamily="@font/latoregular"
-                android:gravity="center_vertical"
-                android:maxLines="2"
-                android:text="Restaurant"
-                android:textAlignment="center"
-                android:textColor="@color/colorBlackMatiz1"
-                android:textSize="21sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_logo_detailbusiness"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="RtlCompat" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dp_5"
-                android:layout_marginTop="@dimen/dp_5"
-                android:layout_marginBottom="@dimen/dp_5"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_logo_detailbusiness"
-                app:layout_constraintTop_toBottomOf="@id/tv_name_detailbusiness">
-
-                <TextView
-                    android:id="@+id/tv_time_detailbusiness"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginHorizontal="@dimen/dp_5"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:drawableTint="@color/colorBlueMatiz1"
-                    android:fontFamily="@font/latoregular"
-                    android:gravity="center"
-                    android:minWidth="@dimen/dp_50"
-                    android:text="-"
-                    android:textColor="@color/colorGrey"
-                    android:textSize="15sp"
-                    app:drawableStartCompat="@drawable/ic_baseline_access_time_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/tv_rate_detailbusiness"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_rate_detailbusiness"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginHorizontal="@dimen/dp_5"
-                    android:layout_toStartOf="@id/tv_cost_detailbusiness"
-                    android:layout_toEndOf="@id/tv_time_detailbusiness"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:drawableTint="@color/colorYellowMatiz1"
-                    android:fontFamily="@font/latoregular"
-                    android:gravity="center"
-                    android:minWidth="@dimen/dp_50"
-                    android:text="-"
-
-                    android:textColor="@color/colorGrey"
-                    android:textSize="15sp"
-                    app:drawableStartCompat="@drawable/ic_baseline_star_outline_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/tv_cost_detailbusiness"
-                    app:layout_constraintStart_toEndOf="@id/tv_time_detailbusiness"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_cost_detailbusiness"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginHorizontal="@dimen/dp_5"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:drawableTint="#81C784"
-                    android:fontFamily="@font/latoregular"
-                    android:gravity="center"
-                    android:minWidth="@dimen/dp_50"
-                    android:text="-"
-                    android:textColor="@color/colorGrey"
-                    android:textSize="15sp"
-                    app:drawableStartCompat="@drawable/ic_baseline_attach_money_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_rate_detailbusiness"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
 
     <include layout="@layout/content_principal" />
 

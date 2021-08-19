@@ -177,7 +177,6 @@
             android:fontFamily="@font/productsansregular"
             android:hint="Distrito"
             android:inputType="none"
-
             android:maxLines="1"
             android:padding="@dimen/dp_10"
             android:visibility="gone"

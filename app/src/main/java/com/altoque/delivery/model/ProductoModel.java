@@ -35,21 +35,9 @@ public class ProductoModel {
     @SerializedName("disponibilidad_prod")
     @Expose
     private String disponibilidad_prod;
-    @SerializedName("idnegocio")
+    @SerializedName("nomb_categoria")
     @Expose
-    private String idnegocio;
-    @SerializedName("idsubcategoria")
-    @Expose
-    private String idsubcategoria;
-    @SerializedName("iddescuento")
-    @Expose
-    private String iddescuento;
-    @SerializedName("idmarca")
-    @Expose
-    private String idmarca;
-    @SerializedName("idmedida")
-    @Expose
-    private String idmedida;
+    private String nomb_categoria;
     @SerializedName("nom_medida")
     @Expose
     private String nom_medida;
@@ -94,11 +82,7 @@ public class ProductoModel {
                 ", precio_ventaprod='" + precio_ventaprod + '\'' +
                 ", image_prod='" + image_prod + '\'' +
                 ", disponibilidad_prod='" + disponibilidad_prod + '\'' +
-                ", idnegocio='" + idnegocio + '\'' +
-                ", idsubcategoria='" + idsubcategoria + '\'' +
-                ", iddescuento='" + iddescuento + '\'' +
-                ", idmarca='" + idmarca + '\'' +
-                ", idmedida='" + idmedida + '\'' +
+                ", nomb_categoria='" + nomb_categoria + '\'' +
                 ", nom_medida='" + nom_medida + '\'' +
                 ", nombre_marca='" + nombre_marca + '\'' +
                 ", imagen_marca='" + imagen_marca + '\'' +
@@ -109,6 +93,37 @@ public class ProductoModel {
                 ", stock_maximo='" + stock_maximo + '\'' +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    public ProductoModel(String code_server, String res_server, String msg_server, String idproducto, String nom_prod, String desc_prod, String precio_compraprod, String precio_ventaprod, String image_prod, String disponibilidad_prod, String nomb_categoria, String nom_medida, String nombre_marca, String imagen_marca, String precio_descuento, String precio_unid, String stock_actual, String stock_minimo, String stock_maximo, String status) {
+        this.code_server = code_server;
+        this.res_server = res_server;
+        this.msg_server = msg_server;
+        this.idproducto = idproducto;
+        this.nom_prod = nom_prod;
+        this.desc_prod = desc_prod;
+        this.precio_compraprod = precio_compraprod;
+        this.precio_ventaprod = precio_ventaprod;
+        this.image_prod = image_prod;
+        this.disponibilidad_prod = disponibilidad_prod;
+        this.nomb_categoria = nomb_categoria;
+        this.nom_medida = nom_medida;
+        this.nombre_marca = nombre_marca;
+        this.imagen_marca = imagen_marca;
+        this.precio_descuento = precio_descuento;
+        this.precio_unid = precio_unid;
+        this.stock_actual = stock_actual;
+        this.stock_minimo = stock_minimo;
+        this.stock_maximo = stock_maximo;
+        this.status = status;
+    }
+
+    public String getNomb_categoria() {
+        return nomb_categoria;
+    }
+
+    public void setNomb_categoria(String nomb_categoria) {
+        this.nomb_categoria = nomb_categoria;
     }
 
     public String getCode_server() {
@@ -191,46 +206,6 @@ public class ProductoModel {
         this.disponibilidad_prod = disponibilidad_prod;
     }
 
-    public String getIdnegocio() {
-        return idnegocio;
-    }
-
-    public void setIdnegocio(String idnegocio) {
-        this.idnegocio = idnegocio;
-    }
-
-    public String getIdsubcategoria() {
-        return idsubcategoria;
-    }
-
-    public void setIdsubcategoria(String idsubcategoria) {
-        this.idsubcategoria = idsubcategoria;
-    }
-
-    public String getIddescuento() {
-        return iddescuento;
-    }
-
-    public void setIddescuento(String iddescuento) {
-        this.iddescuento = iddescuento;
-    }
-
-    public String getIdmarca() {
-        return idmarca;
-    }
-
-    public void setIdmarca(String idmarca) {
-        this.idmarca = idmarca;
-    }
-
-    public String getIdmedida() {
-        return idmedida;
-    }
-
-    public void setIdmedida(String idmedida) {
-        this.idmedida = idmedida;
-    }
-
     public String getNom_medida() {
         return nom_medida;
     }
@@ -303,30 +278,4 @@ public class ProductoModel {
         this.status = status;
     }
 
-    public ProductoModel(String code_server, String res_server, String msg_server, String idproducto, String nom_prod, String desc_prod, String precio_compraprod, String precio_ventaprod, String image_prod, String disponibilidad_prod, String idnegocio, String idsubcategoria, String iddescuento, String idmarca, String idmedida, String nom_medida, String nombre_marca, String imagen_marca, String precio_descuento, String precio_unid, String stock_actual, String stock_minimo, String stock_maximo, String status) {
-        this.code_server = code_server;
-        this.res_server = res_server;
-        this.msg_server = msg_server;
-        this.idproducto = idproducto;
-        this.nom_prod = nom_prod;
-        this.desc_prod = desc_prod;
-        this.precio_compraprod = precio_compraprod;
-        this.precio_ventaprod = precio_ventaprod;
-        this.image_prod = image_prod;
-        this.disponibilidad_prod = disponibilidad_prod;
-        this.idnegocio = idnegocio;
-        this.idsubcategoria = idsubcategoria;
-        this.iddescuento = iddescuento;
-        this.idmarca = idmarca;
-        this.idmedida = idmedida;
-        this.nom_medida = nom_medida;
-        this.nombre_marca = nombre_marca;
-        this.imagen_marca = imagen_marca;
-        this.precio_descuento = precio_descuento;
-        this.precio_unid = precio_unid;
-        this.stock_actual = stock_actual;
-        this.stock_minimo = stock_minimo;
-        this.stock_maximo = stock_maximo;
-        this.status = status;
-    }
 }

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:behavior_hideable="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/layout_round_up"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name_detailproduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_15"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:ellipsize="end"
+                android:fontFamily="@font/latobold"
+                android:maxLines="2"
+                android:text="Producto"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="25sp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:background="@drawable/layout_round">
+
+                <ImageView
+                    android:id="@+id/iv_image_detailproduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+
+            </FrameLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp_10">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_favorite_detailproduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_5"
+                    android:src="@drawable/ic_baseline_favorite_border_24"
+                    app:backgroundTint="@color/colorSecundary"
+                    app:elevation="3dp"
+                    app:fabSize="mini"
+                    app:layout_constraintBottom_toBottomOf="@id/mcv_addcount"
+                    app:layout_constraintEnd_toStartOf="@id/mcv_addcount"
+                    app:layout_constraintTop_toTopOf="@id/mcv_addcount" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcv_addcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:layout_marginBottom="15dp"
+                    app:cardCornerRadius="@dimen/dp_20"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeColor="@color/colorGrey"
+                    app:strokeWidth="0.5dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_negative_detailproduct"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_baseline_exposure_neg_1_24"
+                            app:backgroundTint="@color/colorSecundary"
+                            app:elevation="0dp"
+                            app:fabSize="mini" />
+
+                        <TextView
+                            android:id="@+id/tv_qtyadd_detailproduct"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="@dimen/dp_10"
+                            android:fontFamily="@font/latobold"
+                            android:padding="@dimen/dp_5"
+                            android:text="1"
+                            android:textSize="20sp" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_positive_detailproduct"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_baseline_exposure_plus_1_24"
+                            app:backgroundTint="@color/colorSecundary"
+                            app:elevation="0dp"
+                            app:fabSize="mini" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/tv_cost_detailproduct"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_15"
+                    android:fontFamily="@font/sourcesansprosemibold"
+                    android:text=""
+                    android:textColor="@color/colorBlack"
+                    android:textSize="25sp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    app:layout_constraintEnd_toStartOf="@id/fab_favorite_detailproduct"
+                    app:layout_constraintBottom_toBottomOf="@id/mcv_addcount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/mcv_addcount" />
+
+                <TextView
+                    android:id="@+id/tv_description_detailproduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_40"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:fontFamily="@font/latoregular"
+                    android:text=""
+                    android:textSize="19sp"
+                    app:layout_constraintBottom_toTopOf="@id/hsv_attacheds"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_cost_detailproduct" />
+
+                <HorizontalScrollView
+                    android:id="@+id/hsv_attacheds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:orientation="horizontal"
+                    android:scrollbars="none"
+                    app:layout_constraintBottom_toTopOf="@id/feb_add_detailproduct"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description_detailproduct">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/mcv_brand_detailproduct"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_15"
+                            app:cardCornerRadius="@dimen/dp_10"
+                            app:cardElevation="5dp"
+                            app:strokeColor="@color/colorPrimary"
+                            app:strokeWidth="0.5dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="@dimen/dp_10">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/sourcesansprosemibold"
+                                    android:text="Marca"
+                                    android:textColor="@color/colorGrey"
+                                    android:textSize="14sp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tv_brand_detailproduct"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginTop="@dimen/dp_5"
+                                    android:fontFamily="@font/sourcesansprosemibold"
+                                    android:textColor="@color/colorBlackMatiz1"
+                                    android:textSize="17sp"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/mcv_category_detailproduct"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_15"
+                            app:cardCornerRadius="@dimen/dp_10"
+                            app:cardElevation="5dp"
+                            app:strokeColor="@color/colorPrimary"
+                            app:strokeWidth="0.5dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="@dimen/dp_10">
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/sourcesansprosemibold"
+                                    android:text="Categoria"
+                                    android:textColor="@color/colorGrey"
+                                    android:textSize="14sp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tv_category_detailproduct"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginTop="@dimen/dp_5"
+                                    android:fontFamily="@font/sourcesansprosemibold"
+                                    android:textColor="@color/colorBlackMatiz1"
+                                    android:textSize="17sp"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/tv_total_detailproduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:fontFamily="@font/sourcesansprosemibold"
+                    android:text="S/. 0.0"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/feb_add_detailproduct"
+                    app:layout_constraintEnd_toStartOf="@id/feb_add_detailproduct"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/feb_add_detailproduct" />
+
+                <ProgressBar
+                    android:id="@+id/pgb_stateadd_detailproduct"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:elevation="@dimen/dp_50"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/colorPrimary"
+                    android:max="100"
+                    android:progress="20"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/feb_add_detailproduct"
+                    app:layout_constraintEnd_toEndOf="@id/feb_add_detailproduct"
+                    app:layout_constraintStart_toStartOf="@id/feb_add_detailproduct"
+                    app:layout_constraintTop_toTopOf="@id/feb_add_detailproduct" />
+
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/feb_add_detailproduct"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:layout_marginVertical="@dimen/dp_20"
+                    android:drawableLeft="@drawable/ic_outline_shopping_cart_24"
+                    android:text="Agregar al carrito"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/colorPrimary_50"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/hsv_attacheds" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

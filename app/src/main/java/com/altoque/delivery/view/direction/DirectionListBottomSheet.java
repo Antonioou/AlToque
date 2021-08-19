@@ -130,7 +130,7 @@ public class DirectionListBottomSheet extends BottomSheetDialogFragment implemen
         view = View.inflate(getContext(), R.layout.bottomsheet_direction_list, null);
         dialog.setContentView(view);
         mBehavior = BottomSheetBehavior.from((View) view.getParent());
-
+        mBehavior.setPeekHeight(0);
         bindView();
         initResources();
         eventListener();
