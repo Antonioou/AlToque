@@ -1,5 +1,6 @@
 package com.altoque.delivery.view.initial.ui.services;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,7 +49,7 @@ public class ListBusinessByRubroActivity extends AppCompatActivity {
     FloatingActionButton fab_back;
 
     ImageView iv_photo;
-    TextView tv_nameRubro, tv_qtylist;
+    TextView tv_nameRubro, tv_qtylist, tv_state;
 
     /* BUSINESS */
     private RecyclerView recview;
@@ -60,6 +61,7 @@ public class ListBusinessByRubroActivity extends AppCompatActivity {
         tv_nameRubro = binding.tvNameListBusinessByRubro;
         tv_qtylist = binding.tvQtyListBusinessByRubro;
         fab_back = binding.fabBackListBusinessByRubro;
+        tv_state = binding.tvStateListBusinessByRubro;
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
@@ -88,13 +90,11 @@ public class ListBusinessByRubroActivity extends AppCompatActivity {
         binding = ActivityListBusinessbyrubroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow()
-                    .setStatusBarColor(ContextCompat.
-                            getColor(ListBusinessByRubroActivity.this, R.color.colorWhite));
-            getWindow()
-                    .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        getWindow()
+                .setStatusBarColor(ContextCompat.
+                        getColor(ListBusinessByRubroActivity.this, R.color.colorWhite));
+        getWindow()
+                .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         initResources();
 
@@ -128,14 +128,13 @@ public class ListBusinessByRubroActivity extends AppCompatActivity {
 
                     if (response.isSuccessful()) {
                         assert response.body() != null;
-                        Log.e("Error_log_list", "" + response.body().toString());
+                        //Log.e("Error_log_list", "" + response.body().toString());
                         if (response.body().size() > 0) {
                             String code = response.body().get(0).getCodeServer().toString();
 
                             if (code.equals("221")) {
 
                                 list = response.body();
-
 
                                 if (list.size() >= 1) {
                                     tv_qtylist.setText(list.size() + " Tienda (s)");
@@ -146,35 +145,28 @@ public class ListBusinessByRubroActivity extends AppCompatActivity {
                                     recview.setVisibility(View.VISIBLE);
                                     eventAdapterBusinessList();
                                 } else {
-                                    tv_qtylist.setTextSize(25);
-                                    tv_qtylist.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                    tv_qtylist.setText("No se hallaron tiendas relacionadas.");
-                                    tv_qtylist.setMaxLines(6);
+                                    tv_qtylist.setVisibility(View.GONE);
+                                    tv_state.setVisibility(View.VISIBLE);
                                 }
 
                             } else if (code.equals("010")) {
-                                tv_qtylist.setTextSize(25);
-                                tv_qtylist.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                tv_qtylist.setText("No se hallaron tiendas relacionadas.");
-                                tv_qtylist.setMaxLines(6);
+                                tv_qtylist.setVisibility(View.GONE);
+                                tv_state.setVisibility(View.VISIBLE);
                             }
                         } else {
-                            tv_qtylist.setTextSize(25);
-                            tv_qtylist.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                            tv_qtylist.setText("No se hallaron tiendas relacionadas.");
-                            tv_qtylist.setMaxLines(6);
-                            //Toast.makeText(ListBusinessByRubroActivity.this, ".", Toast.LENGTH_SHORT).show();
+                            tv_qtylist.setVisibility(View.GONE);
+                            tv_state.setVisibility(View.VISIBLE);
                         }
                     }
                 }
 
                 @Override
-                public void onFailure(Call<List<NegocioModel>> call, Throwable t) {
-                    Log.e("Error_log_serices", "" + t.getMessage().toString());
+                public void onFailure(@NonNull Call<List<NegocioModel>> call, @NonNull Throwable t) {
+                    Log.e("Error_log_serices", "" + t.getMessage());
                 }
             });
         } catch (Exception e) {
-            Log.e("Error_log_serices", "" + e.getMessage().toString());
+            Log.e("Error_log_serices", "" + e.getMessage());
 
         }
     }

@@ -2,31 +2,25 @@ package com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.altoque.delivery.adapter.BusinessStyleOneAdapter;
-import com.altoque.delivery.adapter.BusinessStyleTwoAdapter;
-import com.altoque.delivery.adapter.CenterZoomLayoutManager;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.altoque.delivery.adapter.ProductStyleOneAdapter;
 import com.altoque.delivery.api.ApiClient;
 import com.altoque.delivery.api.ApiHelper;
 import com.altoque.delivery.apiInterface.ApiInterface;
 import com.altoque.delivery.databinding.FragmentFirstDetailBusinessBinding;
-import com.altoque.delivery.model.NegocioModel;
 import com.altoque.delivery.model.ProductoModel;
-import com.altoque.delivery.view.initial.ui.detail.viewdetailproduct.AccessDetailProductBottomSheet;
+import com.altoque.delivery.view.initial.ui.detail.viewdetailproduct.DetailProductActivity;
 import com.altoque.delivery.view.initial.ui.detail.viewdetailproduct.DetailProductBottomSheet;
 
 import org.jetbrains.annotations.NotNull;
@@ -157,12 +151,21 @@ public class FirstDetailBusinessFragment extends Fragment {
     private void eventAdapter() {
         adapterProduct.setOnClickListener(v -> {
             int position = recviewProducts.getChildAdapterPosition(v);
+            String state = listProducts.get(position).getStatus().toLowerCase().trim().toString();
 
-            DetailProductBottomSheet productBottomSheet = new DetailProductBottomSheet();
-            Bundle bundle = new Bundle();
-            bundle.putString("value_idproduct", listProducts.get(position).getIdproducto().toString());
-            productBottomSheet.setArguments(bundle);
-            productBottomSheet.show(getChildFragmentManager(), "");
+            if (state.equals("agotado")) {
+                Toast.makeText(requireContext(), "Item no disponible", Toast.LENGTH_SHORT).show();
+            } else {/*
+                DetailProductBottomSheet productBottomSheet = new DetailProductBottomSheet();
+                Bundle bundle = new Bundle();
+                bundle.putString("value_idproduct", listProducts.get(position).getIdproducto().toString());
+                productBottomSheet.setArguments(bundle);
+                productBottomSheet.show(getChildFragmentManager(), "");*/
+
+                Intent intent = new Intent(mContext, DetailProductActivity.class);
+                intent.putExtra("value_idproduct", listProducts.get(position).getIdproducto().toString());
+                startActivity(intent);
+            }
         });
     }
 

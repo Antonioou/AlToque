@@ -1,6 +1,7 @@
 package com.altoque.delivery.apiInterface;
 
 import com.altoque.delivery.model.AccessResponseModel;
+import com.altoque.delivery.model.AggregatesModel;
 import com.altoque.delivery.model.CategoriaModel;
 import com.altoque.delivery.model.CustomerModel;
 import com.altoque.delivery.model.DomicilioModel;
@@ -13,7 +14,6 @@ import com.altoque.delivery.model.RubroModel;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -209,4 +209,17 @@ public interface ApiInterface {
             @Field("op") String operation,
             @Field("idproducto") String idproduct
     );
+
+    @FormUrlEncoded
+    @POST("controller/rproducto.php")
+    Call<List<ProductoModel>> getQuantityPermitiedProduct(
+            @Field("op") String operation,
+            @Field("idproducto") String idproduct
+    );
+    @FormUrlEncoded
+    @POST("controller/rproducto.php")
+    Call<List<AggregatesModel>> getAggregatesProduct(
+                    @Field("op") String operation,
+                    @Field("idproducto") String idproduct
+            );
 }

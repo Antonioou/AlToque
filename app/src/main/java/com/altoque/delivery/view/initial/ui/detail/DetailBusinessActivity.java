@@ -18,8 +18,10 @@ import com.altoque.delivery.databinding.ActivityDetailBusinessBinding;
 import com.altoque.delivery.model.CategoriaModel;
 import com.altoque.delivery.model.DomicilioModel;
 import com.altoque.delivery.model.NegocioModel;
+import com.altoque.delivery.view.initial.InitialActivity;
 import com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness.DataBusinessBottomSheet;
 import com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness.FirstDetailBusinessFragment;
+import com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness.FiveDetailBusinessFragment;
 import com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness.FourthDetailBusinessFragment;
 import com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness.SecondDetailBusinessFragment;
 import com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness.ThirdDetailBusinessFragment;
@@ -27,6 +29,8 @@ import com.altoque.delivery.view.initial.ui.detail.viewdetailbusiness.ViewPagerA
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -34,6 +38,7 @@ import androidx.palette.graphics.Palette;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -77,7 +82,7 @@ public class DetailBusinessActivity extends AppCompatActivity {
 
     TextView tv_time, tv_rate, tv_cost, tv_name, tv_state, tv_info;
     ImageView iv_banner, iv_logo;
-    ImageView view_gradient;
+    //ImageView view_gradient;
 
     String global_idnegocio = "";
 
@@ -89,21 +94,18 @@ public class DetailBusinessActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         View view = binding.getRoot();
 
-        /*getWindow()
-                .setStatusBarColor(ContextCompat.getColor(this, R.color.colorWhite));*/
-
-
-        /*Window w = getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-*/
-        //setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
-        //getWindow().setStatusBarColor(Color.TRANSPARENT);
-        /*getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-*/
-
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
         toolBarLayout = binding.toolbarLayout;
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        getWindow()
+                .setStatusBarColor(ContextCompat.getColor(DetailBusinessActivity.this, R.color.colorWhite));
+        getWindow()
+                .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
 
 
@@ -113,13 +115,13 @@ public class DetailBusinessActivity extends AppCompatActivity {
                 .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);*/
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        listCateg = new ArrayList<CategoriaModel>();
-        listBusiness = new ArrayList<NegocioModel>();
+        listCateg = new ArrayList<>();
+        listBusiness = new ArrayList<>();
 
-        view_gradient = binding.viewGradientDetailbusiness;
+        //view_gradient = binding.viewGradientDetailbusiness;
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager_detailbusinness);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout_detailbusinness);
+        viewPager = findViewById(R.id.viewPager_detailbusinness);
+        tabLayout = findViewById(R.id.tabLayout_detailbusinness);
 
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -213,23 +215,6 @@ public class DetailBusinessActivity extends AppCompatActivity {
                                             .into(iv_banner);
 
 
-                                    Bitmap bitmap = ((BitmapDrawable) iv_banner.getDrawable()).getBitmap();
-                                    Palette.from(bitmap).generate(palette -> {
-                                        assert palette != null;
-                                        int vibrant = palette.getVibrantColor(0x000000);
-                                        int vibrantLight = palette.getLightVibrantColor(0x000000);
-                                        int vibrantDark = palette.getDarkVibrantColor(0x000000);
-                                        int muted = palette.getMutedColor(0x000000);
-                                        int mutedLight = palette.getLightMutedColor(0x000000);
-                                        int mutedDark = palette.getDarkMutedColor(0x000000);
-
-                                        //int colorCode = Color.parseColor(vibrant) ;
-                                        //view_gradient.setImageTintList(ColorStateList.valueOf(getResources().getColor(vibrant)));
-
-
-
-                                    });
-
                                 } catch (Exception ignored) {}
 
 
@@ -256,28 +241,25 @@ public class DetailBusinessActivity extends AppCompatActivity {
     private void scrollListener(String title){
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = true;
-            int scrollRange = -1;
-
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
+
+                if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0)
+                {
+                    //  Collapsed
                     toolBarLayout.setTitle(title);
-                    isShow = true;
-                } else if(isShow) {
-                    toolBarLayout.setTitle(" ");//careful there should a space between double quote otherwise it wont work
-                    isShow = false;
+                    toolBarLayout.setCollapsedTitleTextColor(Color.BLACK);
+                }/*if (verticalOffset == 0) {
+                    //Expanded
+                    toolBarLayout.setTitle("");
+                }*/
+                else
+                { toolBarLayout.setTitle("");
                 }
             }
         });
     }
 
-    private Bitmap convertImageViewToBitmap(ImageView v){
-        return ((BitmapDrawable)v.getDrawable()).getBitmap();
-    }
 
 
     private void getListCategories(String id) {
@@ -334,7 +316,6 @@ public class DetailBusinessActivity extends AppCompatActivity {
         switch (qty_tabs) {
             case 1:
                 adapter.AddFragment(new FirstDetailBusinessFragment().newInstance(id.get(0), global_idnegocio), title.get(0));
-
                 break;
             case 2:
                 adapter.AddFragment(new FirstDetailBusinessFragment().newInstance(id.get(0), global_idnegocio), title.get(0));
@@ -352,6 +333,13 @@ public class DetailBusinessActivity extends AppCompatActivity {
                 adapter.AddFragment(new ThirdDetailBusinessFragment().newInstance(id.get(2), global_idnegocio), title.get(2));
                 adapter.AddFragment(new FourthDetailBusinessFragment().newInstance(id.get(3), global_idnegocio), title.get(3));
                 break;
+            case 5:
+                adapter.AddFragment(new FirstDetailBusinessFragment().newInstance(id.get(0), global_idnegocio), title.get(0));
+                adapter.AddFragment(new SecondDetailBusinessFragment().newInstance(id.get(1), global_idnegocio), title.get(1));
+                adapter.AddFragment(new ThirdDetailBusinessFragment().newInstance(id.get(2), global_idnegocio), title.get(2));
+                adapter.AddFragment(new FourthDetailBusinessFragment().newInstance(id.get(3), global_idnegocio), title.get(3));
+                adapter.AddFragment(new FiveDetailBusinessFragment().newInstance(id.get(4), global_idnegocio), title.get(4));
+                break;
             case 0:
                 adapter.AddFragment(new FirstDetailBusinessFragment(), "Title");
                 break;
@@ -367,15 +355,13 @@ public class DetailBusinessActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-
-    public static void setWindowFlag(Activity activity, final int bits, boolean on) {
-        Window win = activity.getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
         }
-        win.setAttributes(winParams);
+        return super.onOptionsItemSelected(item);
     }
 }

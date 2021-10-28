@@ -1,37 +1,31 @@
 package com.altoque.delivery.view.initial.ui.detail.viewdetailproduct;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.altoque.delivery.R;
+import com.altoque.delivery.adapter.AggregatesStyleParentPreviewAdapter;
 import com.altoque.delivery.api.ApiClient;
 import com.altoque.delivery.api.ApiHelper;
 import com.altoque.delivery.apiInterface.ApiInterface;
 import com.altoque.delivery.data.SessionSP;
+import com.altoque.delivery.databinding.ActivityDetailProductBinding;
 import com.altoque.delivery.model.AggregatesModel;
 import com.altoque.delivery.model.ProductoModel;
 import com.altoque.delivery.model.SubAggregatesModel;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,21 +34,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailProductBottomSheet extends BottomSheetDialogFragment {
+public class DetailProductActivity extends AppCompatActivity {
 
-    View view;
-
-    private BottomSheetBehavior mBehavior;
     private ApiInterface api;
     SessionSP sessionSP;
-
+    ActivityDetailProductBinding binding;
 
     String global_idproduct = "";
-    private Context mContext;
+
 
     List<ProductoModel> listProductsQty;
     List<ProductoModel> listProducts;
     List<AggregatesModel> listAggregatesProduct;
+    List<AggregatesModel> listPreviewAggregatesProduct;
+
+    AggregatesStyleParentPreviewAdapter adapterPreviewAggregates;
 
     private final Integer qtyDefItem = 1;
     String countTemp = "";
@@ -63,15 +57,21 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
     private TextView tv_qtyadd, tv_total;
     private FloatingActionButton fab_positive, fab_negative;
 
+    RecyclerView rv_preview_aggregates;
+
+
     private void initView() {
 
         /*TextView tv_timeopen = (TextView) view.findViewById(R.id.tv_timeopen_businessdata);
         TextView tv_timeclose = (TextView) view.findViewById(R.id.tv_timeclose_businessdata);*/
-        TextView tv_address = (TextView) view.findViewById(R.id.tv_map_businessdata);
-        tv_total = (TextView) view.findViewById(R.id.tv_total_detailproduct);
-        tv_qtyadd = (TextView) view.findViewById(R.id.tv_qtyadd_detailproduct);
-        fab_positive = view.findViewById(R.id.fab_positive_detailproduct);
-        fab_negative = view.findViewById(R.id.fab_negative_detailproduct);
+        TextView tv_address = (TextView) findViewById(R.id.tv_map_businessdata);
+        tv_total = (TextView) findViewById(R.id.tv_total_detailproduct);
+        tv_qtyadd = (TextView) findViewById(R.id.tv_qtyadd_detailproduct);
+        fab_positive = findViewById(R.id.fab_positive_detailproduct);
+        fab_negative = findViewById(R.id.fab_negative_detailproduct);
+
+        rv_preview_aggregates = binding.rvPreviewAggregates;
+
 
     }
 
@@ -79,103 +79,53 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
 
         fab_negative.setOnClickListener(v -> restQtyProduct());
         fab_positive.setOnClickListener(v -> sumQtyProduct());
+
+
+        FloatingActionButton fab_back_ = findViewById(R.id.fab_back_detailproduct);
+        fab_back_.setOnClickListener(v -> finish());
     }
 
     private void initResources() {
         api = ApiClient.getApiClient().create(ApiInterface.class);
 
-        sessionSP = SessionSP.get(requireContext());
+        sessionSP = SessionSP.get(DetailProductActivity.this);
 
-        mContext = mContext.getApplicationContext();
         listProductsQty = new ArrayList<>();
         listProducts = new ArrayList<>();
         listAggregatesProduct = new ArrayList<>();
     }
 
-    private DialogInterface.OnDismissListener onDismissListener;
-
-    public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
-        this.onDismissListener = onDismissListener;
-    }
-
     @Override
-    public void onDismiss(@NotNull DialogInterface dialog) {
-        super.onDismiss(dialog);
-        if (onDismissListener != null) {
-            onDismissListener.onDismiss(dialog);
-        }
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.activity_detail_product);
+        binding = ActivityDetailProductBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
-        LayoutInflater inflater = (LayoutInflater)
-                mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.bottomsheet_product_detail, null);
-        dialog.setContentView(view);
-
-        mBehavior = BottomSheetBehavior.from((View) view.getParent());
-        mBehavior.setPeekHeight(0);
-
-        /*requireActivity().getWindow()
-                .setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.transparent));
-        requireActivity().getWindow()
-                .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);*/
+        getWindow()
+                .setStatusBarColor(ContextCompat.getColor(DetailProductActivity.this, R.color.colorWhite));
+        getWindow()
+                .getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         initView();
         initResources();
         initEvent();
-        setupStatesBS();
 
-        if (getArguments() != null) {
-            String id_prod = getArguments().getString("value_idproduct");
+        if (getIntent().getExtras() != null) {
+            String id_prod = getIntent().getStringExtra("value_idproduct");
 
             String id_prod_def = ((id_prod != null) ? id_prod : "-1");
 
             if (id_prod_def.isEmpty() || id_prod_def.equals("-1")) {
-                Toast.makeText(requireContext(), "No se obtuvo el id " + id_prod_def, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailProductActivity.this, "No se obtuvo el id " + id_prod_def, Toast.LENGTH_SHORT).show();
             } else {
                 global_idproduct = id_prod_def;
 
                 getDataProduct(global_idproduct);
             }
         }
-
-
-        return dialog;
     }
 
-
-    private void setupStatesBS() {
-        mBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                    case BottomSheetBehavior.STATE_COLLAPSED:
-                    case BottomSheetBehavior.STATE_HALF_EXPANDED:
-
-                        mBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED:
-                    case BottomSheetBehavior.STATE_SETTLING:
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-            }
-        });
-    }
 
     private void getDataProduct(String id) {
         Call<List<ProductoModel>> call = api.getDataProduct("detail_product", id);
@@ -209,11 +159,11 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
 
                         } else if (code.equals("010")) {
 
-                            Toast.makeText(mContext, "Sin Productos por cargar.",
+                            Toast.makeText(DetailProductActivity.this, "Sin Productos por cargar.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(mContext, "Sin Productos por cargar.",
+                        Toast.makeText(DetailProductActivity.this, "Sin Productos por cargar.",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -252,11 +202,11 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
 
                         } else if (code.equals("010")) {
 
-                            Toast.makeText(mContext, "Sin registro de cantidades.",
+                            Toast.makeText(DetailProductActivity.this, "Sin registro de cantidades.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(mContext, "Sin registro de cantidades.",
+                        Toast.makeText(DetailProductActivity.this, "Sin registro de cantidades.",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -291,11 +241,11 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
                             }
                         } else if (code.equals("010")) {
                             listAggregatesProduct = response.body();
-                            Toast.makeText(mContext, "El item no cuenta con acompañamientos.",
+                            Toast.makeText(DetailProductActivity.this, "El item no cuenta con acompañamientos.",
                                     Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(mContext, "Sin acompañamientos por cargar.",
+                        Toast.makeText(DetailProductActivity.this, "Sin acompañamientos por cargar.",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -310,23 +260,51 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
 
     private void extractData(List<AggregatesModel> list) {
         //Log.e("error_log_p", "  FIRSTCOUNT: "+list.get(0).toString());
+        List<AggregatesModel> listAgg = new ArrayList<>();
+        List<SubAggregatesModel> listSubAgg = new ArrayList<>();
 
-        for (int i = 0; i<list.size(); i++){
-            //Log.e("error_log_p", "" + i+"\nCOUNT: "+list.get(i).toString());
+        if (list.size() > 0) {
 
-            List<SubAggregatesModel> listSubAgg = new ArrayList<>();
+            listAgg = list;
 
-            listSubAgg  = list.get(i).getAcompanamiento();
+            for (int i = 0; i < list.size(); i++) {
+                //Log.e("error_log_p", "" + i+"\nCOUNT: "+list.get(i).toString());
 
-            Log.e("error_log_p", "POSITION: " + i+"\nDATA: "+listSubAgg.toString());
+                listSubAgg = list.get(i).getAcompanamiento();
+
+                Log.e("error_log_p", "POSITION: " + i + "\nDATA: " + listSubAgg.toString());
+            }
+
+            retrieveDataPreviewAggregates(listAgg, listSubAgg);
         }
     }
 
 
+    private void retrieveDataPreviewAggregates(List<AggregatesModel> listAgg, List<SubAggregatesModel> listSub) {
+
+        if (listSub.size() > 0) {
+
+            /*LinearLayoutManager layoutManBusinessByProv = new LinearLayoutManager(DetailProductActivity.this,
+                    RecyclerView.VERTICAL, false);
+            rv_preview_aggregates.setLayoutManager(layoutManBusinessByProv);*/
+            rv_preview_aggregates.setHasFixedSize(true);
+            rv_preview_aggregates.setItemViewCacheSize(7);
+            rv_preview_aggregates.setDrawingCacheEnabled(true);
+            rv_preview_aggregates.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+            adapterPreviewAggregates = new AggregatesStyleParentPreviewAdapter(listAgg, listSub);
+
+            rv_preview_aggregates.setAdapter(adapterPreviewAggregates);
+            adapterPreviewAggregates.notifyDataSetChanged();
+
+        }
+
+    }
+
     /***************************/
 
     private void setImageProduct(List<ProductoModel> list) {
-        ImageView imageView = view.findViewById(R.id.iv_image_detailproduct);
+        ImageView imageView = findViewById(R.id.iv_image_detailproduct);
         try {
             if (list.get(0).getImage_prod() != null) {
                 String url = String.valueOf(list.get(0).getImage_prod());
@@ -341,7 +319,7 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void setNameProduct(List<ProductoModel> list) {
-        TextView textView = view.findViewById(R.id.tv_name_detailproduct);
+        TextView textView = findViewById(R.id.tv_name_detailproduct);
         try {
             if (list.get(0).getNom_prod() != null || !list.get(0).getNom_prod().isEmpty()) {
                 textView.setText(list.get(0).getNom_prod());
@@ -352,7 +330,7 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void setDescriptionProduct(List<ProductoModel> list) {
-        TextView textView = view.findViewById(R.id.tv_description_detailproduct);
+        TextView textView = findViewById(R.id.tv_description_detailproduct);
         try {
             if (list.get(0).getDesc_prod() != null || !list.get(0).getDesc_prod().isEmpty()) {
                 textView.setText(list.get(0).getDesc_prod());
@@ -364,7 +342,7 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
 
     @SuppressLint("SetTextI18n")
     private void setCostProduct(List<ProductoModel> list) {
-        TextView textView = view.findViewById(R.id.tv_cost_detailproduct);
+        TextView textView = findViewById(R.id.tv_cost_detailproduct);
         try {
             if (list.get(0).getPrecio_venta_unidad() != null || !list.get(0).getPrecio_venta_unidad().isEmpty()) {
                 textView.setText("S/. " + list.get(0).getPrecio_venta_unidad());
@@ -375,7 +353,7 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void setBrandProduct(List<ProductoModel> list) {
-        TextView textView = view.findViewById(R.id.tv_brand_detailproduct);
+        TextView textView = findViewById(R.id.tv_brand_detailproduct);
         try {
             if (list.get(0).getNombre_marca() != null || !list.get(0).getNombre_marca().isEmpty()) {
                 textView.setText(list.get(0).getNombre_marca());
@@ -386,7 +364,7 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void setCategoryProduct(List<ProductoModel> list) {
-        TextView textView = view.findViewById(R.id.tv_category_detailproduct);
+        TextView textView = findViewById(R.id.tv_category_detailproduct);
         try {
             if (list.get(0).getNomb_categoria() != null || !list.get(0).getNomb_categoria().isEmpty()) {
                 textView.setText(list.get(0).getNomb_categoria());
@@ -397,7 +375,7 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void setMeasureProduct(List<ProductoModel> list) {
-        TextView textView = view.findViewById(R.id.tv_measure_detailproduct);
+        TextView textView = findViewById(R.id.tv_measure_detailproduct);
         try {
             if (list.get(0).getNom_medida() != null || !list.get(0).getNom_medida().isEmpty()) {
                 textView.setText(list.get(0).getNom_medida());
@@ -436,7 +414,7 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
 
             if (total >= maxLocal) {
                 String textToast = "Cantidad máxima (" + maxLocal + ") alcanzada.";
-                Toast.makeText(requireContext(), "" + textToast, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailProductActivity.this, "" + textToast, Toast.LENGTH_SHORT).show();
             } else {
                 count += qtyDefItem;
                 tv_qtyadd.setText(String.valueOf(count));
@@ -472,27 +450,4 @@ public class DetailProductBottomSheet extends BottomSheetDialogFragment {
         }
 
     }
-
-
-    /******************************/
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if (mContext == null)
-            mContext = context.getApplicationContext();
-        mContext = context;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-    }
-
-    @Override
-    public void onCancel(@NonNull DialogInterface dialog) {
-        super.onCancel(dialog);
-    }
-
-
 }

@@ -55,9 +55,20 @@
         <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
 
     </style>
-    <style name="Theme.AlToque.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="Theme.AlToque.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.Toolbar" parent="Theme.AlToque.NoActionBar">
+
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:statusBarColor">@android:color/white</item>
+        <!--<item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowTranslucentStatus">false</item>-->
+
+    </style>
+    <style name="Theme.AlToque.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.AlToque.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="SplashTheme" parent="Theme.AlToque.NoActionBar">
         <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimary</item>

@@ -17,7 +17,8 @@ import com.altoque.delivery.adapter.ProductStyleOneAdapter;
 import com.altoque.delivery.api.ApiClient;
 import com.altoque.delivery.api.ApiHelper;
 import com.altoque.delivery.apiInterface.ApiInterface;
-import com.altoque.delivery.databinding.FragmentSecondDetailBusinessBinding;
+import com.altoque.delivery.databinding.FragmentFiveDetailBusinessBinding;
+import com.altoque.delivery.databinding.FragmentThirdDetailBusinessBinding;
 import com.altoque.delivery.model.ProductoModel;
 import com.altoque.delivery.view.initial.ui.detail.viewdetailproduct.DetailProductActivity;
 import com.altoque.delivery.view.initial.ui.detail.viewdetailproduct.DetailProductBottomSheet;
@@ -31,16 +32,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SecondDetailBusinessFragment extends Fragment {
+public class FiveDetailBusinessFragment extends Fragment {
 
     private static final String ARG_PARAM_IDCATEGORY = "value_idcategory";
-    private static final String ARG_PARAM_IDBUSINESS= "value_idbusiness";
-
+    private static final String ARG_PARAM_IDBUSINESS = "value_idbusiness";
 
     private String param_idcategory;
     private String param_idBusiness;
 
-    FragmentSecondDetailBusinessBinding binding;
+    FragmentFiveDetailBusinessBinding binding;
     public ApiInterface apiInterface;
 
     private RecyclerView recviewProducts;
@@ -49,12 +49,13 @@ public class SecondDetailBusinessFragment extends Fragment {
 
     private Context mContext;
 
-    public SecondDetailBusinessFragment() {
+    public FiveDetailBusinessFragment() {
         // Required empty public constructor
     }
 
-    public static SecondDetailBusinessFragment newInstance(String idCategory, String idBusiness) {
-        SecondDetailBusinessFragment fragment = new SecondDetailBusinessFragment();
+
+    public static FiveDetailBusinessFragment newInstance(String idCategory, String idBusiness) {
+        FiveDetailBusinessFragment fragment = new FiveDetailBusinessFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM_IDCATEGORY, idCategory);
         args.putString(ARG_PARAM_IDBUSINESS, idBusiness);
@@ -75,7 +76,7 @@ public class SecondDetailBusinessFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentSecondDetailBusinessBinding.inflate(inflater, container, false);
+        binding = FragmentFiveDetailBusinessBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         recviewProducts = binding.rvProducts;
@@ -110,10 +111,12 @@ public class SecondDetailBusinessFragment extends Fragment {
 
                                 listProducts = response.body();
                                 adapterProduct =
-                                        new ProductStyleOneAdapter(listProducts, requireContext(), getChildFragmentManager());
+                                        new ProductStyleOneAdapter(listProducts, requireContext(),
+                                                getChildFragmentManager());
                                 recviewProducts.setAdapter(adapterProduct);
                                 adapterProduct.notifyDataSetChanged();
                                 eventAdapter();
+
                             } else if (code.equals("010")) {
 
                                 Toast.makeText(mContext, "Sin Productos por cargar.",
@@ -159,7 +162,6 @@ public class SecondDetailBusinessFragment extends Fragment {
         super.onAttach(context);
         if (mContext == null)
             mContext = context.getApplicationContext();
-
         mContext = context;
     }
 }

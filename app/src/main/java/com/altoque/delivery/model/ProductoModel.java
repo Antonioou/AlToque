@@ -3,6 +3,8 @@ package com.altoque.delivery.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class ProductoModel {
 
     @SerializedName("code_server")
@@ -29,6 +31,9 @@ public class ProductoModel {
     @SerializedName("precio_ventaprod")
     @Expose
     private String precio_ventaprod;
+    @SerializedName("precio_venta_unidad")
+    @Expose
+    private String precio_venta_unidad;
     @SerializedName("image_prod")
     @Expose
     private String image_prod;
@@ -66,64 +71,28 @@ public class ProductoModel {
     @Expose
     private String status;
 
+    @SerializedName("minimum_quantity")
+    @Expose
+    private String minimum_quantity;
+    @SerializedName("maximum_quantity")
+    @Expose
+    private String maximum_quantity;
+
+
     public ProductoModel() {
     }
 
     @Override
-    public String toString() {
-        return "ProductoModel{" +
-                "code_server='" + code_server + '\'' +
-                ", res_server='" + res_server + '\'' +
-                ", msg_server='" + msg_server + '\'' +
-                ", idproducto='" + idproducto + '\'' +
-                ", nom_prod='" + nom_prod + '\'' +
-                ", desc_prod='" + desc_prod + '\'' +
-                ", precio_compraprod='" + precio_compraprod + '\'' +
-                ", precio_ventaprod='" + precio_ventaprod + '\'' +
-                ", image_prod='" + image_prod + '\'' +
-                ", disponibilidad_prod='" + disponibilidad_prod + '\'' +
-                ", nomb_categoria='" + nomb_categoria + '\'' +
-                ", nom_medida='" + nom_medida + '\'' +
-                ", nombre_marca='" + nombre_marca + '\'' +
-                ", imagen_marca='" + imagen_marca + '\'' +
-                ", precio_descuento='" + precio_descuento + '\'' +
-                ", precio_unid='" + precio_unid + '\'' +
-                ", stock_actual='" + stock_actual + '\'' +
-                ", stock_minimo='" + stock_minimo + '\'' +
-                ", stock_maximo='" + stock_maximo + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductoModel that = (ProductoModel) o;
+        return Objects.equals(code_server, that.code_server) && Objects.equals(res_server, that.res_server) && Objects.equals(msg_server, that.msg_server) && Objects.equals(idproducto, that.idproducto) && Objects.equals(nom_prod, that.nom_prod) && Objects.equals(desc_prod, that.desc_prod) && Objects.equals(precio_compraprod, that.precio_compraprod) && Objects.equals(precio_ventaprod, that.precio_ventaprod) && Objects.equals(precio_venta_unidad, that.precio_venta_unidad) && Objects.equals(image_prod, that.image_prod) && Objects.equals(disponibilidad_prod, that.disponibilidad_prod) && Objects.equals(nomb_categoria, that.nomb_categoria) && Objects.equals(nom_medida, that.nom_medida) && Objects.equals(nombre_marca, that.nombre_marca) && Objects.equals(imagen_marca, that.imagen_marca) && Objects.equals(precio_descuento, that.precio_descuento) && Objects.equals(precio_unid, that.precio_unid) && Objects.equals(stock_actual, that.stock_actual) && Objects.equals(stock_minimo, that.stock_minimo) && Objects.equals(stock_maximo, that.stock_maximo) && Objects.equals(status, that.status) && Objects.equals(minimum_quantity, that.minimum_quantity) && Objects.equals(maximum_quantity, that.maximum_quantity);
     }
 
-    public ProductoModel(String code_server, String res_server, String msg_server, String idproducto, String nom_prod, String desc_prod, String precio_compraprod, String precio_ventaprod, String image_prod, String disponibilidad_prod, String nomb_categoria, String nom_medida, String nombre_marca, String imagen_marca, String precio_descuento, String precio_unid, String stock_actual, String stock_minimo, String stock_maximo, String status) {
-        this.code_server = code_server;
-        this.res_server = res_server;
-        this.msg_server = msg_server;
-        this.idproducto = idproducto;
-        this.nom_prod = nom_prod;
-        this.desc_prod = desc_prod;
-        this.precio_compraprod = precio_compraprod;
-        this.precio_ventaprod = precio_ventaprod;
-        this.image_prod = image_prod;
-        this.disponibilidad_prod = disponibilidad_prod;
-        this.nomb_categoria = nomb_categoria;
-        this.nom_medida = nom_medida;
-        this.nombre_marca = nombre_marca;
-        this.imagen_marca = imagen_marca;
-        this.precio_descuento = precio_descuento;
-        this.precio_unid = precio_unid;
-        this.stock_actual = stock_actual;
-        this.stock_minimo = stock_minimo;
-        this.stock_maximo = stock_maximo;
-        this.status = status;
-    }
-
-    public String getNomb_categoria() {
-        return nomb_categoria;
-    }
-
-    public void setNomb_categoria(String nomb_categoria) {
-        this.nomb_categoria = nomb_categoria;
+    @Override
+    public int hashCode() {
+        return Objects.hash(code_server, res_server, msg_server, idproducto, nom_prod, desc_prod, precio_compraprod, precio_ventaprod, precio_venta_unidad, image_prod, disponibilidad_prod, nomb_categoria, nom_medida, nombre_marca, imagen_marca, precio_descuento, precio_unid, stock_actual, stock_minimo, stock_maximo, status, minimum_quantity, maximum_quantity);
     }
 
     public String getCode_server() {
@@ -190,6 +159,14 @@ public class ProductoModel {
         this.precio_ventaprod = precio_ventaprod;
     }
 
+    public String getPrecio_venta_unidad() {
+        return precio_venta_unidad;
+    }
+
+    public void setPrecio_venta_unidad(String precio_venta_unidad) {
+        this.precio_venta_unidad = precio_venta_unidad;
+    }
+
     public String getImage_prod() {
         return image_prod;
     }
@@ -204,6 +181,14 @@ public class ProductoModel {
 
     public void setDisponibilidad_prod(String disponibilidad_prod) {
         this.disponibilidad_prod = disponibilidad_prod;
+    }
+
+    public String getNomb_categoria() {
+        return nomb_categoria;
+    }
+
+    public void setNomb_categoria(String nomb_categoria) {
+        this.nomb_categoria = nomb_categoria;
     }
 
     public String getNom_medida() {
@@ -278,4 +263,74 @@ public class ProductoModel {
         this.status = status;
     }
 
+    public String getMinimum_quantity() {
+        return minimum_quantity;
+    }
+
+    public void setMinimum_quantity(String minimum_quantity) {
+        this.minimum_quantity = minimum_quantity;
+    }
+
+    public String getMaximum_quantity() {
+        return maximum_quantity;
+    }
+
+    public void setMaximum_quantity(String maximum_quantity) {
+        this.maximum_quantity = maximum_quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductoModel{" +
+                "code_server='" + code_server + '\'' +
+                ", res_server='" + res_server + '\'' +
+                ", msg_server='" + msg_server + '\'' +
+                ", idproducto='" + idproducto + '\'' +
+                ", nom_prod='" + nom_prod + '\'' +
+                ", desc_prod='" + desc_prod + '\'' +
+                ", precio_compraprod='" + precio_compraprod + '\'' +
+                ", precio_ventaprod='" + precio_ventaprod + '\'' +
+                ", precio_venta_unidad='" + precio_venta_unidad + '\'' +
+                ", image_prod='" + image_prod + '\'' +
+                ", disponibilidad_prod='" + disponibilidad_prod + '\'' +
+                ", nomb_categoria='" + nomb_categoria + '\'' +
+                ", nom_medida='" + nom_medida + '\'' +
+                ", nombre_marca='" + nombre_marca + '\'' +
+                ", imagen_marca='" + imagen_marca + '\'' +
+                ", precio_descuento='" + precio_descuento + '\'' +
+                ", precio_unid='" + precio_unid + '\'' +
+                ", stock_actual='" + stock_actual + '\'' +
+                ", stock_minimo='" + stock_minimo + '\'' +
+                ", stock_maximo='" + stock_maximo + '\'' +
+                ", status='" + status + '\'' +
+                ", minimum_quantity='" + minimum_quantity + '\'' +
+                ", maximum_quantity='" + maximum_quantity + '\'' +
+                '}';
+    }
+
+    public ProductoModel(String code_server, String res_server, String msg_server, String idproducto, String nom_prod, String desc_prod, String precio_compraprod, String precio_ventaprod, String precio_venta_unidad, String image_prod, String disponibilidad_prod, String nomb_categoria, String nom_medida, String nombre_marca, String imagen_marca, String precio_descuento, String precio_unid, String stock_actual, String stock_minimo, String stock_maximo, String status, String minimum_quantity, String maximum_quantity) {
+        this.code_server = code_server;
+        this.res_server = res_server;
+        this.msg_server = msg_server;
+        this.idproducto = idproducto;
+        this.nom_prod = nom_prod;
+        this.desc_prod = desc_prod;
+        this.precio_compraprod = precio_compraprod;
+        this.precio_ventaprod = precio_ventaprod;
+        this.precio_venta_unidad = precio_venta_unidad;
+        this.image_prod = image_prod;
+        this.disponibilidad_prod = disponibilidad_prod;
+        this.nomb_categoria = nomb_categoria;
+        this.nom_medida = nom_medida;
+        this.nombre_marca = nombre_marca;
+        this.imagen_marca = imagen_marca;
+        this.precio_descuento = precio_descuento;
+        this.precio_unid = precio_unid;
+        this.stock_actual = stock_actual;
+        this.stock_minimo = stock_minimo;
+        this.stock_maximo = stock_maximo;
+        this.status = status;
+        this.minimum_quantity = minimum_quantity;
+        this.maximum_quantity = maximum_quantity;
+    }
 }

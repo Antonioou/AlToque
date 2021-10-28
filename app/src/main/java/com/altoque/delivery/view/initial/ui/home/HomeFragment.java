@@ -254,7 +254,7 @@ public class HomeFragment extends Fragment {
                     getBusinessListByRate("list_business_by_rating_district", "1");
             ApiHelper.enqueueWithRetry(call, new Callback<List<NegocioModel>>() {
                 @Override
-                public void onResponse(@NotNull Call<List<NegocioModel>> call, Response<List<NegocioModel>> response) {
+                public void onResponse(@NotNull Call<List<NegocioModel>> call, @NonNull Response<List<NegocioModel>> response) {
 
                     if (response.isSuccessful()) {
                         assert response.body() != null;

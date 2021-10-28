@@ -18,13 +18,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AlToque">
         <activity
-            android:name=".view.AccessRestrictActivity"
+            android:name=".view.initial.ui.detail.viewdetailproduct.DetailProductActivity"
             android:exported="true"
             android:theme="@style/Theme.AlToque.NoActionBar"/>
         <activity
+            android:name=".view.AccessRestrictActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AlToque.NoActionBar" />
+        <activity
             android:name=".view.initial.ui.detail.DetailBusinessActivity"
             android:label=""
-            android:theme="@style/AppTheme.TranslucentSystemBars" />
+            android:theme="@style/AppTheme.Toolbar" />
         <activity
             android:name=".view.initial.ui.services.ListBusinessByRubroActivity"
             android:theme="@style/Theme.AlToque.NoActionBar" />
@@ -59,8 +63,8 @@
             android:theme="@style/Theme.AlToque.NoActionBar" />
         <activity
             android:name=".view.SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

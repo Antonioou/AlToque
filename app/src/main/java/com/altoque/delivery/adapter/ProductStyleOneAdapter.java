@@ -62,7 +62,7 @@ public class ProductStyleOneAdapter extends RecyclerView.Adapter<ProductStyleOne
         holder.name.setText(name);
         String detail = list.get(position).getDesc_prod();
         holder.detail.setText(detail);
-        String cost = list.get(position).getPrecio_ventaprod();
+        String cost = list.get(position).getPrecio_venta_unidad();
         holder.cost.setText("S/. " + cost);
 
         //Log.e("Debug_error", "" + list.get(pos).toString());
@@ -82,19 +82,19 @@ public class ProductStyleOneAdapter extends RecyclerView.Adapter<ProductStyleOne
         String state = list.get(position).getStatus().toLowerCase().trim().toString();
 
         if (state.equals("agotado")) {
-            holder.add.setEnabled(false);
+            //holder.add.setVisibility(View.GONE);
             holder.cost.setText("Agotado");
             holder.cost.setTextColor(Color.RED);
         }
 
-        holder.add.setOnClickListener(v -> {
+        /*holder.add.setOnClickListener(v -> {
 
             AccessDetailProductBottomSheet accessBottomSheet = new AccessDetailProductBottomSheet();
             Bundle bundle = new Bundle();
             bundle.putString("value_idproduct", list.get(position).getIdproducto().toString());
             accessBottomSheet.setArguments(bundle);
             accessBottomSheet.show(fragmentManager, "");
-        });
+        });*/
 
     }
 
@@ -117,7 +117,7 @@ public class ProductStyleOneAdapter extends RecyclerView.Adapter<ProductStyleOne
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, detail, cost;
         ImageView url;
-        FloatingActionButton add;
+        //FloatingActionButton add;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -126,7 +126,7 @@ public class ProductStyleOneAdapter extends RecyclerView.Adapter<ProductStyleOne
             url = itemView.findViewById(R.id.iv_photo_product_style_one);
             detail = itemView.findViewById(R.id.tv_detail_product_style_one);
             cost = itemView.findViewById(R.id.tv_cost_product_style_one);
-            add = itemView.findViewById(R.id.fab_add_product_style_one);
+            //add = itemView.findViewById(R.id.fab_add_product_style_one);
         }
     }
 }

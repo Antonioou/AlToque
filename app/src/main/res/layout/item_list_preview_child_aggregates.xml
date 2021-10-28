@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_subaggregates_child"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:ellipsize="end"
+            android:fontFamily="@font/latoregular"
+            android:maxLines="3"
+            android:text="color"
+            android:textSize="17sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/tv_option_subagg_child"
+            app:layout_constraintEnd_toStartOf="@id/mcv_count_subagg_child"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_count_subagg_child"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="@dimen/dp_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_negative_detailproduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_exposure_neg_1_24"
+                    app:backgroundTint="#D1C4E9"
+                    app:elevation="0dp"
+                    app:fabSize="mini" />
+
+                <TextView
+                    android:id="@+id/tv_qtyadd_subaggregates_child"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:fontFamily="@font/latobold"
+                    android:padding="@dimen/dp_5"
+                    android:text="1"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_positive_detailproduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_exposure_plus_1_24"
+                    app:backgroundTint="#D1C4E9"
+                    app:elevation="0dp"
+                    app:fabSize="mini" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tv_cost_subagg_child"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="7dp"
+            android:ellipsize="end"
+            android:layout_marginStart="@dimen/dp_10"
+            android:fontFamily="@font/opensanstegular"
+            android:maxLines="1"
+            android:text="S/. 10.00"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/tv_separate"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_subaggregates_child" />
+
+        <TextView
+            android:id="@+id/tv_separate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:ellipsize="end"
+            android:fontFamily="@font/opensanstegular"
+            android:maxLines="1"
+            android:text="-"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_cost_subagg_child"
+            app:layout_constraintEnd_toStartOf="@id/tv_option_subagg_child"
+            app:layout_constraintTop_toBottomOf="@id/tv_subaggregates_child" />
+
+        <TextView
+            android:id="@+id/tv_option_subagg_child"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:ellipsize="end"
+            android:fontFamily="@font/opensanstegular"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_separate"
+            app:layout_constraintTop_toBottomOf="@id/tv_subaggregates_child" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/chb_subaggregates_child"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_5"
+        android:layout_marginVertical="@dimen/dp_5"
+        android:ellipsize="end"
+        android:fontFamily="@font/latoregular"
+        android:maxLines="3"
+        android:text="check"
+        android:textSize="16sp"
+        android:visibility="gone" />
+</LinearLayout>

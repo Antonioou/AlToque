@@ -2,20 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_5"
-        android:layout_marginEnd="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_5"
+        android:layout_marginBottom="7dp"
         app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:cardCornerRadius="@dimen/dp_10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -26,28 +27,28 @@
 
             <ImageView
                 android:id="@+id/iv_photo_product_style_one"
-                android:layout_width="80dp"
-                android:layout_height="95dp"
+                android:layout_width="83dp"
+                android:layout_height="100dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/second_image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_name_product_style_one"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp_5"
-                android:fontFamily="@font/latobold"
                 android:layout_marginTop="@dimen/dp_5"
+                android:ellipsize="end"
+                android:fontFamily="@font/latobold"
+                android:maxLines="2"
                 android:text=""
                 android:textColor="@color/colorBlackMatiz1"
                 android:textSize="18sp"
-                android:ellipsize="end"
-                android:maxLines="2"
                 app:layout_constraintBottom_toTopOf="@+id/tv_detail_product_style_one"
-                app:layout_constraintEnd_toStartOf="@+id/fab_add_product_style_one"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_photo_product_style_one"
                 app:layout_constraintTop_toTopOf="@id/iv_photo_product_style_one" />
 
@@ -57,16 +58,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp_5"
                 android:layout_marginBottom="@dimen/dp_3"
+                android:ellipsize="end"
                 android:fontFamily="@font/latoregular"
+                android:maxLines="1"
                 android:text=""
                 android:textColor="@color/colorGrey"
                 android:textSize="15sp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintTop_toBottomOf="@id/tv_name_product_style_one"
                 app:layout_constraintBottom_toTopOf="@id/tv_cost_product_style_one"
-                app:layout_constraintEnd_toStartOf="@id/fab_add_product_style_one"
-                app:layout_constraintStart_toEndOf="@id/iv_photo_product_style_one" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_photo_product_style_one"
+                app:layout_constraintTop_toBottomOf="@id/tv_name_product_style_one" />
 
             <TextView
                 android:id="@+id/tv_cost_product_style_one"
@@ -74,32 +75,33 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp_5"
                 android:layout_marginBottom="@dimen/dp_3"
+                android:ellipsize="end"
                 android:fontFamily="@font/latoregular"
+                android:maxLines="1"
                 android:text=""
                 android:textColor="@color/colorBlack"
                 android:textSize="15sp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_product_style_one"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_photo_product_style_one"
-                app:layout_constraintEnd_toStartOf="@id/fab_add_product_style_one"
-                app:layout_constraintStart_toEndOf="@id/iv_photo_product_style_one" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_photo_product_style_one"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_product_style_one" />
 
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add_product_style_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_outline_add_location_alt_24"
-                app:fabSize="mini"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_margin="@dimen/dp_5"
-                app:elevation="1dp"
+                android:contentDescription="@string/agregar_producto"
                 android:src="@drawable/ic_baseline_add_24"
                 app:backgroundTint="@color/colorSecundary"
-                app:layout_constraintTop_toTopOf="parent"
+                app:elevation="1dp"
+                app:fabSize="mini"
+
+                app:icon="@drawable/ic_outline_add_location_alt_24"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:contentDescription="@string/agregar_producto" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

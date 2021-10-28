@@ -16,6 +16,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.Objects;
+
 public class InitialActivity extends AppCompatActivity {
 
     @Override
@@ -25,7 +27,7 @@ public class InitialActivity extends AppCompatActivity {
         ActivityInitialBinding binding = ActivityInitialBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         getWindow()
                 .setStatusBarColor(ContextCompat.getColor(InitialActivity.this, R.color.colorWhite));
